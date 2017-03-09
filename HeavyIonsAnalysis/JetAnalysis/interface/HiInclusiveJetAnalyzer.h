@@ -92,6 +92,10 @@ private:
   void analyzeRefSubjets(const reco::GenJet jet);
   void analyzeGenSubjets(const reco::GenJet jet);
   float getAboveCharmThresh(reco::TrackRefVector& selTracks, const reco::TrackIPTagInfo& ipData, int sigOrVal);
+
+  int findMatchedParton(float eta, float phi, float maxDr, edm::Handle<reco::GenParticleCollection > genparts, int partonFlavor);
+  int getFlavorProcess(int index, edm::Handle<reco::GenParticleCollection > genparts);
+
  
   std::auto_ptr<fastjet::contrib::Njettiness>   routine_;
 
@@ -154,6 +158,8 @@ private:
   bool doTrigger_;
   bool useQuality_;
   std::string trackQuality_;
+
+	bool isPythia6_;
 
   bool doSubEvent_;
   double genPtMin_;
@@ -518,6 +524,7 @@ private:
     float refparton_pt[MAXJETS];
     int refparton_flavor[MAXJETS];
     int refparton_flavorForB[MAXJETS];
+		int refparton_flavorProcess[MAXJETS];
     int refnCands[MAXJETS];
     int refnChCands[MAXJETS];
     int refnNeCands[MAXJETS];
@@ -613,6 +620,7 @@ private:
     std::vector<std::vector<float>> refSDConstituentsM;
 
     float pthat;
+    int bProdCode, cProdCode;
     int beamId1, beamId2;
     int ngen;
     int genmatchindex[MAXJETS];

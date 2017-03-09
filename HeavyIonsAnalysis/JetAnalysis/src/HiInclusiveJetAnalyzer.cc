@@ -1,7 +1,10 @@
 /*
   Based on the jet response analyzer
   Modified by Matt Nguyen, November 2010
-
+*/
+/*
+	Modified by Cheng-Chieh 
+	add Flavor Production Identification developed by Matt 3/7/2017
 */
 
 #include "HeavyIonsAnalysis/JetAnalysis/interface/HiInclusiveJetAnalyzer.h"
@@ -103,7 +106,9 @@ HiInclusiveJetAnalyzer::HiInclusiveJetAnalyzer(const edm::ParameterSet& iConfig)
   // if (iConfig.exists("genTau3"))
   //   tokenGenTau3_          = consumes<edm::ValueMap<float> >(iConfig.getParameter<edm::InputTag>("genTau3"));
   // else useGenTaus = false;
-  
+
+  isPythia6_ = iConfig.getUntrackedParameter<bool>("isPythia6",false);  
+	cout<<"isPythia6 = "<<isPythia6_<<endl;
   isMC_ = iConfig.getUntrackedParameter<bool>("isMC",false);
   useHepMC_ = iConfig.getUntrackedParameter<bool> ("useHepMC",false);
   fillGenJets_ = iConfig.getUntrackedParameter<bool>("fillGenJets",false);
@@ -546,6 +551,11 @@ HiInclusiveJetAnalyzer::beginJob() {
     t->Branch("refm",jets_.refm,"refm[nref]/F");
     t->Branch("refarea",jets_.refarea,"refarea[nref]/F");
 
+	if(isPythia6_){
+	    t->Branch("bProdCode",&jets_.bProdCode,"bProdCode/I");
+  	  t->Branch("cProdCode",&jets_.cProdCode,"cProdCode/I");
+	}
+
     if(doNewJetVars_){
       t->Branch("refnCands",jets_.refnCands,"refnCands[nref]/I");
       t->Branch("refnChCands",jets_.refnChCands,"refnChCands[nref]/I");
@@ -639,6 +649,10 @@ HiInclusiveJetAnalyzer::beginJob() {
     t->Branch("refparton_pt",jets_.refparton_pt,"refparton_pt[nref]/F");
     t->Branch("refparton_flavor",jets_.refparton_flavor,"refparton_flavor[nref]/I");
     t->Branch("refparton_flavorForB",jets_.refparton_flavorForB,"refparton_flavorForB[nref]/I");
+		if(isPythia6_){
+	    t->Branch("refparton_flavorProcess",jets_.refparton_flavorProcess,"refparton_flavorProcess[nref]/I");			
+		}
+
 
     if(doGenSubJets_) {
       t->Branch("refptG",jets_.refptG,"refptG[nref]/F");
@@ -1538,6 +1552,33 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 
     if(isMC_){
 
+			if(isPythia6_){
+				
+      bool hasPrimB = false;
+      bool hasPrimC = false;
+      for(UInt_t i = 4; i < 8; ++i){
+        if( abs( (*genparts)[i].pdgId() )==5) hasPrimB = true;
+        if( abs( (*genparts)[i].pdgId() )==4) hasPrimC = true;
+      }
+
+      if(hasPrimB){
+        if( abs( (*genparts)[4].pdgId() )==5 || abs( (*genparts)[5].pdgId() )==5 ){
+          if(abs( (*genparts)[6].pdgId() )==5 && abs( (*genparts)[7].pdgId() )==5) jets_.bProdCode = 3;  // double FEX
+    else jets_.bProdCode = 2; //single FEX
+        }
+        else if(abs( (*genparts)[6].pdgId() )==5 && abs( (*genparts)[7].pdgId() )==5) jets_.bProdCode = 1;  // FCR
+      }
+      if(hasPrimC){
+        if( abs( (*genparts)[4].pdgId() )==4 || abs( (*genparts)[5].pdgId() )==4 ){
+          if(abs( (*genparts)[6].pdgId() )==4 && abs( (*genparts)[7].pdgId() )==4) jets_.cProdCode = 3;  // double FEX
+          else jets_.cProdCode = 2; //single FEX
+        }
+        else if(abs( (*genparts)[6].pdgId() )==4 && abs( (*genparts)[7].pdgId() )==4) jets_.cProdCode = 1;  // FCR
+      }		
+			} // end if isPythia6_
+	
+
+
       for(UInt_t i = 0; i < genparts->size(); ++i){
 	const reco::GenParticle& p = (*genparts)[i];
 	if ( p.status()!=1 || p.charge()==0) continue;
@@ -1735,6 +1776,27 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
       jets_.reftau3[jets_.nref] = -999.;
       
       jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();
+
+			// Matt's Flavor Productio code 
+			if(isPythia6_){
+      int partonFlavor = (*patjets)[j].partonFlavour();
+//      jets_.refparton_flavorForB[jets_.nref] = partonFlavor;
+
+      if(abs(partonFlavor)==4||abs(partonFlavor)==5){
+
+  int partonMatchIndex = findMatchedParton(jet.eta(), jet.phi(), 0.3, genparts, partonFlavor);
+        if(partonMatchIndex<0){
+    cout<< " couldn't find the parton "<<endl;
+    jets_.refparton_flavorProcess[jets_.nref] = 0;
+  }
+  else{
+    int flavorProcess =  getFlavorProcess(partonMatchIndex, genparts);
+    jets_.refparton_flavorProcess[jets_.nref] = flavorProcess;
+  }
+      }
+      else jets_.refparton_flavorProcess[jets_.nref] = 0;
+			}
+
       // matched partons
       const reco::GenParticle & parton = *(*patjets)[j].genParton();
 
@@ -2092,6 +2154,55 @@ int HiInclusiveJetAnalyzer::TaggedJet(Jet calojet, Handle<JetTagCollection > jet
     }
   }
   return result;
+}
+// Matt Flavor Production Identification
+//-------------------------------------------------------------------------------------------------
+int HiInclusiveJetAnalyzer::findMatchedParton(float eta, float phi, float maxDr, Handle<GenParticleCollection > genparts, int partonFlavor=0){
+
+  float highestPartonPt =0.;
+  int matchIndex =-1;
+  for( size_t i = 0; i < genparts->size(); ++ i ) {
+    const GenParticle & genCand = (*genparts)[ i ];
+
+    if(partonFlavor!=0){
+      if(genCand.pdgId()!=partonFlavor) continue;
+      if(genCand.status()!=2) continue;
+    }
+    double dr = deltaR(eta,phi,genCand.eta(),genCand.phi());
+    if(dr>maxDr) continue;
+    if(genCand.pt() > highestPartonPt){
+      matchIndex = i;
+      highestPartonPt = genCand.pt();
+    }
+  }
+  return matchIndex;
+}
+
+int HiInclusiveJetAnalyzer::getFlavorProcess(int index, Handle<GenParticleCollection > genparts){
+
+  const GenParticle & matchedParton = (*genparts)[ index ];
+  if(matchedParton.numberOfMothers()>1) cout<<" too many parents "<<endl;
+  int momID = matchedParton.mother(0)->pdgId();
+  int momIndex = findMatchedParton(matchedParton.mother(0)->eta(),matchedParton.mother(0)->phi(),0.001,genparts);
+
+  if(abs(momID)==5){
+    if(matchedParton.mother(0)->status()==3) return 1;  // primary b-quark
+    else {
+      return getFlavorProcess(momIndex,genparts);
+    }
+  }
+  if(momIndex<2) return 4; // initial state GSP
+  else if(momIndex<4) return 3; // sometimes GSP, sometimes associated to FEX
+  else if(momIndex<6) return 2; // primaries
+  else if(momIndex<8){
+    if(momID==21) return 6;  // final state hard GSP
+    else return 5; // final state soft GSP
+  }
+  //else cout<<" should never get here "<<" momID "<<momID<<" momIndex "<<momIndex<<endl;
+
+
+  return -1;
+
 }
 
 
