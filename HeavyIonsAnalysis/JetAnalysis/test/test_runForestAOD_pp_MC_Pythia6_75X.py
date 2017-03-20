@@ -78,6 +78,8 @@ process.ak4PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.ak5PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.ak4CaloJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.akSoftDrop4PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
+#process.akSoftDrop4PFJetAnalyzer.doJetConstituents = cms.untracked.bool(True)
+#process.akSoftDrop4PFJetAnalyzer.doNewJetVars = cms.untracked.bool(True)
 process.akSoftDrop5PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 
 # Include this to turn on storing the jet constituents and new jet variables for q/g separation
