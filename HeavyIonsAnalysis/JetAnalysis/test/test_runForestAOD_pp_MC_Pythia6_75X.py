@@ -26,7 +26,9 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-                                "file:test_sample/pp_MC_PYTHIA6_bjet30.root"
+#                                "file:test_sample/pp_MC_PYTHIA6_bjet30.root"
+#"root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp
+"root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_Dijet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/16CDD81D-660F-E611-A0D4-0090FAA573F0.root" #dijet_pthat120_pp
                             )
 )
 
@@ -60,7 +62,10 @@ process = overrideJEC_pp5020(process)
 #####################################################################################
 
 process.TFileService = cms.Service("TFileService",
-                                   fileName=cms.string("Test_HiForestAOD_pp_MC_PYTHIA6_bjet30.root"))
+                                   fileName=cms.string(
+																	 #"Test_HiForestAOD_pp_MC_PYTHIA6_bjet30.root"
+																	 "Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root"
+																	 ))
 
 #####################################################################################
 # Additional Reconstruction and Analysis: Main Body
@@ -78,8 +83,8 @@ process.ak4PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.ak5PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.ak4CaloJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.akSoftDrop4PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
-#process.akSoftDrop4PFJetAnalyzer.doJetConstituents = cms.untracked.bool(True)
-#process.akSoftDrop4PFJetAnalyzer.doNewJetVars = cms.untracked.bool(True)
+process.akSoftDrop4PFJetAnalyzer.doJetConstituents = cms.untracked.bool(True)
+process.akSoftDrop4PFJetAnalyzer.doNewJetVars = cms.untracked.bool(True)
 process.akSoftDrop5PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 
 # Include this to turn on storing the jet constituents and new jet variables for q/g separation

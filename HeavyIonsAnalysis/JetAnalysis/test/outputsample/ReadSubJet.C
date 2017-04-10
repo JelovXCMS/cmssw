@@ -1,4 +1,5 @@
-// reading vector<vector<float> > example
+// an example of 
+// reading vector<vector<float> > 
 
 
 #include <vector>

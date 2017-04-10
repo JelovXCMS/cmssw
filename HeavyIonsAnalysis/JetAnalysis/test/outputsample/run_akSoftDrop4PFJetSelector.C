@@ -12,8 +12,9 @@ void run_akSoftDrop4PFJetSelector(int nevt=-1, int firstEntry=0, string outfile 
   TProof *plite = TProof::Open("lite://","workers=10");
 
 	TChain *ch_akSD4PF = new TChain("akSoftDrop4PFJetAnalyzer/t","akSD4PFJet");
-	ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet30.root");
-
+//	ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet30.root");
+	ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet120.root");
+//  ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root");
 	ch_akSD4PF->ls();
 
 	// run on Proof

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Fri Mar 17 15:03:03 2017 by ROOT version 6.02/13
+// Mon Mar 20 16:02:59 2017 by ROOT version 6.02/13
 // from TTree t/akSoftDrop4PFpatJetsWithBtagging Jet Analysis Tree
 // found on file: Test_HiForestAOD_pp_MC_PYTHIA6_bjet30.root
 //////////////////////////////////////////////////////////
@@ -13,6 +13,7 @@
 #include <TFile.h>
 
 // Header file for the classes stored in the TTree if any.
+#include "vector"
 #include "vector"
 
 class akSoftDrop4PFJetClass {
@@ -34,6 +35,76 @@ public :
    Float_t         jtpu[44];   //[nref]
    Float_t         jtm[44];   //[nref]
    Float_t         jtarea[44];   //[nref]
+   Int_t           jtnCands[44];   //[nref]
+   Int_t           jtnChCands[44];   //[nref]
+   Int_t           jtnNeCands[44];   //[nref]
+   Float_t         jtchargedSumConst[44];   //[nref]
+   Int_t           jtchargedNConst[44];   //[nref]
+   Float_t         jteSumConst[44];   //[nref]
+   Int_t           jteNConst[44];   //[nref]
+   Float_t         jtmuSumConst[44];   //[nref]
+   Int_t           jtmuNConst[44];   //[nref]
+   Float_t         jtphotonSumConst[44];   //[nref]
+   Int_t           jtphotonNConst[44];   //[nref]
+   Float_t         jtneutralSumConst[44];   //[nref]
+   Int_t           jtneutralNConst[44];   //[nref]
+   Float_t         jthfhadSumConst[44];   //[nref]
+   Int_t           jthfhadNConst[44];   //[nref]
+   Float_t         jthfemSumConst[44];   //[nref]
+   Int_t           jthfemNConst[44];   //[nref]
+   Float_t         jtMByPt[44];   //[nref]
+   Float_t         jtRMSCand[44];   //[nref]
+   Float_t         jtAxis1[44];   //[nref]
+   Float_t         jtAxis2[44];   //[nref]
+   Float_t         jtSigma[44];   //[nref]
+   Float_t         jtR[44];   //[nref]
+   Float_t         jtpTD[44];   //[nref]
+   Float_t         jtpull[44];   //[nref]
+   Float_t         jtrm0p5[44];   //[nref]
+   Float_t         jtrm1[44];   //[nref]
+   Float_t         jtrm2[44];   //[nref]
+   Float_t         jtrm3[44];   //[nref]
+   Float_t         jtSDm[44];   //[nref]
+   Float_t         jtSDpt[44];   //[nref]
+   Float_t         jtSDeta[44];   //[nref]
+   Float_t         jtSDphi[44];   //[nref]
+   Float_t         jtSDptFrac[44];   //[nref]
+   Float_t         jtSDrm0p5[44];   //[nref]
+   Float_t         jtSDrm1[44];   //[nref]
+   Float_t         jtSDrm2[44];   //[nref]
+   Float_t         jtSDrm3[44];   //[nref]
+   Float_t         jtTbeta20p2[44];   //[nref]
+   Float_t         jtTbeta20p3[44];   //[nref]
+   Float_t         jtTbeta20p4[44];   //[nref]
+   Float_t         jtTbeta20p5[44];   //[nref]
+   Float_t         jtTbeta30p2[44];   //[nref]
+   Float_t         jtTbeta30p3[44];   //[nref]
+   Float_t         jtTbeta30p4[44];   //[nref]
+   Float_t         jtTbeta30p5[44];   //[nref]
+   Float_t         jtCbeta20p2[44];   //[nref]
+   Float_t         jtCbeta20p3[44];   //[nref]
+   Float_t         jtCbeta20p4[44];   //[nref]
+   Float_t         jtCbeta20p5[44];   //[nref]
+   Float_t         jtZ11[44];   //[nref]
+   Float_t         jtZ20[44];   //[nref]
+   Float_t         jtZ22[44];   //[nref]
+   Float_t         jtZ31[44];   //[nref]
+   Float_t         jtZ33[44];   //[nref]
+   Float_t         jtZ40[44];   //[nref]
+   Float_t         jtZ42[44];   //[nref]
+   Float_t         jtZ44[44];   //[nref]
+   Float_t         jtZ51[44];   //[nref]
+   Float_t         jtZ53[44];   //[nref]
+   Float_t         jtZ55[44];   //[nref]
+   Float_t         jtPhi1[44];   //[nref]
+   Float_t         jtPhi2[44];   //[nref]
+   Float_t         jtPhi3[44];   //[nref]
+   Float_t         jtPhi4[44];   //[nref]
+   Float_t         jtPhi5[44];   //[nref]
+   Float_t         jtPhi6[44];   //[nref]
+   Float_t         jtPhi7[44];   //[nref]
+   Float_t         jtSkx[44];   //[nref]
+   Float_t         jtSky[44];   //[nref]
    Float_t         jtPfCHF[44];   //[nref]
    Float_t         jtPfNHF[44];   //[nref]
    Float_t         jtPfCEF[44];   //[nref]
@@ -51,6 +122,18 @@ public :
    vector<vector<float> > *jtSubJetEta;
    vector<vector<float> > *jtSubJetPhi;
    vector<vector<float> > *jtSubJetM;
+   vector<vector<int> > *jtConstituentsId;
+   vector<vector<float> > *jtConstituentsE;
+   vector<vector<float> > *jtConstituentsPt;
+   vector<vector<float> > *jtConstituentsEta;
+   vector<vector<float> > *jtConstituentsPhi;
+   vector<vector<float> > *jtConstituentsM;
+   vector<vector<int> > *jtSDConstituentsId;
+   vector<vector<float> > *jtSDConstituentsE;
+   vector<vector<float> > *jtSDConstituentsPt;
+   vector<vector<float> > *jtSDConstituentsEta;
+   vector<vector<float> > *jtSDConstituentsPhi;
+   vector<vector<float> > *jtSDConstituentsM;
    Float_t         discr_jetID_cuts[44];   //[nref]
    Float_t         discr_jetID_bdt[44];   //[nref]
    Float_t         discr_fr01[44];   //[nref]
@@ -126,6 +209,76 @@ public :
    Float_t         refarea[44];   //[nref]
    Int_t           bProdCode;
    Int_t           cProdCode;
+   Int_t           refnCands[44];   //[nref]
+   Int_t           refnChCands[44];   //[nref]
+   Int_t           refnNeCands[44];   //[nref]
+   Float_t         refchargedSumConst[44];   //[nref]
+   Int_t           refchargedNConst[44];   //[nref]
+   Float_t         refeSumConst[44];   //[nref]
+   Int_t           refeNConst[44];   //[nref]
+   Float_t         refmuSumConst[44];   //[nref]
+   Int_t           refmuNConst[44];   //[nref]
+   Float_t         refphotonSumConst[44];   //[nref]
+   Int_t           refphotonNConst[44];   //[nref]
+   Float_t         refneutralSumConst[44];   //[nref]
+   Int_t           refneutralNConst[44];   //[nref]
+   Float_t         refhfhadSumConst[44];   //[nref]
+   Int_t           refhfhadNConst[44];   //[nref]
+   Float_t         refhfemSumConst[44];   //[nref]
+   Int_t           refhfemNConst[44];   //[nref]
+   Float_t         refMByPt[44];   //[nref]
+   Float_t         refRMSCand[44];   //[nref]
+   Float_t         refAxis1[44];   //[nref]
+   Float_t         refAxis2[44];   //[nref]
+   Float_t         refSigma[44];   //[nref]
+   Float_t         refR[44];   //[nref]
+   Float_t         refpTD[44];   //[nref]
+   Float_t         refpull[44];   //[nref]
+   Float_t         refrm0p5[44];   //[nref]
+   Float_t         refrm1[44];   //[nref]
+   Float_t         refrm2[44];   //[nref]
+   Float_t         refrm3[44];   //[nref]
+   Float_t         refSDm[44];   //[nref]
+   Float_t         refSDpt[44];   //[nref]
+   Float_t         refSDeta[44];   //[nref]
+   Float_t         refSDphi[44];   //[nref]
+   Float_t         refSDptFrac[44];   //[nref]
+   Float_t         refSDrm0p5[44];   //[nref]
+   Float_t         refSDrm1[44];   //[nref]
+   Float_t         refSDrm2[44];   //[nref]
+   Float_t         refSDrm3[44];   //[nref]
+   Float_t         refTbeta20p2[44];   //[nref]
+   Float_t         refTbeta20p3[44];   //[nref]
+   Float_t         refTbeta20p4[44];   //[nref]
+   Float_t         refTbeta20p5[44];   //[nref]
+   Float_t         refTbeta30p2[44];   //[nref]
+   Float_t         refTbeta30p3[44];   //[nref]
+   Float_t         refTbeta30p4[44];   //[nref]
+   Float_t         refTbeta30p5[44];   //[nref]
+   Float_t         refCbeta20p2[44];   //[nref]
+   Float_t         refCbeta20p3[44];   //[nref]
+   Float_t         refCbeta20p4[44];   //[nref]
+   Float_t         refCbeta20p5[44];   //[nref]
+   Float_t         refZ11[44];   //[nref]
+   Float_t         refZ20[44];   //[nref]
+   Float_t         refZ22[44];   //[nref]
+   Float_t         refZ31[44];   //[nref]
+   Float_t         refZ33[44];   //[nref]
+   Float_t         refZ40[44];   //[nref]
+   Float_t         refZ42[44];   //[nref]
+   Float_t         refZ44[44];   //[nref]
+   Float_t         refZ51[44];   //[nref]
+   Float_t         refZ53[44];   //[nref]
+   Float_t         refZ55[44];   //[nref]
+   Float_t         refPhi1[44];   //[nref]
+   Float_t         refPhi2[44];   //[nref]
+   Float_t         refPhi3[44];   //[nref]
+   Float_t         refPhi4[44];   //[nref]
+   Float_t         refPhi5[44];   //[nref]
+   Float_t         refPhi6[44];   //[nref]
+   Float_t         refPhi7[44];   //[nref]
+   Float_t         refSkx[44];   //[nref]
+   Float_t         refSky[44];   //[nref]
    Float_t         reftau1[44];   //[nref]
    Float_t         reftau2[44];   //[nref]
    Float_t         reftau3[44];   //[nref]
@@ -143,6 +296,18 @@ public :
    vector<vector<float> > *refSubJetEta;
    vector<vector<float> > *refSubJetPhi;
    vector<vector<float> > *refSubJetM;
+   vector<vector<int> > *refConstituentsId;
+   vector<vector<float> > *refConstituentsE;
+   vector<vector<float> > *refConstituentsPt;
+   vector<vector<float> > *refConstituentsEta;
+   vector<vector<float> > *refConstituentsPhi;
+   vector<vector<float> > *refConstituentsM;
+   vector<vector<int> > *refSDConstituentsId;
+   vector<vector<float> > *refSDConstituentsE;
+   vector<vector<float> > *refSDConstituentsPt;
+   vector<vector<float> > *refSDConstituentsEta;
+   vector<vector<float> > *refSDConstituentsPhi;
+   vector<vector<float> > *refSDConstituentsM;
    Float_t         genChargedSum[44];   //[nref]
    Float_t         genHardSum[44];   //[nref]
    Float_t         signalChargedSum[44];   //[nref]
@@ -160,6 +325,75 @@ public :
    Float_t         genm[24];   //[ngen]
    Float_t         gendphijt[24];   //[ngen]
    Float_t         gendrjt[24];   //[ngen]
+   Int_t           gennCands[24];   //[ngen]
+   Int_t           gennChCands[24];   //[ngen]
+   Int_t           gennNeCands[24];   //[ngen]
+   Int_t           genchargedNConst[24];   //[ngen]
+   Float_t         geneSumConst[24];   //[ngen]
+   Int_t           geneNConst[24];   //[ngen]
+   Float_t         genmuSumConst[24];   //[ngen]
+   Int_t           genmuNConst[24];   //[ngen]
+   Float_t         genphotonSumConst[24];   //[ngen]
+   Int_t           genphotonNConst[24];   //[ngen]
+   Float_t         genneutralSumConst[24];   //[ngen]
+   Int_t           genneutralNConst[24];   //[ngen]
+   Float_t         genhfhadSumConst[24];   //[ngen]
+   Int_t           genhfhadNConst[24];   //[ngen]
+   Float_t         genhfemSumConst[24];   //[ngen]
+   Int_t           genhfemNConst[24];   //[ngen]
+   Float_t         genMByPt[24];   //[ngen]
+   Float_t         genRMSCand[24];   //[ngen]
+   Float_t         genAxis1[24];   //[ngen]
+   Float_t         genAxis2[24];   //[ngen]
+   Float_t         genSigma[24];   //[ngen]
+   Float_t         genR[24];   //[ngen]
+   Float_t         genpTD[24];   //[ngen]
+   Float_t         genpull[24];   //[ngen]
+   Float_t         genrm0p5[24];   //[ngen]
+   Float_t         genrm1[24];   //[ngen]
+   Float_t         genrm2[24];   //[ngen]
+   Float_t         genrm3[24];   //[ngen]
+   Float_t         genSDm[24];   //[ngen]
+   Float_t         genSDpt[24];   //[ngen]
+   Float_t         genSDeta[24];   //[ngen]
+   Float_t         genSDphi[24];   //[ngen]
+   Float_t         genSDptFrac[24];   //[ngen]
+   Float_t         genSDrm0p5[24];   //[ngen]
+   Float_t         genSDrm1[24];   //[ngen]
+   Float_t         genSDrm2[24];   //[ngen]
+   Float_t         genSDrm3[24];   //[ngen]
+   Float_t         genTbeta20p2[24];   //[ngen]
+   Float_t         genTbeta20p3[24];   //[ngen]
+   Float_t         genTbeta20p4[24];   //[ngen]
+   Float_t         genTbeta20p5[24];   //[ngen]
+   Float_t         genTbeta30p2[24];   //[ngen]
+   Float_t         genTbeta30p3[24];   //[ngen]
+   Float_t         genTbeta30p4[24];   //[ngen]
+   Float_t         genTbeta30p5[24];   //[ngen]
+   Float_t         genCbeta20p2[24];   //[ngen]
+   Float_t         genCbeta20p3[24];   //[ngen]
+   Float_t         genCbeta20p4[24];   //[ngen]
+   Float_t         genCbeta20p5[24];   //[ngen]
+   Float_t         genZ11[24];   //[ngen]
+   Float_t         genZ20[24];   //[ngen]
+   Float_t         genZ22[24];   //[ngen]
+   Float_t         genZ31[24];   //[ngen]
+   Float_t         genZ33[24];   //[ngen]
+   Float_t         genZ40[24];   //[ngen]
+   Float_t         genZ42[24];   //[ngen]
+   Float_t         genZ44[24];   //[ngen]
+   Float_t         genZ51[24];   //[ngen]
+   Float_t         genZ53[24];   //[ngen]
+   Float_t         genZ55[24];   //[ngen]
+   Float_t         genPhi1[24];   //[ngen]
+   Float_t         genPhi2[24];   //[ngen]
+   Float_t         genPhi3[24];   //[ngen]
+   Float_t         genPhi4[24];   //[ngen]
+   Float_t         genPhi5[24];   //[ngen]
+   Float_t         genPhi6[24];   //[ngen]
+   Float_t         genPhi7[24];   //[ngen]
+   Float_t         genSkx[24];   //[ngen]
+   Float_t         genSky[24];   //[ngen]
    Float_t         genptG[24];   //[ngen]
    Float_t         genetaG[24];   //[ngen]
    Float_t         genphiG[24];   //[ngen]
@@ -168,6 +402,18 @@ public :
    vector<vector<float> > *genSubJetEta;
    vector<vector<float> > *genSubJetPhi;
    vector<vector<float> > *genSubJetM;
+   vector<vector<int> > *genConstituentsId;
+   vector<vector<float> > *genConstituentsE;
+   vector<vector<float> > *genConstituentsPt;
+   vector<vector<float> > *genConstituentsEta;
+   vector<vector<float> > *genConstituentsPhi;
+   vector<vector<float> > *genConstituentsM;
+   vector<vector<int> > *genSDConstituentsId;
+   vector<vector<float> > *genSDConstituentsE;
+   vector<vector<float> > *genSDConstituentsPt;
+   vector<vector<float> > *genSDConstituentsEta;
+   vector<vector<float> > *genSDConstituentsPhi;
+   vector<vector<float> > *genSDConstituentsM;
    Int_t           gensubid[24];   //[ngen]
 
    // List of branches
@@ -182,6 +428,76 @@ public :
    TBranch        *b_jtpu;   //!
    TBranch        *b_jtm;   //!
    TBranch        *b_jtarea;   //!
+   TBranch        *b_jtnCands;   //!
+   TBranch        *b_jtnChCands;   //!
+   TBranch        *b_jtnNeCands;   //!
+   TBranch        *b_jtchargedSumConst;   //!
+   TBranch        *b_jtchargedNConst;   //!
+   TBranch        *b_jteSumConst;   //!
+   TBranch        *b_jteNConst;   //!
+   TBranch        *b_jtmuSumConst;   //!
+   TBranch        *b_jtmuNConst;   //!
+   TBranch        *b_jtphotonSumConst;   //!
+   TBranch        *b_jtphotonNConst;   //!
+   TBranch        *b_jtneutralSumConst;   //!
+   TBranch        *b_jtneutralNConst;   //!
+   TBranch        *b_jthfhadSumConst;   //!
+   TBranch        *b_jthfhadNConst;   //!
+   TBranch        *b_jthfemSumConst;   //!
+   TBranch        *b_jthfemNConst;   //!
+   TBranch        *b_jtMByPt;   //!
+   TBranch        *b_jtRMSCand;   //!
+   TBranch        *b_jtAxis1;   //!
+   TBranch        *b_jtAxis2;   //!
+   TBranch        *b_jtSigma;   //!
+   TBranch        *b_jtR;   //!
+   TBranch        *b_jtpTD;   //!
+   TBranch        *b_jtpull;   //!
+   TBranch        *b_jtrm0p5;   //!
+   TBranch        *b_jtrm1;   //!
+   TBranch        *b_jtrm2;   //!
+   TBranch        *b_jtrm3;   //!
+   TBranch        *b_jtSDm;   //!
+   TBranch        *b_jtSDpt;   //!
+   TBranch        *b_jtSDeta;   //!
+   TBranch        *b_jtSDphi;   //!
+   TBranch        *b_jtSDptFrac;   //!
+   TBranch        *b_jtSDrm0p5;   //!
+   TBranch        *b_jtSDrm1;   //!
+   TBranch        *b_jtSDrm2;   //!
+   TBranch        *b_jtSDrm3;   //!
+   TBranch        *b_jtTbeta20p2;   //!
+   TBranch        *b_jtTbeta20p3;   //!
+   TBranch        *b_jtTbeta20p4;   //!
+   TBranch        *b_jtTbeta20p5;   //!
+   TBranch        *b_jtTbeta30p2;   //!
+   TBranch        *b_jtTbeta30p3;   //!
+   TBranch        *b_jtTbeta30p4;   //!
+   TBranch        *b_jtTbeta30p5;   //!
+   TBranch        *b_jtCbeta20p2;   //!
+   TBranch        *b_jtCbeta20p3;   //!
+   TBranch        *b_jtCbeta20p4;   //!
+   TBranch        *b_jtCbeta20p5;   //!
+   TBranch        *b_jtZ11;   //!
+   TBranch        *b_jtZ20;   //!
+   TBranch        *b_jtZ22;   //!
+   TBranch        *b_jtZ31;   //!
+   TBranch        *b_jtZ33;   //!
+   TBranch        *b_jtZ40;   //!
+   TBranch        *b_jtZ42;   //!
+   TBranch        *b_jtZ44;   //!
+   TBranch        *b_jtZ51;   //!
+   TBranch        *b_jtZ53;   //!
+   TBranch        *b_jtZ55;   //!
+   TBranch        *b_jtPhi1;   //!
+   TBranch        *b_jtPhi2;   //!
+   TBranch        *b_jtPhi3;   //!
+   TBranch        *b_jtPhi4;   //!
+   TBranch        *b_jtPhi5;   //!
+   TBranch        *b_jtPhi6;   //!
+   TBranch        *b_jtPhi7;   //!
+   TBranch        *b_jtSkx;   //!
+   TBranch        *b_jtSky;   //!
    TBranch        *b_jtPfCHF;   //!
    TBranch        *b_jtPfNHF;   //!
    TBranch        *b_jtPfCEF;   //!
@@ -199,6 +515,18 @@ public :
    TBranch        *b_jtSubJetEta;   //!
    TBranch        *b_jtSubJetPhi;   //!
    TBranch        *b_jtSubJetM;   //!
+   TBranch        *b_jtConstituentsId;   //!
+   TBranch        *b_jtConstituentsE;   //!
+   TBranch        *b_jtConstituentsPt;   //!
+   TBranch        *b_jtConstituentsEta;   //!
+   TBranch        *b_jtConstituentsPhi;   //!
+   TBranch        *b_jtConstituentsM;   //!
+   TBranch        *b_jtSDConstituentsId;   //!
+   TBranch        *b_jtSDConstituentsE;   //!
+   TBranch        *b_jtSDConstituentsPt;   //!
+   TBranch        *b_jtSDConstituentsEta;   //!
+   TBranch        *b_jtSDConstituentsPhi;   //!
+   TBranch        *b_jtSDConstituentsM;   //!
    TBranch        *b_discr_jetID_cuts;   //!
    TBranch        *b_discr_jetID_bdt;   //!
    TBranch        *b_discr_fr01;   //!
@@ -274,6 +602,76 @@ public :
    TBranch        *b_refarea;   //!
    TBranch        *b_bProdCode;   //!
    TBranch        *b_cProdCode;   //!
+   TBranch        *b_refnCands;   //!
+   TBranch        *b_refnChCands;   //!
+   TBranch        *b_refnNeCands;   //!
+   TBranch        *b_refchargedSumConst;   //!
+   TBranch        *b_refchargedNConst;   //!
+   TBranch        *b_refeSumConst;   //!
+   TBranch        *b_refeNConst;   //!
+   TBranch        *b_refmuSumConst;   //!
+   TBranch        *b_refmuNConst;   //!
+   TBranch        *b_refphotonSumConst;   //!
+   TBranch        *b_refphotonNConst;   //!
+   TBranch        *b_refneutralSumConst;   //!
+   TBranch        *b_refneutralNConst;   //!
+   TBranch        *b_refhfhadSumConst;   //!
+   TBranch        *b_refhfhadNConst;   //!
+   TBranch        *b_refhfemSumConst;   //!
+   TBranch        *b_refhfemNConst;   //!
+   TBranch        *b_refMByPt;   //!
+   TBranch        *b_refRMSCand;   //!
+   TBranch        *b_refAxis1;   //!
+   TBranch        *b_refAxis2;   //!
+   TBranch        *b_refSigma;   //!
+   TBranch        *b_refR;   //!
+   TBranch        *b_refpTD;   //!
+   TBranch        *b_refpull;   //!
+   TBranch        *b_refrm0p5;   //!
+   TBranch        *b_refrm1;   //!
+   TBranch        *b_refrm2;   //!
+   TBranch        *b_refrm3;   //!
+   TBranch        *b_refSDm;   //!
+   TBranch        *b_refSDpt;   //!
+   TBranch        *b_refSDeta;   //!
+   TBranch        *b_refSDphi;   //!
+   TBranch        *b_refSDptFrac;   //!
+   TBranch        *b_refSDrm0p5;   //!
+   TBranch        *b_refSDrm1;   //!
+   TBranch        *b_refSDrm2;   //!
+   TBranch        *b_refSDrm3;   //!
+   TBranch        *b_refTbeta20p2;   //!
+   TBranch        *b_refTbeta20p3;   //!
+   TBranch        *b_refTbeta20p4;   //!
+   TBranch        *b_refTbeta20p5;   //!
+   TBranch        *b_refTbeta30p2;   //!
+   TBranch        *b_refTbeta30p3;   //!
+   TBranch        *b_refTbeta30p4;   //!
+   TBranch        *b_refTbeta30p5;   //!
+   TBranch        *b_refCbeta20p2;   //!
+   TBranch        *b_refCbeta20p3;   //!
+   TBranch        *b_refCbeta20p4;   //!
+   TBranch        *b_refCbeta20p5;   //!
+   TBranch        *b_refZ11;   //!
+   TBranch        *b_refZ20;   //!
+   TBranch        *b_refZ22;   //!
+   TBranch        *b_refZ31;   //!
+   TBranch        *b_refZ33;   //!
+   TBranch        *b_refZ40;   //!
+   TBranch        *b_refZ42;   //!
+   TBranch        *b_refZ44;   //!
+   TBranch        *b_refZ51;   //!
+   TBranch        *b_refZ53;   //!
+   TBranch        *b_refZ55;   //!
+   TBranch        *b_refPhi1;   //!
+   TBranch        *b_refPhi2;   //!
+   TBranch        *b_refPhi3;   //!
+   TBranch        *b_refPhi4;   //!
+   TBranch        *b_refPhi5;   //!
+   TBranch        *b_refPhi6;   //!
+   TBranch        *b_refPhi7;   //!
+   TBranch        *b_refSkx;   //!
+   TBranch        *b_refSky;   //!
    TBranch        *b_reftau1;   //!
    TBranch        *b_reftau2;   //!
    TBranch        *b_reftau3;   //!
@@ -291,6 +689,18 @@ public :
    TBranch        *b_refSubJetEta;   //!
    TBranch        *b_refSubJetPhi;   //!
    TBranch        *b_refSubJetM;   //!
+   TBranch        *b_refConstituentsId;   //!
+   TBranch        *b_refConstituentsE;   //!
+   TBranch        *b_refConstituentsPt;   //!
+   TBranch        *b_refConstituentsEta;   //!
+   TBranch        *b_refConstituentsPhi;   //!
+   TBranch        *b_refConstituentsM;   //!
+   TBranch        *b_refSDConstituentsId;   //!
+   TBranch        *b_refSDConstituentsE;   //!
+   TBranch        *b_refSDConstituentsPt;   //!
+   TBranch        *b_refSDConstituentsEta;   //!
+   TBranch        *b_refSDConstituentsPhi;   //!
+   TBranch        *b_refSDConstituentsM;   //!
    TBranch        *b_genChargedSum;   //!
    TBranch        *b_genHardSum;   //!
    TBranch        *b_signalChargedSum;   //!
@@ -308,6 +718,75 @@ public :
    TBranch        *b_genm;   //!
    TBranch        *b_gendphijt;   //!
    TBranch        *b_gendrjt;   //!
+   TBranch        *b_gennCands;   //!
+   TBranch        *b_gennChCands;   //!
+   TBranch        *b_gennNeCands;   //!
+   TBranch        *b_genchargedNConst;   //!
+   TBranch        *b_geneSumConst;   //!
+   TBranch        *b_geneNConst;   //!
+   TBranch        *b_genmuSumConst;   //!
+   TBranch        *b_genmuNConst;   //!
+   TBranch        *b_genphotonSumConst;   //!
+   TBranch        *b_genphotonNConst;   //!
+   TBranch        *b_genneutralSumConst;   //!
+   TBranch        *b_genneutralNConst;   //!
+   TBranch        *b_genhfhadSumConst;   //!
+   TBranch        *b_genhfhadNConst;   //!
+   TBranch        *b_genhfemSumConst;   //!
+   TBranch        *b_genhfemNConst;   //!
+   TBranch        *b_genMByPt;   //!
+   TBranch        *b_genRMSCand;   //!
+   TBranch        *b_genAxis1;   //!
+   TBranch        *b_genAxis2;   //!
+   TBranch        *b_genSigma;   //!
+   TBranch        *b_genR;   //!
+   TBranch        *b_genpTD;   //!
+   TBranch        *b_genpull;   //!
+   TBranch        *b_genrm0p5;   //!
+   TBranch        *b_genrm1;   //!
+   TBranch        *b_genrm2;   //!
+   TBranch        *b_genrm3;   //!
+   TBranch        *b_genSDm;   //!
+   TBranch        *b_genSDpt;   //!
+   TBranch        *b_genSDeta;   //!
+   TBranch        *b_genSDphi;   //!
+   TBranch        *b_genSDptFrac;   //!
+   TBranch        *b_genSDrm0p5;   //!
+   TBranch        *b_genSDrm1;   //!
+   TBranch        *b_genSDrm2;   //!
+   TBranch        *b_genSDrm3;   //!
+   TBranch        *b_genTbeta20p2;   //!
+   TBranch        *b_genTbeta20p3;   //!
+   TBranch        *b_genTbeta20p4;   //!
+   TBranch        *b_genTbeta20p5;   //!
+   TBranch        *b_genTbeta30p2;   //!
+   TBranch        *b_genTbeta30p3;   //!
+   TBranch        *b_genTbeta30p4;   //!
+   TBranch        *b_genTbeta30p5;   //!
+   TBranch        *b_genCbeta20p2;   //!
+   TBranch        *b_genCbeta20p3;   //!
+   TBranch        *b_genCbeta20p4;   //!
+   TBranch        *b_genCbeta20p5;   //!
+   TBranch        *b_genZ11;   //!
+   TBranch        *b_genZ20;   //!
+   TBranch        *b_genZ22;   //!
+   TBranch        *b_genZ31;   //!
+   TBranch        *b_genZ33;   //!
+   TBranch        *b_genZ40;   //!
+   TBranch        *b_genZ42;   //!
+   TBranch        *b_genZ44;   //!
+   TBranch        *b_genZ51;   //!
+   TBranch        *b_genZ53;   //!
+   TBranch        *b_genZ55;   //!
+   TBranch        *b_genPhi1;   //!
+   TBranch        *b_genPhi2;   //!
+   TBranch        *b_genPhi3;   //!
+   TBranch        *b_genPhi4;   //!
+   TBranch        *b_genPhi5;   //!
+   TBranch        *b_genPhi6;   //!
+   TBranch        *b_genPhi7;   //!
+   TBranch        *b_genSkx;   //!
+   TBranch        *b_genSky;   //!
    TBranch        *b_genptG;   //!
    TBranch        *b_genetaG;   //!
    TBranch        *b_genphiG;   //!
@@ -316,6 +795,18 @@ public :
    TBranch        *b_genSubJetEta;   //!
    TBranch        *b_genSubJetPhi;   //!
    TBranch        *b_genSubJetM;   //!
+   TBranch        *b_genConstituentsId;   //!
+   TBranch        *b_genConstituentsE;   //!
+   TBranch        *b_genConstituentsPt;   //!
+   TBranch        *b_genConstituentsEta;   //!
+   TBranch        *b_genConstituentsPhi;   //!
+   TBranch        *b_genConstituentsM;   //!
+   TBranch        *b_genSDConstituentsId;   //!
+   TBranch        *b_genSDConstituentsE;   //!
+   TBranch        *b_genSDConstituentsPt;   //!
+   TBranch        *b_genSDConstituentsEta;   //!
+   TBranch        *b_genSDConstituentsPhi;   //!
+   TBranch        *b_genSDConstituentsM;   //!
    TBranch        *b_gensubid;   //!
 
    akSoftDrop4PFJetClass(TTree *tree=0);
@@ -388,14 +879,50 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    jtSubJetEta = 0;
    jtSubJetPhi = 0;
    jtSubJetM = 0;
+   jtConstituentsId = 0;
+   jtConstituentsE = 0;
+   jtConstituentsPt = 0;
+   jtConstituentsEta = 0;
+   jtConstituentsPhi = 0;
+   jtConstituentsM = 0;
+   jtSDConstituentsId = 0;
+   jtSDConstituentsE = 0;
+   jtSDConstituentsPt = 0;
+   jtSDConstituentsEta = 0;
+   jtSDConstituentsPhi = 0;
+   jtSDConstituentsM = 0;
    refSubJetPt = 0;
    refSubJetEta = 0;
    refSubJetPhi = 0;
    refSubJetM = 0;
+   refConstituentsId = 0;
+   refConstituentsE = 0;
+   refConstituentsPt = 0;
+   refConstituentsEta = 0;
+   refConstituentsPhi = 0;
+   refConstituentsM = 0;
+   refSDConstituentsId = 0;
+   refSDConstituentsE = 0;
+   refSDConstituentsPt = 0;
+   refSDConstituentsEta = 0;
+   refSDConstituentsPhi = 0;
+   refSDConstituentsM = 0;
    genSubJetPt = 0;
    genSubJetEta = 0;
    genSubJetPhi = 0;
    genSubJetM = 0;
+   genConstituentsId = 0;
+   genConstituentsE = 0;
+   genConstituentsPt = 0;
+   genConstituentsEta = 0;
+   genConstituentsPhi = 0;
+   genConstituentsM = 0;
+   genSDConstituentsId = 0;
+   genSDConstituentsE = 0;
+   genSDConstituentsPt = 0;
+   genSDConstituentsEta = 0;
+   genSDConstituentsPhi = 0;
+   genSDConstituentsM = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -413,6 +940,76 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    fChain->SetBranchAddress("jtpu", jtpu, &b_jtpu);
    fChain->SetBranchAddress("jtm", jtm, &b_jtm);
    fChain->SetBranchAddress("jtarea", jtarea, &b_jtarea);
+   fChain->SetBranchAddress("jtnCands", jtnCands, &b_jtnCands);
+   fChain->SetBranchAddress("jtnChCands", jtnChCands, &b_jtnChCands);
+   fChain->SetBranchAddress("jtnNeCands", jtnNeCands, &b_jtnNeCands);
+   fChain->SetBranchAddress("jtchargedSumConst", jtchargedSumConst, &b_jtchargedSumConst);
+   fChain->SetBranchAddress("jtchargedNConst", jtchargedNConst, &b_jtchargedNConst);
+   fChain->SetBranchAddress("jteSumConst", jteSumConst, &b_jteSumConst);
+   fChain->SetBranchAddress("jteNConst", jteNConst, &b_jteNConst);
+   fChain->SetBranchAddress("jtmuSumConst", jtmuSumConst, &b_jtmuSumConst);
+   fChain->SetBranchAddress("jtmuNConst", jtmuNConst, &b_jtmuNConst);
+   fChain->SetBranchAddress("jtphotonSumConst", jtphotonSumConst, &b_jtphotonSumConst);
+   fChain->SetBranchAddress("jtphotonNConst", jtphotonNConst, &b_jtphotonNConst);
+   fChain->SetBranchAddress("jtneutralSumConst", jtneutralSumConst, &b_jtneutralSumConst);
+   fChain->SetBranchAddress("jtneutralNConst", jtneutralNConst, &b_jtneutralNConst);
+   fChain->SetBranchAddress("jthfhadSumConst", jthfhadSumConst, &b_jthfhadSumConst);
+   fChain->SetBranchAddress("jthfhadNConst", jthfhadNConst, &b_jthfhadNConst);
+   fChain->SetBranchAddress("jthfemSumConst", jthfemSumConst, &b_jthfemSumConst);
+   fChain->SetBranchAddress("jthfemNConst", jthfemNConst, &b_jthfemNConst);
+   fChain->SetBranchAddress("jtMByPt", jtMByPt, &b_jtMByPt);
+   fChain->SetBranchAddress("jtRMSCand", jtRMSCand, &b_jtRMSCand);
+   fChain->SetBranchAddress("jtAxis1", jtAxis1, &b_jtAxis1);
+   fChain->SetBranchAddress("jtAxis2", jtAxis2, &b_jtAxis2);
+   fChain->SetBranchAddress("jtSigma", jtSigma, &b_jtSigma);
+   fChain->SetBranchAddress("jtR", jtR, &b_jtR);
+   fChain->SetBranchAddress("jtpTD", jtpTD, &b_jtpTD);
+   fChain->SetBranchAddress("jtpull", jtpull, &b_jtpull);
+   fChain->SetBranchAddress("jtrm0p5", jtrm0p5, &b_jtrm0p5);
+   fChain->SetBranchAddress("jtrm1", jtrm1, &b_jtrm1);
+   fChain->SetBranchAddress("jtrm2", jtrm2, &b_jtrm2);
+   fChain->SetBranchAddress("jtrm3", jtrm3, &b_jtrm3);
+   fChain->SetBranchAddress("jtSDm", jtSDm, &b_jtSDm);
+   fChain->SetBranchAddress("jtSDpt", jtSDpt, &b_jtSDpt);
+   fChain->SetBranchAddress("jtSDeta", jtSDeta, &b_jtSDeta);
+   fChain->SetBranchAddress("jtSDphi", jtSDphi, &b_jtSDphi);
+   fChain->SetBranchAddress("jtSDptFrac", jtSDptFrac, &b_jtSDptFrac);
+   fChain->SetBranchAddress("jtSDrm0p5", jtSDrm0p5, &b_jtSDrm0p5);
+   fChain->SetBranchAddress("jtSDrm1", jtSDrm1, &b_jtSDrm1);
+   fChain->SetBranchAddress("jtSDrm2", jtSDrm2, &b_jtSDrm2);
+   fChain->SetBranchAddress("jtSDrm3", jtSDrm3, &b_jtSDrm3);
+   fChain->SetBranchAddress("jtTbeta20p2", jtTbeta20p2, &b_jtTbeta20p2);
+   fChain->SetBranchAddress("jtTbeta20p3", jtTbeta20p3, &b_jtTbeta20p3);
+   fChain->SetBranchAddress("jtTbeta20p4", jtTbeta20p4, &b_jtTbeta20p4);
+   fChain->SetBranchAddress("jtTbeta20p5", jtTbeta20p5, &b_jtTbeta20p5);
+   fChain->SetBranchAddress("jtTbeta30p2", jtTbeta30p2, &b_jtTbeta30p2);
+   fChain->SetBranchAddress("jtTbeta30p3", jtTbeta30p3, &b_jtTbeta30p3);
+   fChain->SetBranchAddress("jtTbeta30p4", jtTbeta30p4, &b_jtTbeta30p4);
+   fChain->SetBranchAddress("jtTbeta30p5", jtTbeta30p5, &b_jtTbeta30p5);
+   fChain->SetBranchAddress("jtCbeta20p2", jtCbeta20p2, &b_jtCbeta20p2);
+   fChain->SetBranchAddress("jtCbeta20p3", jtCbeta20p3, &b_jtCbeta20p3);
+   fChain->SetBranchAddress("jtCbeta20p4", jtCbeta20p4, &b_jtCbeta20p4);
+   fChain->SetBranchAddress("jtCbeta20p5", jtCbeta20p5, &b_jtCbeta20p5);
+   fChain->SetBranchAddress("jtZ11", jtZ11, &b_jtZ11);
+   fChain->SetBranchAddress("jtZ20", jtZ20, &b_jtZ20);
+   fChain->SetBranchAddress("jtZ22", jtZ22, &b_jtZ22);
+   fChain->SetBranchAddress("jtZ31", jtZ31, &b_jtZ31);
+   fChain->SetBranchAddress("jtZ33", jtZ33, &b_jtZ33);
+   fChain->SetBranchAddress("jtZ40", jtZ40, &b_jtZ40);
+   fChain->SetBranchAddress("jtZ42", jtZ42, &b_jtZ42);
+   fChain->SetBranchAddress("jtZ44", jtZ44, &b_jtZ44);
+   fChain->SetBranchAddress("jtZ51", jtZ51, &b_jtZ51);
+   fChain->SetBranchAddress("jtZ53", jtZ53, &b_jtZ53);
+   fChain->SetBranchAddress("jtZ55", jtZ55, &b_jtZ55);
+   fChain->SetBranchAddress("jtPhi1", jtPhi1, &b_jtPhi1);
+   fChain->SetBranchAddress("jtPhi2", jtPhi2, &b_jtPhi2);
+   fChain->SetBranchAddress("jtPhi3", jtPhi3, &b_jtPhi3);
+   fChain->SetBranchAddress("jtPhi4", jtPhi4, &b_jtPhi4);
+   fChain->SetBranchAddress("jtPhi5", jtPhi5, &b_jtPhi5);
+   fChain->SetBranchAddress("jtPhi6", jtPhi6, &b_jtPhi6);
+   fChain->SetBranchAddress("jtPhi7", jtPhi7, &b_jtPhi7);
+   fChain->SetBranchAddress("jtSkx", jtSkx, &b_jtSkx);
+   fChain->SetBranchAddress("jtSky", jtSky, &b_jtSky);
    fChain->SetBranchAddress("jtPfCHF", jtPfCHF, &b_jtPfCHF);
    fChain->SetBranchAddress("jtPfNHF", jtPfNHF, &b_jtPfNHF);
    fChain->SetBranchAddress("jtPfCEF", jtPfCEF, &b_jtPfCEF);
@@ -430,6 +1027,18 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    fChain->SetBranchAddress("jtSubJetEta", &jtSubJetEta, &b_jtSubJetEta);
    fChain->SetBranchAddress("jtSubJetPhi", &jtSubJetPhi, &b_jtSubJetPhi);
    fChain->SetBranchAddress("jtSubJetM", &jtSubJetM, &b_jtSubJetM);
+   fChain->SetBranchAddress("jtConstituentsId", &jtConstituentsId, &b_jtConstituentsId);
+   fChain->SetBranchAddress("jtConstituentsE", &jtConstituentsE, &b_jtConstituentsE);
+   fChain->SetBranchAddress("jtConstituentsPt", &jtConstituentsPt, &b_jtConstituentsPt);
+   fChain->SetBranchAddress("jtConstituentsEta", &jtConstituentsEta, &b_jtConstituentsEta);
+   fChain->SetBranchAddress("jtConstituentsPhi", &jtConstituentsPhi, &b_jtConstituentsPhi);
+   fChain->SetBranchAddress("jtConstituentsM", &jtConstituentsM, &b_jtConstituentsM);
+   fChain->SetBranchAddress("jtSDConstituentsId", &jtSDConstituentsId, &b_jtSDConstituentsId);
+   fChain->SetBranchAddress("jtSDConstituentsE", &jtSDConstituentsE, &b_jtSDConstituentsE);
+   fChain->SetBranchAddress("jtSDConstituentsPt", &jtSDConstituentsPt, &b_jtSDConstituentsPt);
+   fChain->SetBranchAddress("jtSDConstituentsEta", &jtSDConstituentsEta, &b_jtSDConstituentsEta);
+   fChain->SetBranchAddress("jtSDConstituentsPhi", &jtSDConstituentsPhi, &b_jtSDConstituentsPhi);
+   fChain->SetBranchAddress("jtSDConstituentsM", &jtSDConstituentsM, &b_jtSDConstituentsM);
    fChain->SetBranchAddress("discr_jetID_cuts", discr_jetID_cuts, &b_discr_jetID_cuts);
    fChain->SetBranchAddress("discr_jetID_bdt", discr_jetID_bdt, &b_discr_jetID_bdt);
    fChain->SetBranchAddress("discr_fr01", discr_fr01, &b_discr_fr01);
@@ -505,6 +1114,76 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    fChain->SetBranchAddress("refarea", refarea, &b_refarea);
    fChain->SetBranchAddress("bProdCode", &bProdCode, &b_bProdCode);
    fChain->SetBranchAddress("cProdCode", &cProdCode, &b_cProdCode);
+   fChain->SetBranchAddress("refnCands", refnCands, &b_refnCands);
+   fChain->SetBranchAddress("refnChCands", refnChCands, &b_refnChCands);
+   fChain->SetBranchAddress("refnNeCands", refnNeCands, &b_refnNeCands);
+   fChain->SetBranchAddress("refchargedSumConst", refchargedSumConst, &b_refchargedSumConst);
+   fChain->SetBranchAddress("refchargedNConst", refchargedNConst, &b_refchargedNConst);
+   fChain->SetBranchAddress("refeSumConst", refeSumConst, &b_refeSumConst);
+   fChain->SetBranchAddress("refeNConst", refeNConst, &b_refeNConst);
+   fChain->SetBranchAddress("refmuSumConst", refmuSumConst, &b_refmuSumConst);
+   fChain->SetBranchAddress("refmuNConst", refmuNConst, &b_refmuNConst);
+   fChain->SetBranchAddress("refphotonSumConst", refphotonSumConst, &b_refphotonSumConst);
+   fChain->SetBranchAddress("refphotonNConst", refphotonNConst, &b_refphotonNConst);
+   fChain->SetBranchAddress("refneutralSumConst", refneutralSumConst, &b_refneutralSumConst);
+   fChain->SetBranchAddress("refneutralNConst", refneutralNConst, &b_refneutralNConst);
+   fChain->SetBranchAddress("refhfhadSumConst", refhfhadSumConst, &b_refhfhadSumConst);
+   fChain->SetBranchAddress("refhfhadNConst", refhfhadNConst, &b_refhfhadNConst);
+   fChain->SetBranchAddress("refhfemSumConst", refhfemSumConst, &b_refhfemSumConst);
+   fChain->SetBranchAddress("refhfemNConst", refhfemNConst, &b_refhfemNConst);
+   fChain->SetBranchAddress("refMByPt", refMByPt, &b_refMByPt);
+   fChain->SetBranchAddress("refRMSCand", refRMSCand, &b_refRMSCand);
+   fChain->SetBranchAddress("refAxis1", refAxis1, &b_refAxis1);
+   fChain->SetBranchAddress("refAxis2", refAxis2, &b_refAxis2);
+   fChain->SetBranchAddress("refSigma", refSigma, &b_refSigma);
+   fChain->SetBranchAddress("refR", refR, &b_refR);
+   fChain->SetBranchAddress("refpTD", refpTD, &b_refpTD);
+   fChain->SetBranchAddress("refpull", refpull, &b_refpull);
+   fChain->SetBranchAddress("refrm0p5", refrm0p5, &b_refrm0p5);
+   fChain->SetBranchAddress("refrm1", refrm1, &b_refrm1);
+   fChain->SetBranchAddress("refrm2", refrm2, &b_refrm2);
+   fChain->SetBranchAddress("refrm3", refrm3, &b_refrm3);
+   fChain->SetBranchAddress("refSDm", refSDm, &b_refSDm);
+   fChain->SetBranchAddress("refSDpt", refSDpt, &b_refSDpt);
+   fChain->SetBranchAddress("refSDeta", refSDeta, &b_refSDeta);
+   fChain->SetBranchAddress("refSDphi", refSDphi, &b_refSDphi);
+   fChain->SetBranchAddress("refSDptFrac", refSDptFrac, &b_refSDptFrac);
+   fChain->SetBranchAddress("refSDrm0p5", refSDrm0p5, &b_refSDrm0p5);
+   fChain->SetBranchAddress("refSDrm1", refSDrm1, &b_refSDrm1);
+   fChain->SetBranchAddress("refSDrm2", refSDrm2, &b_refSDrm2);
+   fChain->SetBranchAddress("refSDrm3", refSDrm3, &b_refSDrm3);
+   fChain->SetBranchAddress("refTbeta20p2", refTbeta20p2, &b_refTbeta20p2);
+   fChain->SetBranchAddress("refTbeta20p3", refTbeta20p3, &b_refTbeta20p3);
+   fChain->SetBranchAddress("refTbeta20p4", refTbeta20p4, &b_refTbeta20p4);
+   fChain->SetBranchAddress("refTbeta20p5", refTbeta20p5, &b_refTbeta20p5);
+   fChain->SetBranchAddress("refTbeta30p2", refTbeta30p2, &b_refTbeta30p2);
+   fChain->SetBranchAddress("refTbeta30p3", refTbeta30p3, &b_refTbeta30p3);
+   fChain->SetBranchAddress("refTbeta30p4", refTbeta30p4, &b_refTbeta30p4);
+   fChain->SetBranchAddress("refTbeta30p5", refTbeta30p5, &b_refTbeta30p5);
+   fChain->SetBranchAddress("refCbeta20p2", refCbeta20p2, &b_refCbeta20p2);
+   fChain->SetBranchAddress("refCbeta20p3", refCbeta20p3, &b_refCbeta20p3);
+   fChain->SetBranchAddress("refCbeta20p4", refCbeta20p4, &b_refCbeta20p4);
+   fChain->SetBranchAddress("refCbeta20p5", refCbeta20p5, &b_refCbeta20p5);
+   fChain->SetBranchAddress("refZ11", refZ11, &b_refZ11);
+   fChain->SetBranchAddress("refZ20", refZ20, &b_refZ20);
+   fChain->SetBranchAddress("refZ22", refZ22, &b_refZ22);
+   fChain->SetBranchAddress("refZ31", refZ31, &b_refZ31);
+   fChain->SetBranchAddress("refZ33", refZ33, &b_refZ33);
+   fChain->SetBranchAddress("refZ40", refZ40, &b_refZ40);
+   fChain->SetBranchAddress("refZ42", refZ42, &b_refZ42);
+   fChain->SetBranchAddress("refZ44", refZ44, &b_refZ44);
+   fChain->SetBranchAddress("refZ51", refZ51, &b_refZ51);
+   fChain->SetBranchAddress("refZ53", refZ53, &b_refZ53);
+   fChain->SetBranchAddress("refZ55", refZ55, &b_refZ55);
+   fChain->SetBranchAddress("refPhi1", refPhi1, &b_refPhi1);
+   fChain->SetBranchAddress("refPhi2", refPhi2, &b_refPhi2);
+   fChain->SetBranchAddress("refPhi3", refPhi3, &b_refPhi3);
+   fChain->SetBranchAddress("refPhi4", refPhi4, &b_refPhi4);
+   fChain->SetBranchAddress("refPhi5", refPhi5, &b_refPhi5);
+   fChain->SetBranchAddress("refPhi6", refPhi6, &b_refPhi6);
+   fChain->SetBranchAddress("refPhi7", refPhi7, &b_refPhi7);
+   fChain->SetBranchAddress("refSkx", refSkx, &b_refSkx);
+   fChain->SetBranchAddress("refSky", refSky, &b_refSky);
    fChain->SetBranchAddress("reftau1", reftau1, &b_reftau1);
    fChain->SetBranchAddress("reftau2", reftau2, &b_reftau2);
    fChain->SetBranchAddress("reftau3", reftau3, &b_reftau3);
@@ -522,6 +1201,18 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    fChain->SetBranchAddress("refSubJetEta", &refSubJetEta, &b_refSubJetEta);
    fChain->SetBranchAddress("refSubJetPhi", &refSubJetPhi, &b_refSubJetPhi);
    fChain->SetBranchAddress("refSubJetM", &refSubJetM, &b_refSubJetM);
+   fChain->SetBranchAddress("refConstituentsId", &refConstituentsId, &b_refConstituentsId);
+   fChain->SetBranchAddress("refConstituentsE", &refConstituentsE, &b_refConstituentsE);
+   fChain->SetBranchAddress("refConstituentsPt", &refConstituentsPt, &b_refConstituentsPt);
+   fChain->SetBranchAddress("refConstituentsEta", &refConstituentsEta, &b_refConstituentsEta);
+   fChain->SetBranchAddress("refConstituentsPhi", &refConstituentsPhi, &b_refConstituentsPhi);
+   fChain->SetBranchAddress("refConstituentsM", &refConstituentsM, &b_refConstituentsM);
+   fChain->SetBranchAddress("refSDConstituentsId", &refSDConstituentsId, &b_refSDConstituentsId);
+   fChain->SetBranchAddress("refSDConstituentsE", &refSDConstituentsE, &b_refSDConstituentsE);
+   fChain->SetBranchAddress("refSDConstituentsPt", &refSDConstituentsPt, &b_refSDConstituentsPt);
+   fChain->SetBranchAddress("refSDConstituentsEta", &refSDConstituentsEta, &b_refSDConstituentsEta);
+   fChain->SetBranchAddress("refSDConstituentsPhi", &refSDConstituentsPhi, &b_refSDConstituentsPhi);
+   fChain->SetBranchAddress("refSDConstituentsM", &refSDConstituentsM, &b_refSDConstituentsM);
    fChain->SetBranchAddress("genChargedSum", genChargedSum, &b_genChargedSum);
    fChain->SetBranchAddress("genHardSum", genHardSum, &b_genHardSum);
    fChain->SetBranchAddress("signalChargedSum", signalChargedSum, &b_signalChargedSum);
@@ -539,6 +1230,75 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    fChain->SetBranchAddress("genm", genm, &b_genm);
    fChain->SetBranchAddress("gendphijt", gendphijt, &b_gendphijt);
    fChain->SetBranchAddress("gendrjt", gendrjt, &b_gendrjt);
+   fChain->SetBranchAddress("gennCands", gennCands, &b_gennCands);
+   fChain->SetBranchAddress("gennChCands", gennChCands, &b_gennChCands);
+   fChain->SetBranchAddress("gennNeCands", gennNeCands, &b_gennNeCands);
+   fChain->SetBranchAddress("genchargedNConst", genchargedNConst, &b_genchargedNConst);
+   fChain->SetBranchAddress("geneSumConst", geneSumConst, &b_geneSumConst);
+   fChain->SetBranchAddress("geneNConst", geneNConst, &b_geneNConst);
+   fChain->SetBranchAddress("genmuSumConst", genmuSumConst, &b_genmuSumConst);
+   fChain->SetBranchAddress("genmuNConst", genmuNConst, &b_genmuNConst);
+   fChain->SetBranchAddress("genphotonSumConst", genphotonSumConst, &b_genphotonSumConst);
+   fChain->SetBranchAddress("genphotonNConst", genphotonNConst, &b_genphotonNConst);
+   fChain->SetBranchAddress("genneutralSumConst", genneutralSumConst, &b_genneutralSumConst);
+   fChain->SetBranchAddress("genneutralNConst", genneutralNConst, &b_genneutralNConst);
+   fChain->SetBranchAddress("genhfhadSumConst", genhfhadSumConst, &b_genhfhadSumConst);
+   fChain->SetBranchAddress("genhfhadNConst", genhfhadNConst, &b_genhfhadNConst);
+   fChain->SetBranchAddress("genhfemSumConst", genhfemSumConst, &b_genhfemSumConst);
+   fChain->SetBranchAddress("genhfemNConst", genhfemNConst, &b_genhfemNConst);
+   fChain->SetBranchAddress("genMByPt", genMByPt, &b_genMByPt);
+   fChain->SetBranchAddress("genRMSCand", genRMSCand, &b_genRMSCand);
+   fChain->SetBranchAddress("genAxis1", genAxis1, &b_genAxis1);
+   fChain->SetBranchAddress("genAxis2", genAxis2, &b_genAxis2);
+   fChain->SetBranchAddress("genSigma", genSigma, &b_genSigma);
+   fChain->SetBranchAddress("genR", genR, &b_genR);
+   fChain->SetBranchAddress("genpTD", genpTD, &b_genpTD);
+   fChain->SetBranchAddress("genpull", genpull, &b_genpull);
+   fChain->SetBranchAddress("genrm0p5", genrm0p5, &b_genrm0p5);
+   fChain->SetBranchAddress("genrm1", genrm1, &b_genrm1);
+   fChain->SetBranchAddress("genrm2", genrm2, &b_genrm2);
+   fChain->SetBranchAddress("genrm3", genrm3, &b_genrm3);
+   fChain->SetBranchAddress("genSDm", genSDm, &b_genSDm);
+   fChain->SetBranchAddress("genSDpt", genSDpt, &b_genSDpt);
+   fChain->SetBranchAddress("genSDeta", genSDeta, &b_genSDeta);
+   fChain->SetBranchAddress("genSDphi", genSDphi, &b_genSDphi);
+   fChain->SetBranchAddress("genSDptFrac", genSDptFrac, &b_genSDptFrac);
+   fChain->SetBranchAddress("genSDrm0p5", genSDrm0p5, &b_genSDrm0p5);
+   fChain->SetBranchAddress("genSDrm1", genSDrm1, &b_genSDrm1);
+   fChain->SetBranchAddress("genSDrm2", genSDrm2, &b_genSDrm2);
+   fChain->SetBranchAddress("genSDrm3", genSDrm3, &b_genSDrm3);
+   fChain->SetBranchAddress("genTbeta20p2", genTbeta20p2, &b_genTbeta20p2);
+   fChain->SetBranchAddress("genTbeta20p3", genTbeta20p3, &b_genTbeta20p3);
+   fChain->SetBranchAddress("genTbeta20p4", genTbeta20p4, &b_genTbeta20p4);
+   fChain->SetBranchAddress("genTbeta20p5", genTbeta20p5, &b_genTbeta20p5);
+   fChain->SetBranchAddress("genTbeta30p2", genTbeta30p2, &b_genTbeta30p2);
+   fChain->SetBranchAddress("genTbeta30p3", genTbeta30p3, &b_genTbeta30p3);
+   fChain->SetBranchAddress("genTbeta30p4", genTbeta30p4, &b_genTbeta30p4);
+   fChain->SetBranchAddress("genTbeta30p5", genTbeta30p5, &b_genTbeta30p5);
+   fChain->SetBranchAddress("genCbeta20p2", genCbeta20p2, &b_genCbeta20p2);
+   fChain->SetBranchAddress("genCbeta20p3", genCbeta20p3, &b_genCbeta20p3);
+   fChain->SetBranchAddress("genCbeta20p4", genCbeta20p4, &b_genCbeta20p4);
+   fChain->SetBranchAddress("genCbeta20p5", genCbeta20p5, &b_genCbeta20p5);
+   fChain->SetBranchAddress("genZ11", genZ11, &b_genZ11);
+   fChain->SetBranchAddress("genZ20", genZ20, &b_genZ20);
+   fChain->SetBranchAddress("genZ22", genZ22, &b_genZ22);
+   fChain->SetBranchAddress("genZ31", genZ31, &b_genZ31);
+   fChain->SetBranchAddress("genZ33", genZ33, &b_genZ33);
+   fChain->SetBranchAddress("genZ40", genZ40, &b_genZ40);
+   fChain->SetBranchAddress("genZ42", genZ42, &b_genZ42);
+   fChain->SetBranchAddress("genZ44", genZ44, &b_genZ44);
+   fChain->SetBranchAddress("genZ51", genZ51, &b_genZ51);
+   fChain->SetBranchAddress("genZ53", genZ53, &b_genZ53);
+   fChain->SetBranchAddress("genZ55", genZ55, &b_genZ55);
+   fChain->SetBranchAddress("genPhi1", genPhi1, &b_genPhi1);
+   fChain->SetBranchAddress("genPhi2", genPhi2, &b_genPhi2);
+   fChain->SetBranchAddress("genPhi3", genPhi3, &b_genPhi3);
+   fChain->SetBranchAddress("genPhi4", genPhi4, &b_genPhi4);
+   fChain->SetBranchAddress("genPhi5", genPhi5, &b_genPhi5);
+   fChain->SetBranchAddress("genPhi6", genPhi6, &b_genPhi6);
+   fChain->SetBranchAddress("genPhi7", genPhi7, &b_genPhi7);
+   fChain->SetBranchAddress("genSkx", genSkx, &b_genSkx);
+   fChain->SetBranchAddress("genSky", genSky, &b_genSky);
    fChain->SetBranchAddress("genptG", genptG, &b_genptG);
    fChain->SetBranchAddress("genetaG", genetaG, &b_genetaG);
    fChain->SetBranchAddress("genphiG", genphiG, &b_genphiG);
@@ -547,6 +1307,18 @@ void akSoftDrop4PFJetClass::Init(TTree *tree)
    fChain->SetBranchAddress("genSubJetEta", &genSubJetEta, &b_genSubJetEta);
    fChain->SetBranchAddress("genSubJetPhi", &genSubJetPhi, &b_genSubJetPhi);
    fChain->SetBranchAddress("genSubJetM", &genSubJetM, &b_genSubJetM);
+   fChain->SetBranchAddress("genConstituentsId", &genConstituentsId, &b_genConstituentsId);
+   fChain->SetBranchAddress("genConstituentsE", &genConstituentsE, &b_genConstituentsE);
+   fChain->SetBranchAddress("genConstituentsPt", &genConstituentsPt, &b_genConstituentsPt);
+   fChain->SetBranchAddress("genConstituentsEta", &genConstituentsEta, &b_genConstituentsEta);
+   fChain->SetBranchAddress("genConstituentsPhi", &genConstituentsPhi, &b_genConstituentsPhi);
+   fChain->SetBranchAddress("genConstituentsM", &genConstituentsM, &b_genConstituentsM);
+   fChain->SetBranchAddress("genSDConstituentsId", &genSDConstituentsId, &b_genSDConstituentsId);
+   fChain->SetBranchAddress("genSDConstituentsE", &genSDConstituentsE, &b_genSDConstituentsE);
+   fChain->SetBranchAddress("genSDConstituentsPt", &genSDConstituentsPt, &b_genSDConstituentsPt);
+   fChain->SetBranchAddress("genSDConstituentsEta", &genSDConstituentsEta, &b_genSDConstituentsEta);
+   fChain->SetBranchAddress("genSDConstituentsPhi", &genSDConstituentsPhi, &b_genSDConstituentsPhi);
+   fChain->SetBranchAddress("genSDConstituentsM", &genSDConstituentsM, &b_genSDConstituentsM);
    fChain->SetBranchAddress("gensubid", gensubid, &b_gensubid);
    Notify();
 }

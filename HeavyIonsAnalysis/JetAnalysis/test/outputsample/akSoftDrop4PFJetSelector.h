@@ -13,7 +13,7 @@
 #include <TFile.h>
 #include <TSelector.h>
 #include <TH1D.h>
-
+#include <TCut.h>
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
@@ -24,6 +24,22 @@
 using namespace std;
 
 const int MAX_NJetS = 500;
+
+TCanvas c_test(TH1D*);
+
+int testfunction(int inputInt=5, int in2=2, int in3=3);
+/*int plotCompare_fun(TTree *tjet, int nbin, double binLow, double binHigh,
+      TCut CutCommon, TCut Cut1, TCut Cut2, TCut Cut3,
+      TString plotVariable, TString plotTitle,TString plotXTitle,
+      TString type1Title, TString type2Title, TString type3Title);
+*/
+int plotCompare_fun(TTree *tjet, int nbin=50, double binLow=0, double binHigh=0.5,
+      TCut CutCommon="jtpt>100&&nSubJet>=2", TCut Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)", TCut Cut2="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1", TCut Cut3="abs(refparton_flavorForB)!=5",
+      TString add_savename="",
+			TString plotVariable="jtSubZg", TString plotTitle="Sub-Jet pt2/pt2+pt1",TString plotXTitle="Zg",
+      TString type1Title="GSP-B", TString type2Title="FCR-B", TString type3Title="Non B");
+
+
 
 class akSoftDrop4PFJetSelector : public TSelector {
 public :
@@ -40,6 +56,64 @@ public :
 
 	Long64_t fProcessed=0;
 
+// write variables
+   Float_t         rawpt_;   //[nref]
+   Float_t         jtpt_;   //[nref]
+   Float_t         jteta_;   //[nref]
+   Float_t         jty_;   //[nref]
+   Float_t         jtphi_;   //[nref]
+
+	 Float_t         nSubJet_;
+	 Float_t         jtSubJetPt1_;
+   Float_t         jtSubJetEta1_;
+   Float_t         jtSubJetPhi1_;
+   Float_t         jtSubJetM1_;
+   Float_t         jtSubJetPt2_;
+   Float_t         jtSubJetEta2_;
+   Float_t         jtSubJetPhi2_;
+   Float_t         jtSubJetM2_;
+
+	 Float_t         jtSubJetPt2ov1_;
+	 Float_t         jtSubZg_;
+	 Float_t         jtSubJetdR12_;
+
+   Float_t         discr_ssvHighEff_;   //[nref]
+   Float_t         discr_ssvHighPur_;   //[nref]
+   Float_t         discr_csvV1_;   //[nref]
+   Float_t         discr_csvV2_;   //[nref]
+
+
+	// refjet
+	 Float_t         nrefSubJet_;
+   Float_t         refSubJetPt1_;
+   Float_t         refSubJetEta1_;
+   Float_t         refSubJetPhi1_;
+   Float_t         refSubJetM1_;
+   Float_t         refSubJetPt2_;
+   Float_t         refSubJetEta2_;
+   Float_t         refSubJetPhi2_;
+   Float_t         refSubJetM2_;
+
+   Float_t         refSubJetPt2ov1_;
+   Float_t         refSubZg_;
+   Float_t         refSubJetdR12_;
+
+
+  //svt
+   Float_t         svtxm_;   //[nref]
+   Float_t         svtxpt_;   //[nref]
+   Float_t         svtxmcorr_;   //[nref]
+
+   Float_t         pthat_;
+   Float_t         refpt_;   //[nref]
+   Float_t         refeta_;   //[nref]
+   Float_t         refy_;   //[nref]
+   Float_t         refphi_;   //[nref]
+   Int_t           bProdCode_;
+   Int_t           cProdCode_;
+   Int_t           refparton_flavor_;   //[nref]
+   Int_t           refparton_flavorForB_;   //[nref]
+   Int_t           refparton_flavorProcess_;   //[nref]
 
 
 
