@@ -543,6 +543,40 @@ private:
     float refhfemSumConst   [MAXJETS];
     int   refhfemNConst     [MAXJETS];
 
+		// for GSP to bb identify for a event, not for a jet
+		
+//		int		refGSP_Channel;	
+		float	refGSP_gpt [MAXJETS];
+    float refGSP_geta [MAXJETS];
+    float refGSP_gphi [MAXJETS];
+    float refGSP_gidx [MAXJETS];
+    float refGSP_b1pt [MAXJETS];
+    float refGSP_b1eta [MAXJETS];
+    float refGSP_b1phi [MAXJETS];
+    float refGSP_b2pt [MAXJETS];
+    float refGSP_b2eta [MAXJETS];
+    float refGSP_b2phi [MAXJETS];
+
+    // int		refGSP_b1Match_jtIdx [MAXJETS];
+    float refGSP_b1Match_jtdR [MAXJETS];
+		// float refGSP_b1Match_Subjt1dR [MAXJETS];		
+		// float refGSP_b1Match_Subjt2dR [MAXJETS];
+
+    // int   refGSP_b2Match_jtIdx [MAXJETS];
+    float refGSP_b2Match_jtdR [MAXJETS];
+    // float refGSP_b1Match_Subjt1dR [MAXJETS];
+    // float refGSP_b1Match_Subjt2dR [MAXJETS];
+
+    float refGSP_bbdR [MAXJETS];
+    // float refGSP_bbdxy [MAXJETS];
+    // float refGSP_bbdz [MAXJETS];
+    float refGSP_bbzg [MAXJETS];
+
+		int refGSP_SubJtMatched [MAXJETS];
+
+
+		// end GSP to bb identify
+
     float refMByPt[MAXJETS];
     float refRMSCand[MAXJETS];
     float refAxis1[MAXJETS];

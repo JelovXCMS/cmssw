@@ -67,10 +67,10 @@ highPurityTracks = cms.EDFilter("TrackSelector",
 jetSequences = cms.Sequence(
     myPartons +
     genParticlesForJets +
-    ak3GenJets +
+#    ak3GenJets +
     ak4GenJets +
     ak5GenJets +
-    ak3PFJets +
+#    ak3PFJets +
     ak5PFJets +
     akSoftDrop4PFJets +
     akSoftDrop5PFJets +
@@ -79,7 +79,7 @@ jetSequences = cms.Sequence(
     akSoftDrop4GenJets +
     akSoftDrop5GenJets +
     highPurityTracks +
-    ak3PFJetSequence +
+#    ak3PFJetSequence +
     ak4PFJetSequence +
     ak5PFJetSequence +
     ak4CaloJetSequence +

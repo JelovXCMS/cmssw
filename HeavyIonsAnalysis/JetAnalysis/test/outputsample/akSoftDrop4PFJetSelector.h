@@ -27,6 +27,7 @@ const int MAX_NJetS = 500;
 
 TCanvas c_test(TH1D*);
 
+float delta_Phi(float phi1, float phi2);
 int testfunction(int inputInt=5, int in2=2, int in3=3);
 /*int plotCompare_fun(TTree *tjet, int nbin, double binLow, double binHigh,
       TCut CutCommon, TCut Cut1, TCut Cut2, TCut Cut3,
@@ -115,6 +116,29 @@ public :
    Int_t           refparton_flavorForB_;   //[nref]
    Int_t           refparton_flavorProcess_;   //[nref]
 
+	// gsp tag
+   Float_t         refGSP_gpt_;   //[nref]
+   Float_t         refGSP_geta_;   //[nref]
+   Float_t         refGSP_gphi_;   //[nref]
+   Float_t         refGSP_gidx_;   //[nref]
+   Float_t         refGSP_b1pt_;   //[nref]
+   Float_t         refGSP_b1eta_;   //[nref]
+   Float_t         refGSP_b1phi_;   //[nref]
+   Float_t         refGSP_b2pt_;   //[nref]
+   Float_t         refGSP_b2eta_;   //[nref]
+   Float_t         refGSP_b2phi_;   //[nref]
+   Float_t         refGSP_b1Match_jtdR_;   //[nref]
+   Float_t         refGSP_b2Match_jtdR_;   //[nref]
+   Float_t         refGSP_bbdR_;   //[nref]
+   Float_t         refGSP_bbzg_;   //[nref]
+   Int_t           refGSP_SubJtMatched_;   //[nref]
+
+	 Float_t	       refGSP_b1Match_subjt1dR_;
+   Float_t         refGSP_b1Match_subjt2dR_;
+   Float_t         refGSP_b2Match_subjt1dR_;
+   Float_t         refGSP_b2Match_subjt2dR_;
+	 Int_t           refGSP_bbSubJtMatchStatus_; // 0 for not, 1 for b1-jt1 b2-jt2, 2 for b1-jt2, b2-jt1
+  
 
 
 
@@ -138,6 +162,7 @@ public :
    Float_t         jtpu[MAX_NJetS];   //[nref]
    Float_t         jtm[MAX_NJetS];   //[nref]
    Float_t         jtarea[MAX_NJetS];   //[nref]
+/*
    Int_t           jtnCands[MAX_NJetS];   //[nref]
    Int_t           jtnChCands[MAX_NJetS];   //[nref]
    Int_t           jtnNeCands[MAX_NJetS];   //[nref]
@@ -208,6 +233,8 @@ public :
    Float_t         jtPhi7[MAX_NJetS];   //[nref]
    Float_t         jtSkx[MAX_NJetS];   //[nref]
    Float_t         jtSky[MAX_NJetS];   //[nref]
+*/
+
    Float_t         jtPfCHF[MAX_NJetS];   //[nref]
    Float_t         jtPfNHF[MAX_NJetS];   //[nref]
    Float_t         jtPfCEF[MAX_NJetS];   //[nref]
@@ -225,6 +252,7 @@ public :
    vector<vector<float> > *jtSubJetEta;
    vector<vector<float> > *jtSubJetPhi;
    vector<vector<float> > *jtSubJetM;
+/*
    vector<vector<int> > *jtConstituentsId;
    vector<vector<float> > *jtConstituentsE;
    vector<vector<float> > *jtConstituentsPt;
@@ -237,6 +265,7 @@ public :
    vector<vector<float> > *jtSDConstituentsEta;
    vector<vector<float> > *jtSDConstituentsPhi;
    vector<vector<float> > *jtSDConstituentsM;
+*/
    Float_t         discr_jetID_cuts[MAX_NJetS];   //[nref]
    Float_t         discr_jetID_bdt[MAX_NJetS];   //[nref]
    Float_t         discr_fr01[MAX_NJetS];   //[nref]
@@ -312,6 +341,7 @@ public :
    Float_t         refarea[MAX_NJetS];   //[nref]
    Int_t           bProdCode;
    Int_t           cProdCode;
+/*
    Int_t           refnCands[MAX_NJetS];   //[nref]
    Int_t           refnChCands[MAX_NJetS];   //[nref]
    Int_t           refnNeCands[MAX_NJetS];   //[nref]
@@ -382,6 +412,26 @@ public :
    Float_t         refPhi7[MAX_NJetS];   //[nref]
    Float_t         refSkx[MAX_NJetS];   //[nref]
    Float_t         refSky[MAX_NJetS];   //[nref]
+ */
+
+   Float_t         refGSP_gpt[MAX_NJetS];   //[nref]
+   Float_t         refGSP_geta[MAX_NJetS];   //[nref]
+   Float_t         refGSP_gphi[MAX_NJetS];   //[nref]
+   Float_t         refGSP_gidx[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b1pt[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b1eta[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b1phi[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b2pt[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b2eta[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b2phi[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b1Match_jtdR[MAX_NJetS];   //[nref]
+   Float_t         refGSP_b2Match_jtdR[MAX_NJetS];   //[nref]
+   Float_t         refGSP_bbdR[MAX_NJetS];   //[nref]
+   Float_t         refGSP_bbzg[MAX_NJetS];   //[nref]
+   Int_t           refGSP_SubJtMatched[MAX_NJetS];   //[nref]
+
+
+
    Float_t         reftau1[MAX_NJetS];   //[nref]
    Float_t         reftau2[MAX_NJetS];   //[nref]
    Float_t         reftau3[MAX_NJetS];   //[nref]
@@ -399,6 +449,7 @@ public :
    vector<vector<float> > *refSubJetEta;
    vector<vector<float> > *refSubJetPhi;
    vector<vector<float> > *refSubJetM;
+ /*
    vector<vector<int> > *refConstituentsId;
    vector<vector<float> > *refConstituentsE;
    vector<vector<float> > *refConstituentsPt;
@@ -411,6 +462,7 @@ public :
    vector<vector<float> > *refSDConstituentsEta;
    vector<vector<float> > *refSDConstituentsPhi;
    vector<vector<float> > *refSDConstituentsM;
+*/
    Float_t         genChargedSum[MAX_NJetS];   //[nref]
    Float_t         genHardSum[MAX_NJetS];   //[nref]
    Float_t         signalChargedSum[MAX_NJetS];   //[nref]
@@ -428,6 +480,7 @@ public :
    Float_t         genm[MAX_NJetS];   //[ngen]
    Float_t         gendphijt[MAX_NJetS];   //[ngen]
    Float_t         gendrjt[MAX_NJetS];   //[ngen]
+/*
    Int_t           gennCands[MAX_NJetS];   //[ngen]
    Int_t           gennChCands[MAX_NJetS];   //[ngen]
    Int_t           gennNeCands[MAX_NJetS];   //[ngen]
@@ -497,6 +550,7 @@ public :
    Float_t         genPhi7[MAX_NJetS];   //[ngen]
    Float_t         genSkx[MAX_NJetS];   //[ngen]
    Float_t         genSky[MAX_NJetS];   //[ngen]
+*/
    Float_t         genptG[MAX_NJetS];   //[ngen]
    Float_t         genetaG[MAX_NJetS];   //[ngen]
    Float_t         genphiG[MAX_NJetS];   //[ngen]
@@ -505,6 +559,7 @@ public :
    vector<vector<float> > *genSubJetEta;
    vector<vector<float> > *genSubJetPhi;
    vector<vector<float> > *genSubJetM;
+/*
    vector<vector<int> > *genConstituentsId;
    vector<vector<float> > *genConstituentsE;
    vector<vector<float> > *genConstituentsPt;
@@ -517,6 +572,7 @@ public :
    vector<vector<float> > *genSDConstituentsEta;
    vector<vector<float> > *genSDConstituentsPhi;
    vector<vector<float> > *genSDConstituentsM;
+*/
    Int_t           gensubid[MAX_NJetS];   //[ngen]
 
    // List of branches
@@ -531,7 +587,7 @@ public :
    TBranch        *b_jtpu;   //!
    TBranch        *b_jtm;   //!
    TBranch        *b_jtarea;   //!
-   TBranch        *b_jtnCands;   //!
+/*   TBranch        *b_jtnCands;   //!
    TBranch        *b_jtnChCands;   //!
    TBranch        *b_jtnNeCands;   //!
    TBranch        *b_jtchargedSumConst;   //!
@@ -600,7 +656,7 @@ public :
    TBranch        *b_jtPhi6;   //!
    TBranch        *b_jtPhi7;   //!
    TBranch        *b_jtSkx;   //!
-   TBranch        *b_jtSky;   //!
+   TBranch        *b_jtSky;  */ //! 
    TBranch        *b_jtPfCHF;   //!
    TBranch        *b_jtPfNHF;   //!
    TBranch        *b_jtPfCEF;   //!
@@ -618,7 +674,7 @@ public :
    TBranch        *b_jtSubJetEta;   //!
    TBranch        *b_jtSubJetPhi;   //!
    TBranch        *b_jtSubJetM;   //!
-   TBranch        *b_jtConstituentsId;   //!
+/*   TBranch        *b_jtConstituentsId;   //!
    TBranch        *b_jtConstituentsE;   //!
    TBranch        *b_jtConstituentsPt;   //!
    TBranch        *b_jtConstituentsEta;   //!
@@ -629,7 +685,7 @@ public :
    TBranch        *b_jtSDConstituentsPt;   //!
    TBranch        *b_jtSDConstituentsEta;   //!
    TBranch        *b_jtSDConstituentsPhi;   //!
-   TBranch        *b_jtSDConstituentsM;   //!
+   TBranch        *b_jtSDConstituentsM;  */ //!
    TBranch        *b_discr_jetID_cuts;   //!
    TBranch        *b_discr_jetID_bdt;   //!
    TBranch        *b_discr_fr01;   //!
@@ -705,7 +761,7 @@ public :
    TBranch        *b_refarea;   //!
    TBranch        *b_bProdCode;   //!
    TBranch        *b_cProdCode;   //!
-   TBranch        *b_refnCands;   //!
+/*   TBranch        *b_refnCands;   //!
    TBranch        *b_refnChCands;   //!
    TBranch        *b_refnNeCands;   //!
    TBranch        *b_refchargedSumConst;   //!
@@ -774,7 +830,7 @@ public :
    TBranch        *b_refPhi6;   //!
    TBranch        *b_refPhi7;   //!
    TBranch        *b_refSkx;   //!
-   TBranch        *b_refSky;   //!
+   TBranch        *b_refSky;  */ //!
    TBranch        *b_reftau1;   //!
    TBranch        *b_reftau2;   //!
    TBranch        *b_reftau3;   //!
@@ -792,7 +848,26 @@ public :
    TBranch        *b_refSubJetEta;   //!
    TBranch        *b_refSubJetPhi;   //!
    TBranch        *b_refSubJetM;   //!
-   TBranch        *b_refConstituentsId;   //!
+
+   TBranch        *b_refGSP_gpt;   //!
+   TBranch        *b_refGSP_geta;   //!
+   TBranch        *b_refGSP_gphi;   //!
+   TBranch        *b_refGSP_gidx;   //!
+   TBranch        *b_refGSP_b1pt;   //!
+   TBranch        *b_refGSP_b1eta;   //!
+   TBranch        *b_refGSP_b1phi;   //!
+   TBranch        *b_refGSP_b2pt;   //!
+   TBranch        *b_refGSP_b2eta;   //!
+   TBranch        *b_refGSP_b2phi;   //!
+   TBranch        *b_refGSP_b1Match_jtdR;   //!
+   TBranch        *b_refGSP_b2Match_jtdR;   //!
+   TBranch        *b_refGSP_bbdR;   //!
+   TBranch        *b_refGSP_bbzg;   //!
+   TBranch        *b_refGSP_SubJtMatched;   //!
+
+
+
+/*   TBranch        *b_refConstituentsId;   //!
    TBranch        *b_refConstituentsE;   //!
    TBranch        *b_refConstituentsPt;   //!
    TBranch        *b_refConstituentsEta;   //!
@@ -803,7 +878,7 @@ public :
    TBranch        *b_refSDConstituentsPt;   //!
    TBranch        *b_refSDConstituentsEta;   //!
    TBranch        *b_refSDConstituentsPhi;   //!
-   TBranch        *b_refSDConstituentsM;   //!
+   TBranch        *b_refSDConstituentsM;  */ //!
    TBranch        *b_genChargedSum;   //!
    TBranch        *b_genHardSum;   //!
    TBranch        *b_signalChargedSum;   //!
@@ -821,7 +896,7 @@ public :
    TBranch        *b_genm;   //!
    TBranch        *b_gendphijt;   //!
    TBranch        *b_gendrjt;   //!
-   TBranch        *b_gennCands;   //!
+/*   TBranch        *b_gennCands;   //!
    TBranch        *b_gennChCands;   //!
    TBranch        *b_gennNeCands;   //!
    TBranch        *b_genchargedNConst;   //!
@@ -889,7 +964,7 @@ public :
    TBranch        *b_genPhi6;   //!
    TBranch        *b_genPhi7;   //!
    TBranch        *b_genSkx;   //!
-   TBranch        *b_genSky;   //!
+   TBranch        *b_genSky;  */ //!
    TBranch        *b_genptG;   //!
    TBranch        *b_genetaG;   //!
    TBranch        *b_genphiG;   //!
@@ -898,7 +973,7 @@ public :
    TBranch        *b_genSubJetEta;   //!
    TBranch        *b_genSubJetPhi;   //!
    TBranch        *b_genSubJetM;   //!
-   TBranch        *b_genConstituentsId;   //!
+/*   TBranch        *b_genConstituentsId;   //!
    TBranch        *b_genConstituentsE;   //!
    TBranch        *b_genConstituentsPt;   //!
    TBranch        *b_genConstituentsEta;   //!
@@ -909,7 +984,7 @@ public :
    TBranch        *b_genSDConstituentsPt;   //!
    TBranch        *b_genSDConstituentsEta;   //!
    TBranch        *b_genSDConstituentsPhi;   //!
-   TBranch        *b_genSDConstituentsM;   //!
+   TBranch        *b_genSDConstituentsM; */  //!
    TBranch        *b_gensubid;   //!
 
    akSoftDrop4PFJetSelector(TTree * /*tree*/ =0) : fChain(0) { }
@@ -949,7 +1024,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    jtSubJetEta = 0;
    jtSubJetPhi = 0;
    jtSubJetM = 0;
-   jtConstituentsId = 0;
+/*   jtConstituentsId = 0;
    jtConstituentsE = 0;
    jtConstituentsPt = 0;
    jtConstituentsEta = 0;
@@ -960,12 +1035,12 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    jtSDConstituentsPt = 0;
    jtSDConstituentsEta = 0;
    jtSDConstituentsPhi = 0;
-   jtSDConstituentsM = 0;
+   jtSDConstituentsM = 0;*/
    refSubJetPt = 0;
    refSubJetEta = 0;
    refSubJetPhi = 0;
    refSubJetM = 0;
-   refConstituentsId = 0;
+/*   refConstituentsId = 0;
    refConstituentsE = 0;
    refConstituentsPt = 0;
    refConstituentsEta = 0;
@@ -976,12 +1051,12 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    refSDConstituentsPt = 0;
    refSDConstituentsEta = 0;
    refSDConstituentsPhi = 0;
-   refSDConstituentsM = 0;
+   refSDConstituentsM = 0;*/
    genSubJetPt = 0;
    genSubJetEta = 0;
    genSubJetPhi = 0;
    genSubJetM = 0;
-   genConstituentsId = 0;
+/*   genConstituentsId = 0;
    genConstituentsE = 0;
    genConstituentsPt = 0;
    genConstituentsEta = 0;
@@ -992,7 +1067,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    genSDConstituentsPt = 0;
    genSDConstituentsEta = 0;
    genSDConstituentsPhi = 0;
-   genSDConstituentsM = 0;
+   genSDConstituentsM = 0;*/
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -1009,7 +1084,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("jtpu", jtpu, &b_jtpu);
    fChain->SetBranchAddress("jtm", jtm, &b_jtm);
    fChain->SetBranchAddress("jtarea", jtarea, &b_jtarea);
-   fChain->SetBranchAddress("jtnCands", jtnCands, &b_jtnCands);
+/*   fChain->SetBranchAddress("jtnCands", jtnCands, &b_jtnCands);
    fChain->SetBranchAddress("jtnChCands", jtnChCands, &b_jtnChCands);
    fChain->SetBranchAddress("jtnNeCands", jtnNeCands, &b_jtnNeCands);
    fChain->SetBranchAddress("jtchargedSumConst", jtchargedSumConst, &b_jtchargedSumConst);
@@ -1078,7 +1153,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("jtPhi6", jtPhi6, &b_jtPhi6);
    fChain->SetBranchAddress("jtPhi7", jtPhi7, &b_jtPhi7);
    fChain->SetBranchAddress("jtSkx", jtSkx, &b_jtSkx);
-   fChain->SetBranchAddress("jtSky", jtSky, &b_jtSky);
+   fChain->SetBranchAddress("jtSky", jtSky, &b_jtSky); */
    fChain->SetBranchAddress("jtPfCHF", jtPfCHF, &b_jtPfCHF);
    fChain->SetBranchAddress("jtPfNHF", jtPfNHF, &b_jtPfNHF);
    fChain->SetBranchAddress("jtPfCEF", jtPfCEF, &b_jtPfCEF);
@@ -1096,7 +1171,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("jtSubJetEta", &jtSubJetEta, &b_jtSubJetEta);
    fChain->SetBranchAddress("jtSubJetPhi", &jtSubJetPhi, &b_jtSubJetPhi);
    fChain->SetBranchAddress("jtSubJetM", &jtSubJetM, &b_jtSubJetM);
-   fChain->SetBranchAddress("jtConstituentsId", &jtConstituentsId, &b_jtConstituentsId);
+/*   fChain->SetBranchAddress("jtConstituentsId", &jtConstituentsId, &b_jtConstituentsId);
    fChain->SetBranchAddress("jtConstituentsE", &jtConstituentsE, &b_jtConstituentsE);
    fChain->SetBranchAddress("jtConstituentsPt", &jtConstituentsPt, &b_jtConstituentsPt);
    fChain->SetBranchAddress("jtConstituentsEta", &jtConstituentsEta, &b_jtConstituentsEta);
@@ -1107,7 +1182,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("jtSDConstituentsPt", &jtSDConstituentsPt, &b_jtSDConstituentsPt);
    fChain->SetBranchAddress("jtSDConstituentsEta", &jtSDConstituentsEta, &b_jtSDConstituentsEta);
    fChain->SetBranchAddress("jtSDConstituentsPhi", &jtSDConstituentsPhi, &b_jtSDConstituentsPhi);
-   fChain->SetBranchAddress("jtSDConstituentsM", &jtSDConstituentsM, &b_jtSDConstituentsM);
+   fChain->SetBranchAddress("jtSDConstituentsM", &jtSDConstituentsM, &b_jtSDConstituentsM); */
    fChain->SetBranchAddress("discr_jetID_cuts", discr_jetID_cuts, &b_discr_jetID_cuts);
    fChain->SetBranchAddress("discr_jetID_bdt", discr_jetID_bdt, &b_discr_jetID_bdt);
    fChain->SetBranchAddress("discr_fr01", discr_fr01, &b_discr_fr01);
@@ -1183,7 +1258,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("refarea", refarea, &b_refarea);
    fChain->SetBranchAddress("bProdCode", &bProdCode, &b_bProdCode);
    fChain->SetBranchAddress("cProdCode", &cProdCode, &b_cProdCode);
-   fChain->SetBranchAddress("refnCands", refnCands, &b_refnCands);
+/*   fChain->SetBranchAddress("refnCands", refnCands, &b_refnCands);
    fChain->SetBranchAddress("refnChCands", refnChCands, &b_refnChCands);
    fChain->SetBranchAddress("refnNeCands", refnNeCands, &b_refnNeCands);
    fChain->SetBranchAddress("refchargedSumConst", refchargedSumConst, &b_refchargedSumConst);
@@ -1252,7 +1327,25 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("refPhi6", refPhi6, &b_refPhi6);
    fChain->SetBranchAddress("refPhi7", refPhi7, &b_refPhi7);
    fChain->SetBranchAddress("refSkx", refSkx, &b_refSkx);
-   fChain->SetBranchAddress("refSky", refSky, &b_refSky);
+   fChain->SetBranchAddress("refSky", refSky, &b_refSky); */
+
+   fChain->SetBranchAddress("refGSP_gpt", refGSP_gpt, &b_refGSP_gpt);
+   fChain->SetBranchAddress("refGSP_geta", refGSP_geta, &b_refGSP_geta);
+   fChain->SetBranchAddress("refGSP_gphi", refGSP_gphi, &b_refGSP_gphi);
+   fChain->SetBranchAddress("refGSP_gidx", refGSP_gidx, &b_refGSP_gidx);
+   fChain->SetBranchAddress("refGSP_b1pt", refGSP_b1pt, &b_refGSP_b1pt);
+   fChain->SetBranchAddress("refGSP_b1eta", refGSP_b1eta, &b_refGSP_b1eta);
+   fChain->SetBranchAddress("refGSP_b1phi", refGSP_b1phi, &b_refGSP_b1phi);
+   fChain->SetBranchAddress("refGSP_b2pt", refGSP_b2pt, &b_refGSP_b2pt);
+   fChain->SetBranchAddress("refGSP_b2eta", refGSP_b2eta, &b_refGSP_b2eta);
+   fChain->SetBranchAddress("refGSP_b2phi", refGSP_b2phi, &b_refGSP_b2phi);
+   fChain->SetBranchAddress("refGSP_b1Match_jtdR", refGSP_b1Match_jtdR, &b_refGSP_b1Match_jtdR);
+   fChain->SetBranchAddress("refGSP_b2Match_jtdR", refGSP_b2Match_jtdR, &b_refGSP_b2Match_jtdR);
+   fChain->SetBranchAddress("refGSP_bbdR", refGSP_bbdR, &b_refGSP_bbdR);
+   fChain->SetBranchAddress("refGSP_bbzg", refGSP_bbzg, &b_refGSP_bbzg);
+   fChain->SetBranchAddress("refGSP_SubJtMatched", refGSP_SubJtMatched, &b_refGSP_SubJtMatched);
+
+
    fChain->SetBranchAddress("reftau1", reftau1, &b_reftau1);
    fChain->SetBranchAddress("reftau2", reftau2, &b_reftau2);
    fChain->SetBranchAddress("reftau3", reftau3, &b_reftau3);
@@ -1270,7 +1363,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("refSubJetEta", &refSubJetEta, &b_refSubJetEta);
    fChain->SetBranchAddress("refSubJetPhi", &refSubJetPhi, &b_refSubJetPhi);
    fChain->SetBranchAddress("refSubJetM", &refSubJetM, &b_refSubJetM);
-   fChain->SetBranchAddress("refConstituentsId", &refConstituentsId, &b_refConstituentsId);
+/*   fChain->SetBranchAddress("refConstituentsId", &refConstituentsId, &b_refConstituentsId);
    fChain->SetBranchAddress("refConstituentsE", &refConstituentsE, &b_refConstituentsE);
    fChain->SetBranchAddress("refConstituentsPt", &refConstituentsPt, &b_refConstituentsPt);
    fChain->SetBranchAddress("refConstituentsEta", &refConstituentsEta, &b_refConstituentsEta);
@@ -1281,7 +1374,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("refSDConstituentsPt", &refSDConstituentsPt, &b_refSDConstituentsPt);
    fChain->SetBranchAddress("refSDConstituentsEta", &refSDConstituentsEta, &b_refSDConstituentsEta);
    fChain->SetBranchAddress("refSDConstituentsPhi", &refSDConstituentsPhi, &b_refSDConstituentsPhi);
-   fChain->SetBranchAddress("refSDConstituentsM", &refSDConstituentsM, &b_refSDConstituentsM);
+   fChain->SetBranchAddress("refSDConstituentsM", &refSDConstituentsM, &b_refSDConstituentsM); */
    fChain->SetBranchAddress("genChargedSum", genChargedSum, &b_genChargedSum);
    fChain->SetBranchAddress("genHardSum", genHardSum, &b_genHardSum);
    fChain->SetBranchAddress("signalChargedSum", signalChargedSum, &b_signalChargedSum);
@@ -1299,7 +1392,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("genm", genm, &b_genm);
    fChain->SetBranchAddress("gendphijt", gendphijt, &b_gendphijt);
    fChain->SetBranchAddress("gendrjt", gendrjt, &b_gendrjt);
-   fChain->SetBranchAddress("gennCands", gennCands, &b_gennCands);
+/*   fChain->SetBranchAddress("gennCands", gennCands, &b_gennCands);
    fChain->SetBranchAddress("gennChCands", gennChCands, &b_gennChCands);
    fChain->SetBranchAddress("gennNeCands", gennNeCands, &b_gennNeCands);
    fChain->SetBranchAddress("genchargedNConst", genchargedNConst, &b_genchargedNConst);
@@ -1367,7 +1460,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("genPhi6", genPhi6, &b_genPhi6);
    fChain->SetBranchAddress("genPhi7", genPhi7, &b_genPhi7);
    fChain->SetBranchAddress("genSkx", genSkx, &b_genSkx);
-   fChain->SetBranchAddress("genSky", genSky, &b_genSky);
+   fChain->SetBranchAddress("genSky", genSky, &b_genSky); */
    fChain->SetBranchAddress("genptG", genptG, &b_genptG);
    fChain->SetBranchAddress("genetaG", genetaG, &b_genetaG);
    fChain->SetBranchAddress("genphiG", genphiG, &b_genphiG);
@@ -1376,7 +1469,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("genSubJetEta", &genSubJetEta, &b_genSubJetEta);
    fChain->SetBranchAddress("genSubJetPhi", &genSubJetPhi, &b_genSubJetPhi);
    fChain->SetBranchAddress("genSubJetM", &genSubJetM, &b_genSubJetM);
-   fChain->SetBranchAddress("genConstituentsId", &genConstituentsId, &b_genConstituentsId);
+/*   fChain->SetBranchAddress("genConstituentsId", &genConstituentsId, &b_genConstituentsId);
    fChain->SetBranchAddress("genConstituentsE", &genConstituentsE, &b_genConstituentsE);
    fChain->SetBranchAddress("genConstituentsPt", &genConstituentsPt, &b_genConstituentsPt);
    fChain->SetBranchAddress("genConstituentsEta", &genConstituentsEta, &b_genConstituentsEta);
@@ -1387,7 +1480,7 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("genSDConstituentsPt", &genSDConstituentsPt, &b_genSDConstituentsPt);
    fChain->SetBranchAddress("genSDConstituentsEta", &genSDConstituentsEta, &b_genSDConstituentsEta);
    fChain->SetBranchAddress("genSDConstituentsPhi", &genSDConstituentsPhi, &b_genSDConstituentsPhi);
-   fChain->SetBranchAddress("genSDConstituentsM", &genSDConstituentsM, &b_genSDConstituentsM);
+   fChain->SetBranchAddress("genSDConstituentsM", &genSDConstituentsM, &b_genSDConstituentsM); */
    fChain->SetBranchAddress("gensubid", gensubid, &b_gensubid);
 }
 

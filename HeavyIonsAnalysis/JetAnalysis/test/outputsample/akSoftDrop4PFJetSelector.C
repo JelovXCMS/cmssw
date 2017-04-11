@@ -158,6 +158,28 @@ void akSoftDrop4PFJetSelector::SlaveBegin(TTree * /*tree*/)
 		 t_akSD4PFJet->Branch("genSubJetM", &genSubJetM_);
 		 */
 
+	t_akSD4PFJet->Branch("refGSP_gpt",                    &refGSP_gpt_);                 
+	t_akSD4PFJet->Branch("refGSP_geta",                   &refGSP_geta_);  
+	t_akSD4PFJet->Branch("refGSP_gphi",                   &refGSP_gphi_);  
+	t_akSD4PFJet->Branch("refGSP_gidx",                   &refGSP_gidx_);  
+	t_akSD4PFJet->Branch("refGSP_b1pt",                   &refGSP_b1pt_);  
+	t_akSD4PFJet->Branch("refGSP_b1eta",                  &refGSP_b1eta_); 
+	t_akSD4PFJet->Branch("refGSP_b1phi",                  &refGSP_b1phi_); 
+	t_akSD4PFJet->Branch("refGSP_b2pt",                   &refGSP_b2pt_);  
+	t_akSD4PFJet->Branch("refGSP_b2eta",                  &refGSP_b2eta_); 
+	t_akSD4PFJet->Branch("refGSP_b2phi",                  &refGSP_b2phi_); 
+	t_akSD4PFJet->Branch("refGSP_b1Match_jtdR",           &refGSP_b1Match_jtdR_);   
+	t_akSD4PFJet->Branch("refGSP_b2Match_jtdR",           &refGSP_b2Match_jtdR_);   
+	t_akSD4PFJet->Branch("refGSP_bbdR",                   &refGSP_bbdR_);   
+	t_akSD4PFJet->Branch("refGSP_bbzg",                   &refGSP_bbzg_);   
+	t_akSD4PFJet->Branch("refGSP_SubJtMatched",           &refGSP_SubJtMatched_);   
+	t_akSD4PFJet->Branch("refGSP_b1Match_subjt1dR",       &refGSP_b1Match_subjt1dR_); 
+	t_akSD4PFJet->Branch("refGSP_b1Match_subjt2dR",       &refGSP_b1Match_subjt2dR_); 
+	t_akSD4PFJet->Branch("refGSP_b2Match_subjt1dR",       &refGSP_b2Match_subjt1dR_); 
+	t_akSD4PFJet->Branch("refGSP_b2Match_subjt2dR",       &refGSP_b2Match_subjt2dR_); 
+	t_akSD4PFJet->Branch("refGSP_bbSubJtMatchStatus",     &refGSP_bbSubJtMatchStatus_); 
+
+
 	cout<<"slaveBegin mid"<<endl;
 
 
@@ -280,65 +302,109 @@ Bool_t akSoftDrop4PFJetSelector::Process(Long64_t entry)
 		jtSubJetPt2ov1_= jtSubJetPt->at(0).at(1)/jtSubJetPt->at(0).at(0);
 		jtSubZg_       = jtSubJetPt2_/( jtSubJetPt1_ + jtSubJetPt2_);
 
-		cout<<"jtSubJetPhi1_ = "<<jtSubJetPhi1_<<endl; //" , *3.14/180 = "<<jtSubJetPhi1_*3.14/180<<endl;
-		cout<<"jtSubJetPhi2_ = "<<jtSubJetPhi2_<<endl; //" , *3.14/180 = "<<jtSubJetPhi2_*3.14/180<<endl;
+//		cout<<"jtSubJetPhi1_ = "<<jtSubJetPhi1_<<endl; //" , *3.14/180 = "<<jtSubJetPhi1_*3.14/180<<endl;
+//		cout<<"jtSubJetPhi2_ = "<<jtSubJetPhi2_<<endl; //" , *3.14/180 = "<<jtSubJetPhi2_*3.14/180<<endl;
 
 		Float_t deltaPhi = (jtSubJetPhi1_- jtSubJetPhi2_); //*(Float_t)TMath::Pi()/(Float_t)180.0;
-		cout<<"original deltaPhi = "<<deltaPhi<<endl;
+//		cout<<"original deltaPhi = "<<deltaPhi<<endl;
 		if (deltaPhi < -(Float_t)TMath::Pi()) deltaPhi+=2*(Float_t)TMath::Pi();
 		if (deltaPhi >  (Float_t)TMath::Pi()) deltaPhi-=2*(Float_t)TMath::Pi();	
 		//	cout<<"(flaot)TMath pi = "<<(Float_t)TMath::Pi()<<" , TMath::Pi() = "<<TMath::Pi()<<endl;
-		cout<<"deltaPhi = "<<deltaPhi<<endl;
-		cout<<"deltaEta = "<<jtSubJetEta1_-jtSubJetEta2_<<endl;
+//		cout<<"deltaPhi = "<<deltaPhi<<endl;
+//		cout<<"deltaEta = "<<jtSubJetEta1_-jtSubJetEta2_<<endl;
 		jtSubJetdR12_  = sqrt(pow(jtSubJetEta1_-jtSubJetEta2_,2)+ pow(deltaPhi,2));
-		cout<<"dR = "<<jtSubJetdR12_<<endl;
+//		cout<<"dR = "<<jtSubJetdR12_<<endl;
 
 	} // end if nSubJet_>=2;
 
-  // refSubJet part
-  nrefSubJet_=-1;
-  nrefSubJet_= refSubJetPt->at(0).size(); // sub-jet of leading jet
-  refSubJetPt1_   =-999;
-  refSubJetEta1_  =-999;
-  refSubJetPhi1_  =-999;
-  refSubJetM1_    =-999;
-  refSubJetPt2_   =-999;
-  refSubJetEta2_  =-999;
-  refSubJetPhi2_  =-999;
-  refSubJetM2_    =-999;
-  refSubJetPt2ov1_=-999;
-  refSubJetdR12_ =-999;
-  if(nrefSubJet_>=2){
-    refSubJetPt1_   = refSubJetPt->at(0).at(0);
-    refSubJetEta1_  = refSubJetEta->at(0).at(0);
-    refSubJetPhi1_  = refSubJetPhi->at(0).at(0);
-    refSubJetM1_    = refSubJetM->at(0).at(0);
-    refSubJetPt2_   = refSubJetPt->at(0).at(1);
-    refSubJetEta2_  = refSubJetEta->at(0).at(1);
-    refSubJetPhi2_  = refSubJetPhi->at(0).at(1);
-    refSubJetM2_    = refSubJetM->at(0).at(1);
-    refSubJetPt2ov1_= refSubJetPt->at(0).at(1)/refSubJetPt->at(0).at(0);
-    refSubZg_       = refSubJetPt2_/( refSubJetPt1_ + refSubJetPt2_);
+	// refSubJet part
+	nrefSubJet_=-1;
+	nrefSubJet_= refSubJetPt->at(0).size(); // sub-jet of leading jet
+	refSubJetPt1_   =-999;
+	refSubJetEta1_  =-999;
+	refSubJetPhi1_  =-999;
+	refSubJetM1_    =-999;
+	refSubJetPt2_   =-999;
+	refSubJetEta2_  =-999;
+	refSubJetPhi2_  =-999;
+	refSubJetM2_    =-999;
+	refSubJetPt2ov1_=-999;
+	refSubJetdR12_ =-999;
+	if(nrefSubJet_>=2){
+		refSubJetPt1_   = refSubJetPt->at(0).at(0);
+		refSubJetEta1_  = refSubJetEta->at(0).at(0);
+		refSubJetPhi1_  = refSubJetPhi->at(0).at(0);
+		refSubJetM1_    = refSubJetM->at(0).at(0);
+		refSubJetPt2_   = refSubJetPt->at(0).at(1);
+		refSubJetEta2_  = refSubJetEta->at(0).at(1);
+		refSubJetPhi2_  = refSubJetPhi->at(0).at(1);
+		refSubJetM2_    = refSubJetM->at(0).at(1);
+		refSubJetPt2ov1_= refSubJetPt->at(0).at(1)/refSubJetPt->at(0).at(0);
+		refSubZg_       = refSubJetPt2_/( refSubJetPt1_ + refSubJetPt2_);
 
-    cout<<"refSubJetPhi1_ = "<<refSubJetPhi1_<<endl; //" , *3.14/180 = "<<refSubJetPhi1_*3.14/180<<endl;
-    cout<<"refSubJetPhi2_ = "<<refSubJetPhi2_<<endl; //" , *3.14/180 = "<<refSubJetPhi2_*3.14/180<<endl;
+		// cout<<"refSubJetPhi1_ = "<<refSubJetPhi1_<<endl; //" , *3.14/180 = "<<refSubJetPhi1_*3.14/180<<endl;
+		// cout<<"refSubJetPhi2_ = "<<refSubJetPhi2_<<endl; //" , *3.14/180 = "<<refSubJetPhi2_*3.14/180<<endl;
 
-    Float_t deltaPhi = (refSubJetPhi1_- refSubJetPhi2_); //*(Float_t)TMath::Pi()/(Float_t)180.0;
-    cout<<"original deltaPhi = "<<deltaPhi<<endl;
-    if (deltaPhi < -(Float_t)TMath::Pi()) deltaPhi+=2*(Float_t)TMath::Pi();
-    if (deltaPhi >  (Float_t)TMath::Pi()) deltaPhi-=2*(Float_t)TMath::Pi();
-    //  cout<<"(flaot)TMath pi = "<<(Float_t)TMath::Pi()<<" , TMath::Pi() = "<<TMath::Pi()<<endl;
-    cout<<"deltaPhi = "<<deltaPhi<<endl;
-    cout<<"deltaEta = "<<refSubJetEta1_-refSubJetEta2_<<endl;
-    refSubJetdR12_  = sqrt(pow(refSubJetEta1_-refSubJetEta2_,2)+ pow(deltaPhi,2));
-    cout<<"dR = "<<refSubJetdR12_<<endl;
+		Float_t deltaPhi = (refSubJetPhi1_- refSubJetPhi2_); //*(Float_t)TMath::Pi()/(Float_t)180.0;
+		// cout<<"original deltaPhi = "<<deltaPhi<<endl;
+		if (deltaPhi < -(Float_t)TMath::Pi()) deltaPhi+=2*(Float_t)TMath::Pi();
+		if (deltaPhi >  (Float_t)TMath::Pi()) deltaPhi-=2*(Float_t)TMath::Pi();
+		//  cout<<"(flaot)TMath pi = "<<(Float_t)TMath::Pi()<<" , TMath::Pi() = "<<TMath::Pi()<<endl;
+		// cout<<"deltaPhi = "<<deltaPhi<<endl;
+		// cout<<"deltaEta = "<<refSubJetEta1_-refSubJetEta2_<<endl;
+		refSubJetdR12_  = sqrt(pow(refSubJetEta1_-refSubJetEta2_,2)+ pow(deltaPhi,2));
+		// cout<<"dR = "<<refSubJetdR12_<<endl;
 
-  } // end if nrefSubJet_>=2;
+	} // end if nrefSubJet_>=2;
+
+	// refGSP part
+    refGSP_gpt_             =refGSP_gpt[0];              
+    refGSP_geta_            =refGSP_geta[0];  
+    refGSP_gphi_            =refGSP_gphi[0];  
+    refGSP_gidx_            =refGSP_gidx[0];  
+    refGSP_b1pt_            =refGSP_b1pt[0];  
+    refGSP_b1eta_           =refGSP_b1eta[0]; 
+    refGSP_b1phi_           =refGSP_b1phi[0]; 
+    refGSP_b2pt_            =refGSP_b2pt[0];  
+    refGSP_b2eta_           =refGSP_b2eta[0]; 
+    refGSP_b2phi_           =refGSP_b2phi[0]; 
+    refGSP_b1Match_jtdR_    =refGSP_b1Match_jtdR[0];   
+    refGSP_b2Match_jtdR_    =refGSP_b2Match_jtdR[0];   
+    refGSP_bbdR_            =refGSP_bbdR[0];  
+    refGSP_bbzg_            =refGSP_bbzg[0];  
+    refGSP_SubJtMatched_    =refGSP_SubJtMatched[0];   
+
+    refGSP_b1Match_subjt1dR_ = -1;
+		refGSP_b1Match_subjt2dR_ = -1;
+		refGSP_b2Match_subjt1dR_ = -1;
+		refGSP_b2Match_subjt2dR_ = -1;
+		refGSP_bbSubJtMatchStatus_ = -1;
+
+		// modify refGSP_SubJtMatched_ dr value
+//		if(refGSP_SubJtMatched_==1) refGSP_SubJtMatched_=0;
+//	  if(refGSP_b1Match_jtdR_ <0.3 && refGSP_b2Match_jtdR_ <0.3) refGSP_SubJtMatched_=1;
+
+		
+		if (refGSP_SubJtMatched_==1 && refGSP_b2pt_>refGSP_b1pt_){
+		cout<<"hello in one reco jet 2pt > 1pt"<<endl;  // why this appear  // the findParton ask exact flavor, not abs(flavor)
+		}
+
+		if (refGSP_SubJtMatched_==1 && nSubJet_>=2){
+			refGSP_b1Match_subjt1dR_ =pow( pow(refGSP_b1eta_- jtSubJetEta1_,2)+pow(delta_Phi(refGSP_b1phi_,jtSubJetPhi1_),2) , 0.5);
+      refGSP_b1Match_subjt2dR_ =pow( pow(refGSP_b1eta_- jtSubJetEta2_,2)+pow(delta_Phi(refGSP_b1phi_,jtSubJetPhi2_),2) , 0.5);
+      refGSP_b2Match_subjt1dR_ =pow( pow(refGSP_b2eta_- jtSubJetEta1_,2)+pow(delta_Phi(refGSP_b2phi_,jtSubJetPhi1_),2) , 0.5);
+      refGSP_b2Match_subjt2dR_ =pow( pow(refGSP_b2eta_- jtSubJetEta2_,2)+pow(delta_Phi(refGSP_b2phi_,jtSubJetPhi2_),2) , 0.5);
+
+			refGSP_bbSubJtMatchStatus_=0;
+			if (refGSP_b1Match_subjt1dR_ < refGSP_b1Match_subjt2dR_ && refGSP_b2Match_subjt1dR_ > refGSP_b2Match_subjt2dR_) { refGSP_bbSubJtMatchStatus_=1; }
+      if (refGSP_b1Match_subjt1dR_ > refGSP_b1Match_subjt2dR_ && refGSP_b2Match_subjt1dR_ < refGSP_b2Match_subjt2dR_) { refGSP_bbSubJtMatchStatus_=2; }
+	
+		}
 
 
 
 
-  // end of value assign, fill tree
+	// end of value assign, fill tree
 	t_akSD4PFJet->Fill();
 
 	return kTRUE;
@@ -554,102 +620,211 @@ void akSoftDrop4PFJetSelector::Terminate()
 	t_akSD4PFJet->Draw("nSubJet","jtpt>100&&abs(refparton_flavorForB)==5");
 	c_nSubJet->SaveAs("plots/nSubJet.pdf");
 
-	plotCompare_fun(t_akSD4PFJet);
+	TCanvas *c_bbdR = new TCanvas("c_bbdR","c_bbdR",800,800);
+	c_bbdR->Divide(2,2);
+	c_bbdR->cd(1);
+	t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6");
+  c_bbdR->cd(2);
+  t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && refGSP_SubJtMatched==-1 && refparton_flavorProcess==6");
+  c_bbdR->cd(3);
+  t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && refGSP_SubJtMatched==1 && refparton_flavorProcess==6");
+	c_bbdR->SaveAs("plots/refGSP_bbdR.pdf");
+
+	TCanvas *c_bbzg = new TCanvas("c_bbzg","c_bbzg",800,800);
+	c_bbzg->Divide(2,2);
+	c_bbzg->cd(1);
+  t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6");
+  c_bbzg->cd(2);
+  t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==1");
+  c_bbzg->cd(3);
+  t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==2");
+	c_bbzg->SaveAs("plots/refGSP_bbzg.pdf");
+
+	TCanvas *c_subjtMatched_dR = new TCanvas("c_subjtMatched_dR","c_subjtMatched_dR",800,800);
+	c_subjtMatched_dR->Divide(2,2);
+	c_subjtMatched_dR->cd(1);
+	t_akSD4PFJet->Draw("refGSP_b1Match_subjt1dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==1");
+  c_subjtMatched_dR->cd(2);
+  t_akSD4PFJet->Draw("refGSP_b2Match_subjt2dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==1");
+  c_subjtMatched_dR->cd(3);
+  t_akSD4PFJet->Draw("refGSP_b1Match_subjt2dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==2");
+  c_subjtMatched_dR->cd(4);
+  t_akSD4PFJet->Draw("refGSP_b2Match_subjt1dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==2");
+	c_subjtMatched_dR->SaveAs("plots/refGSP_b12Match_subjtdR.pdf");
 	
 
-  TCut CutCommon="jtpt>100&&nSubJet>=2"; TCut Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)"; 
-  TCut Cut2="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1"; TCut Cut3="abs(refparton_flavorForB)!=5";
-  TString add_savename="";
-  TString plotVariable="jtSubZg"; TString plotTitle="Sub-Jet pt2/pt2+pt1";TString plotXTitle="Zg";
-  TString type1Title="GSP-B"; TString type2Title="FCR-B"; TString type3Title="Non B";
+	plotCompare_fun(t_akSD4PFJet);
 
- // plot Gluon-spliiting B , differenet dR
+
+	TCut CutCommon="jtpt>100&&nSubJet>=2"; TCut Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)"; 
+	TCut Cut2="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1"; TCut Cut3="abs(refparton_flavorForB)!=5";
+	TString add_savename="";
+	TString plotVariable="jtSubZg"; TString plotTitle="Sub-Jet pt2/pt2+pt1";TString plotXTitle="Zg";
+	TString type1Title="GSP-B"; TString type2Title="FCR-B"; TString type3Title="Non B";
+
+	// plot GSP-bb match, not match, FCR ; Zg
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100&&nrefSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJtMatchStatus==1 || refGSP_bbSubJtMatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==1";
+  add_savename="GSP_bbMatch";
+  plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
+  type1Title="GSP-B subjt bb match"; type2Title="GSP-B one b jet"; type3Title="FCR-B";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+ // plot GSP-bb match, not match, FCR ; dR
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100&&nrefSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJtMatchStatus==1 || refGSP_bbSubJtMatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==1";
+  add_savename="GSP_bbMatch";
+  plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
+  type1Title="GSP-B subjt bb match"; type2Title="GSP-B one b jet"; type3Title="FCR-B";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+ 
+
+	// plot Gluon-spliiting B , differenet dR
 	nbin=50; binLow=0; binHigh=0.5;
- 	CutCommon="jtpt>100&&nSubJet>=2"; 
- 	Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)&&jtSubJetdR12>0.23";	
+	CutCommon="jtpt>100&&nSubJet>=2"; 
+	Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)&&jtSubJetdR12>0.23";	
 	Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)&&jtSubJetdR12<0.12";
 	Cut3="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1";
 	add_savename="ZgWithdRcut";
 	plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
 	type1Title="GSP-B dR>0.23"; type2Title="GSP-B dR<0.12"; type3Title="FCR-B";
-  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
 	// modify "All" input parameter for plot
 	nbin=50; binLow=0; binHigh=0.5;
 	CutCommon="jtpt>100&&nrefSubJet>=2";	
+  Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
+  Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
+  Cut3="abs(refparton_flavorForB)!=5";	
+	add_savename="";
 	plotVariable="refSubZg";	
-	plotTitle="ref Sub-Jet Zg";
-  type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
+	plotTitle="ref Sub-Jet Zg"; plotXTitle="Zg";
+	type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
 	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
 	// refSubjtdR
-	binLow=0; binHigh=0.5;
+	nbin=50; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100&&nrefSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
+  Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
+  Cut3="abs(refparton_flavorForB)!=5";
+  add_savename="";
 	plotVariable="refSubJetdR12";
 	plotTitle="ref Subj-Jet dR";
 	plotXTitle="dR12";
+  type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
+	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+	// bbdR 
+  nbin=45; binLow=0; binHigh=4.5;
+  CutCommon="jtpt>100 && refparton_flavorProcess==6";
+  Cut1="refGSP_SubJtMatched==1";
+  Cut2="refGSP_SubJtMatched==-1";
+  Cut3="refGSP_SubJtMatched!=-2";
+  add_savename="vs_subjtMatched";
+  plotVariable="refGSP_bbdR";
+  plotTitle="MC bb dR";
+  plotXTitle="dR12";
+  type1Title="GSP-B one-jet"; type2Title="GSP seperate jets";type3Title="All GSP-B";
   plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
-//	testfunction(1,3,2);
+	// bbzg
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && refparton_flavorProcess==6 && refGSP_SubJtMatched!=-2";
+  Cut1="refGSP_bbSubJtMatchStatus==1";
+  Cut2="refGSP_bbSubJtMatchStatus==2";
+  Cut3="refGSP_bbSubJtMatchStatus==0";
+  add_savename="vs_bbSubJtMatch";
+  plotVariable="refGSP_bbzg";
+  plotTitle="MC bb zg";
+  plotXTitle="zg";
+  type1Title="GSP-B pair1"; type2Title="GSP-B pair2";type3Title="GSP-B notMatch";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
 
+	//	testfunction(1,3,2);
+
+
+	f_out->Write();
 	f_out->Close();  // need to close file here?
 
 } // end of Selector:Terminate
 
 int plotCompare_fun(TTree *tjet, int nbin, double binLow, double binHigh,
-      TCut CutCommon, TCut Cut1, TCut Cut2, TCut Cut3,
-      TString add_savename,
-      TString plotVariable, TString plotTitle,TString plotXTitle,
-      TString type1Title, TString type2Title, TString type3Title)
+		TCut CutCommon, TCut Cut1, TCut Cut2, TCut Cut3,
+		TString add_savename,
+		TString plotVariable, TString plotTitle,TString plotXTitle,
+		TString type1Title, TString type2Title, TString type3Title)
 {
 
-//	if (tjet) // check tjet
-	
-  TH1D *h_type1 = new TH1D("h_type1","h_type1",nbin,binLow,binHigh); h_type1->Sumw2();
-  TH1D *h_type2 = new TH1D("h_type2","h_type2",nbin,binLow,binHigh); h_type2->Sumw2();
-  TH1D *h_type3 = new TH1D("h_type3","h_type3",nbin,binLow,binHigh); h_type3->Sumw2();
+	//	if (tjet) // check tjet
 
-  tjet->Draw(Form("%s>>h_type1",plotVariable.Data()),CutCommon&&Cut1);
-  tjet->Draw(Form("%s>>h_type2",plotVariable.Data()),CutCommon&&Cut2);
-  tjet->Draw(Form("%s>>h_type3",plotVariable.Data()),CutCommon&&Cut3);
+	TH1D *h_type1 = new TH1D("h_type1","h_type1",nbin,binLow,binHigh); h_type1->Sumw2();
+	TH1D *h_type2 = new TH1D("h_type2","h_type2",nbin,binLow,binHigh); h_type2->Sumw2();
+	TH1D *h_type3 = new TH1D("h_type3","h_type3",nbin,binLow,binHigh); h_type3->Sumw2();
 
-  h_type3->Scale(1/h_type3->Integral());
-  h_type2->Scale(1/h_type2->Integral());
-  h_type1->Scale(1/h_type1->Integral());
+	tjet->Draw(Form("%s>>h_type1",plotVariable.Data()),CutCommon&&Cut1);
+	tjet->Draw(Form("%s>>h_type2",plotVariable.Data()),CutCommon&&Cut2);
+	tjet->Draw(Form("%s>>h_type3",plotVariable.Data()),CutCommon&&Cut3);
 
-  gStyle->SetOptStat(0);
-  TCanvas *c_Compare = new TCanvas(Form("c_%s",plotVariable.Data()),Form("c_%s",plotVariable.Data()),800,800);
-  c_Compare->cd();
-  h_type3->GetXaxis()->SetTitle(Form("%s",plotXTitle.Data()));
-  h_type3->GetYaxis()->SetTitle("1/N");
-  h_type3->SetLineColor(1);
-  h_type3->SetTitle("");
-  h_type3->Draw();
-  h_type2->SetLineColor(2);
-  h_type2->Draw("SAME");
-  h_type1->SetLineColor(4);
-  h_type1->Draw("SAME");
+	h_type3->Scale(1/h_type3->Integral());
+	h_type2->Scale(1/h_type2->Integral());
+	h_type1->Scale(1/h_type1->Integral());
 
-  TLegend *le_Compare = new TLegend(0.65,0.60,0.88,0.88,NULL,"brNDC");
-  le_Compare->SetBorderSize(0);
-  le_Compare->AddEntry((TObject*)0,Form("%s",plotTitle.Data()),"");
-  le_Compare->AddEntry(h_type3,Form("%s",type3Title.Data()),"l");
-  le_Compare->AddEntry(h_type2,Form("%s",type2Title.Data()),"l");
-  le_Compare->AddEntry(h_type1,Form("%s",type1Title.Data()),"l");
-  le_Compare->Draw("SAME");
+	double his_max=0;
+	his_max=h_type3->GetMaximum();
+	if (h_type2->GetMaximum() > his_max) his_max=h_type2->GetMaximum();
+	if (h_type1->GetMaximum() > his_max) his_max=h_type1->GetMaximum();
+	h_type3->SetMaximum(his_max);
 
-  c_Compare->SaveAs(Form("plots/%s_%s_testFunction.pdf",plotVariable.Data(),add_savename.Data()));
+	gStyle->SetOptStat(0);
+	TCanvas *c_Compare = new TCanvas(Form("c_%s",plotVariable.Data()),Form("c_%s",plotVariable.Data()),800,800);
+	c_Compare->cd();
+	h_type3->GetXaxis()->SetTitle(Form("%s",plotXTitle.Data()));
+	h_type3->GetYaxis()->SetTitle("1/N");
+	h_type3->SetLineColor(1);
+	h_type3->SetTitle("");
+	h_type3->Draw();
+	h_type2->SetLineColor(2);
+	h_type2->Draw("SAME");
+	h_type1->SetLineColor(4);
+	h_type1->Draw("SAME");
+
+	TLegend *le_Compare = new TLegend(0.65,0.60,0.88,0.88,NULL,"brNDC");
+	le_Compare->SetBorderSize(0);
+	le_Compare->AddEntry((TObject*)0,Form("%s",plotTitle.Data()),"");
+	le_Compare->AddEntry(h_type3,Form("%s",type3Title.Data()),"l");
+	le_Compare->AddEntry(h_type2,Form("%s",type2Title.Data()),"l");
+	le_Compare->AddEntry(h_type1,Form("%s",type1Title.Data()),"l");
+	le_Compare->Draw("SAME");
+
+	c_Compare->SaveAs(Form("plots/%s_%s_byFun.pdf",plotVariable.Data(),add_savename.Data()));
 
 	delete c_Compare;
 	delete le_Compare;
 	delete h_type1; delete h_type2; delete h_type3;
 
 
-return 0;
+	return 0;
+}
+
+float delta_Phi(float phi1, float phi2){
+	float dphi= phi1-phi2;
+  if (dphi < -(Float_t)TMath::Pi()) dphi+=2*(Float_t)TMath::Pi();
+  if (dphi >  (Float_t)TMath::Pi()) dphi-=2*(Float_t)TMath::Pi();
+ 	return dphi;
 }
 
 
@@ -660,6 +835,6 @@ int testfunction(int inputInt, int in2, int in3){
 	cout<<in2<<endl;
 	cout<<in3<<endl;
 
-return 1;
+	return 1;
 } 
 

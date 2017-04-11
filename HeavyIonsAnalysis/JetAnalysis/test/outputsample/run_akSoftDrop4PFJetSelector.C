@@ -13,12 +13,16 @@ void run_akSoftDrop4PFJetSelector(int nevt=-1, int firstEntry=0, string outfile 
 
 	TChain *ch_akSD4PF = new TChain("akSoftDrop4PFJetAnalyzer/t","akSD4PFJet");
 //	ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet30.root");
-	ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet120.root");
+//	ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet120.root");
 //  ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root");
+//  ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n1000.root");
+		ch_akSD4PF->Add("Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n23000.root");
+
+
 	ch_akSD4PF->ls();
 
 	// run on Proof
-  ch_akSD4PF->SetProof();
+//  ch_akSD4PF->SetProof();
 
 
   ch_akSD4PF->Process("akSoftDrop4PFJetSelector.C+");
