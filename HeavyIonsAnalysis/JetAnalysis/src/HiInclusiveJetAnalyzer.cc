@@ -1835,7 +1835,8 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 							} // end i_dau < (*genparts)[momIndex].numberOfDaughters()
 						} // end if momIndex >=0 && (*genparts)[momIndex].pdgId()==21
 
-						if(MatchedPartonId >0 && momIndex >0 && partonPairIndex >0){
+						if(partonPairIndex<=0) {cout<<"event : "<<event<<" ,partonPairIndex = "<<partonPairIndex<<" , momIndex = "<<momIndex<<endl;}
+						if(partonMatchIndex >0 && momIndex >0 && partonPairIndex >0){
 							jets_.refGSP_gpt[jets_.nref]          			=(*genparts)[momIndex].pt();
 						  jets_.refGSP_geta [jets_.nref]        			=(*genparts)[momIndex].eta();
 							jets_.refGSP_gphi [jets_.nref]              =(*genparts)[momIndex].phi();

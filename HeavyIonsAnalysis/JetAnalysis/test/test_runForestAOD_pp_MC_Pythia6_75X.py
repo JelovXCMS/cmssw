@@ -27,8 +27,12 @@ process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
 #                                "file:test_sample/pp_MC_PYTHIA6_bjet30.root"
-																"file:test_sample/pp_MC_PYTHIA6_bjet120.root"
-# "root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp
+#																"file:test_sample/pp_MC_PYTHIA6_bjet120.root"
+
+ "root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp 1st, n23711
+,
+"root://cms-xrd-global.cern.ch///store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/2EF3FB1C-1F0F-E611-B00B-0025905D1D60.root" #bjet_pthat120_pp 3st, n42125
+
 #" root://xrootd-cms.infn.it//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp
 
 
@@ -67,7 +71,7 @@ process = overrideJEC_pp5020(process)
 
 process.TFileService = cms.Service("TFileService",
                                    fileName=cms.string(
-																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n23000.root"
+																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n65000.root"
 #																	 "Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root"
 																	 ))
 

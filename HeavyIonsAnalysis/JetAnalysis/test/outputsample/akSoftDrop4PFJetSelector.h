@@ -38,7 +38,7 @@ int plotCompare_fun(TTree *tjet, int nbin=50, double binLow=0, double binHigh=0.
       TCut CutCommon="jtpt>100&&nSubJet>=2", TCut Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)", TCut Cut2="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1", TCut Cut3="abs(refparton_flavorForB)!=5",
       TString add_savename="",
 			TString plotVariable="jtSubZg", TString plotTitle="Sub-Jet pt2/pt2+pt1",TString plotXTitle="Zg",
-      TString type1Title="GSP-B", TString type2Title="FCR-B", TString type3Title="Non B");
+      TString type1Title="GSP-B", TString type2Title="FCR-B", TString type3Title="Non B", Int_t DoNormalize=1);
 
 
 
@@ -133,13 +133,45 @@ public :
    Float_t         refGSP_bbzg_;   //[nref]
    Int_t           refGSP_SubJtMatched_;   //[nref]
 
-	 Float_t	       refGSP_b1Match_subjt1dR_;
-   Float_t         refGSP_b1Match_subjt2dR_;
-   Float_t         refGSP_b2Match_subjt1dR_;
-   Float_t         refGSP_b2Match_subjt2dR_;
-	 Int_t           refGSP_bbSubJtMatchStatus_; // 0 for not, 1 for b1-jt1 b2-jt2, 2 for b1-jt2, b2-jt1
-  
+	 // MC b - groomed reco subjet match
+	 Float_t	       refGSP_b1Match_SubJt1dR_;
+   Float_t         refGSP_b1Match_SubJt2dR_;
+   Float_t         refGSP_b2Match_SubJt1dR_;
+   Float_t         refGSP_b2Match_SubJt2dR_;
+	 Int_t           refGSP_bbSubJt_dRMatchStatus_;          // dR match only 0 for not, 1 for b1-jt1 b2-jt2, 2 for b1-jt2, b2-jt1
+	 Int_t   		     refGSP_bbSubJt_dR0p1MatchStatus_;       // 0.1 dR match , must <0.1 for match & >0.1 for another pair.
+   Float_t         refGSP_b1Match_SubJt1PtRat_;            // pt ratio
+   Float_t         refGSP_b1Match_SubJt2PtRat_;
+   Float_t         refGSP_b2Match_SubJt1PtRat_;
+   Float_t         refGSP_b2Match_SubJt2PtRat_;
 
+	 Int_t           refGSP_bbSubJt_PtRatMatchStatus_;       // Big small match, 0 for not,1 for b1-jt1, b2-jt2, 2 for reverse. 
+	 Int_t           refGSP_bbSubJt_PtRatTightMatchStatus_;  // Tight match
+	
+	 Int_t           refGSP_bbSubJt_MatchStatus_;            // both pt&dR match ,0 for not, 1 for b1-jt1 b2-jt2, 2 for b1-jt2, b2-jt1
+	 Int_t           refGSP_bbSubJt_TightMatchStatus_;       // both pt & dR tight match. 
+
+
+   // MC b - groomed ref subjet match
+   Float_t         refGSP_b1Match_refSubJt1dR_;
+   Float_t         refGSP_b1Match_refSubJt2dR_;
+   Float_t         refGSP_b2Match_refSubJt1dR_;
+   Float_t         refGSP_b2Match_refSubJt2dR_;
+   Int_t           refGSP_bbrefSubJt_dRMatchStatus_;  			// dR match only 0 for not, 1 for b1-jt1 b2-jt2, 2 for b1-jt2, b2-jt1
+   Int_t       	   refGSP_bbrefSubJt_dR0p1MatchStatus_; 		// 0.1 dR match , must <0.1 for match & >0.1 for another pair.
+   Float_t         refGSP_b1Match_refSubJt1PtRat_; 					// pt ratio
+   Float_t         refGSP_b1Match_refSubJt2PtRat_;
+   Float_t         refGSP_b2Match_refSubJt1PtRat_;
+   Float_t         refGSP_b2Match_refSubJt2PtRat_;
+
+   Int_t           refGSP_bbrefSubJt_PtRatMatchStatus_; 			// Big small match, 0 for not,1 for b1-jt1, b2-jt2, 2 for reverse. 
+   Int_t           refGSP_bbrefSubJt_PtRatTightMatchStatus_; 	// Tight match
+
+   Int_t           refGSP_bbrefSubJt_MatchStatus_; 						// both pt&dR match ,0 for not, 1 for b1-jt1 b2-jt2, 2 for b1-jt2, b2-jt1
+   Int_t           refGSP_bbrefSubJt_TightMatchStatus_;       // both pt & dR tight match. 
+
+
+	
 
 
 //// end ouput write ////

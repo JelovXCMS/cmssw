@@ -173,12 +173,34 @@ void akSoftDrop4PFJetSelector::SlaveBegin(TTree * /*tree*/)
 	t_akSD4PFJet->Branch("refGSP_bbdR",                   &refGSP_bbdR_);   
 	t_akSD4PFJet->Branch("refGSP_bbzg",                   &refGSP_bbzg_);   
 	t_akSD4PFJet->Branch("refGSP_SubJtMatched",           &refGSP_SubJtMatched_);   
-	t_akSD4PFJet->Branch("refGSP_b1Match_subjt1dR",       &refGSP_b1Match_subjt1dR_); 
-	t_akSD4PFJet->Branch("refGSP_b1Match_subjt2dR",       &refGSP_b1Match_subjt2dR_); 
-	t_akSD4PFJet->Branch("refGSP_b2Match_subjt1dR",       &refGSP_b2Match_subjt1dR_); 
-	t_akSD4PFJet->Branch("refGSP_b2Match_subjt2dR",       &refGSP_b2Match_subjt2dR_); 
-	t_akSD4PFJet->Branch("refGSP_bbSubJtMatchStatus",     &refGSP_bbSubJtMatchStatus_); 
-
+	//
+	t_akSD4PFJet->Branch("refGSP_b1Match_SubJt1dR",       &refGSP_b1Match_SubJt1dR_); 
+	t_akSD4PFJet->Branch("refGSP_b1Match_SubJt2dR",       &refGSP_b1Match_SubJt2dR_); 
+	t_akSD4PFJet->Branch("refGSP_b2Match_SubJt1dR",       &refGSP_b2Match_SubJt1dR_); 
+	t_akSD4PFJet->Branch("refGSP_b2Match_SubJt2dR",       &refGSP_b2Match_SubJt2dR_); 
+	t_akSD4PFJet->Branch("refGSP_bbSubJt_dRMatchStatus",                  &refGSP_bbSubJt_dRMatchStatus_);                            
+	t_akSD4PFJet->Branch("refGSP_bbSubJt_dR0p1MatchStatus",               &refGSP_bbSubJt_dR0p1MatchStatus_);     
+	t_akSD4PFJet->Branch("refGSP_b1Match_SubJt1PtRat",                    &refGSP_b1Match_SubJt1PtRat_);          
+	t_akSD4PFJet->Branch("refGSP_b1Match_SubJt2PtRat",                    &refGSP_b1Match_SubJt2PtRat_);
+	t_akSD4PFJet->Branch("refGSP_b2Match_SubJt1PtRat",                    &refGSP_b2Match_SubJt1PtRat_);
+	t_akSD4PFJet->Branch("refGSP_b2Match_SubJt2PtRat",                    &refGSP_b2Match_SubJt2PtRat_);               
+	t_akSD4PFJet->Branch("refGSP_bbSubJt_PtRatMatchStatus",               &refGSP_bbSubJt_PtRatMatchStatus_);     
+	t_akSD4PFJet->Branch("refGSP_bbSubJt_PtRatTightMatchStatus",          &refGSP_bbSubJt_PtRatTightMatchStatus_);     
+	t_akSD4PFJet->Branch("refGSP_bbSubJt_MatchStatus",                    &refGSP_bbSubJt_MatchStatus_);          
+	// 
+	t_akSD4PFJet->Branch("refGSP_b1Match_refSubJt1dR",                    &refGSP_b1Match_refSubJt1dR_);
+	t_akSD4PFJet->Branch("refGSP_b1Match_refSubJt2dR",                    &refGSP_b1Match_refSubJt2dR_);
+	t_akSD4PFJet->Branch("refGSP_b2Match_refSubJt1dR",                    &refGSP_b2Match_refSubJt1dR_);
+	t_akSD4PFJet->Branch("refGSP_b2Match_refSubJt2dR",                    &refGSP_b2Match_refSubJt2dR_);
+	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_dRMatchStatus",  			        &refGSP_bbrefSubJt_dRMatchStatus_);  			
+	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_dR0p1MatchStatus", 		        &refGSP_bbrefSubJt_dR0p1MatchStatus_); 		
+	t_akSD4PFJet->Branch("refGSP_b1Match_refSubJt1PtRat", 					      &refGSP_b1Match_refSubJt1PtRat_); 					
+	t_akSD4PFJet->Branch("refGSP_b1Match_refSubJt2PtRat",                 &refGSP_b1Match_refSubJt2PtRat_);
+	t_akSD4PFJet->Branch("refGSP_b2Match_refSubJt1PtRat",                 &refGSP_b2Match_refSubJt1PtRat_);
+	t_akSD4PFJet->Branch("refGSP_b2Match_refSubJt2PtRat",                 &refGSP_b2Match_refSubJt2PtRat_);            
+	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_PtRatMatchStatus", 		        &refGSP_bbrefSubJt_PtRatMatchStatus_); 		
+	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_PtRatTightMatchStatus",       &refGSP_bbrefSubJt_PtRatTightMatchStatus_);  
+	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_MatchStatus", 					      &refGSP_bbrefSubJt_MatchStatus_); 					
 
 	cout<<"slaveBegin mid"<<endl;
 
@@ -302,18 +324,18 @@ Bool_t akSoftDrop4PFJetSelector::Process(Long64_t entry)
 		jtSubJetPt2ov1_= jtSubJetPt->at(0).at(1)/jtSubJetPt->at(0).at(0);
 		jtSubZg_       = jtSubJetPt2_/( jtSubJetPt1_ + jtSubJetPt2_);
 
-//		cout<<"jtSubJetPhi1_ = "<<jtSubJetPhi1_<<endl; //" , *3.14/180 = "<<jtSubJetPhi1_*3.14/180<<endl;
-//		cout<<"jtSubJetPhi2_ = "<<jtSubJetPhi2_<<endl; //" , *3.14/180 = "<<jtSubJetPhi2_*3.14/180<<endl;
+		//		cout<<"jtSubJetPhi1_ = "<<jtSubJetPhi1_<<endl; //" , *3.14/180 = "<<jtSubJetPhi1_*3.14/180<<endl;
+		//		cout<<"jtSubJetPhi2_ = "<<jtSubJetPhi2_<<endl; //" , *3.14/180 = "<<jtSubJetPhi2_*3.14/180<<endl;
 
 		Float_t deltaPhi = (jtSubJetPhi1_- jtSubJetPhi2_); //*(Float_t)TMath::Pi()/(Float_t)180.0;
-//		cout<<"original deltaPhi = "<<deltaPhi<<endl;
+		//		cout<<"original deltaPhi = "<<deltaPhi<<endl;
 		if (deltaPhi < -(Float_t)TMath::Pi()) deltaPhi+=2*(Float_t)TMath::Pi();
 		if (deltaPhi >  (Float_t)TMath::Pi()) deltaPhi-=2*(Float_t)TMath::Pi();	
 		//	cout<<"(flaot)TMath pi = "<<(Float_t)TMath::Pi()<<" , TMath::Pi() = "<<TMath::Pi()<<endl;
-//		cout<<"deltaPhi = "<<deltaPhi<<endl;
-//		cout<<"deltaEta = "<<jtSubJetEta1_-jtSubJetEta2_<<endl;
+		//		cout<<"deltaPhi = "<<deltaPhi<<endl;
+		//		cout<<"deltaEta = "<<jtSubJetEta1_-jtSubJetEta2_<<endl;
 		jtSubJetdR12_  = sqrt(pow(jtSubJetEta1_-jtSubJetEta2_,2)+ pow(deltaPhi,2));
-//		cout<<"dR = "<<jtSubJetdR12_<<endl;
+		//		cout<<"dR = "<<jtSubJetdR12_<<endl;
 
 	} // end if nSubJet_>=2;
 
@@ -358,48 +380,151 @@ Bool_t akSoftDrop4PFJetSelector::Process(Long64_t entry)
 	} // end if nrefSubJet_>=2;
 
 	// refGSP part
-    refGSP_gpt_             =refGSP_gpt[0];              
-    refGSP_geta_            =refGSP_geta[0];  
-    refGSP_gphi_            =refGSP_gphi[0];  
-    refGSP_gidx_            =refGSP_gidx[0];  
-    refGSP_b1pt_            =refGSP_b1pt[0];  
-    refGSP_b1eta_           =refGSP_b1eta[0]; 
-    refGSP_b1phi_           =refGSP_b1phi[0]; 
-    refGSP_b2pt_            =refGSP_b2pt[0];  
-    refGSP_b2eta_           =refGSP_b2eta[0]; 
-    refGSP_b2phi_           =refGSP_b2phi[0]; 
-    refGSP_b1Match_jtdR_    =refGSP_b1Match_jtdR[0];   
-    refGSP_b2Match_jtdR_    =refGSP_b2Match_jtdR[0];   
-    refGSP_bbdR_            =refGSP_bbdR[0];  
-    refGSP_bbzg_            =refGSP_bbzg[0];  
-    refGSP_SubJtMatched_    =refGSP_SubJtMatched[0];   
+	refGSP_gpt_             =refGSP_gpt[0];              
+	refGSP_geta_            =refGSP_geta[0];  
+	refGSP_gphi_            =refGSP_gphi[0];  
+	refGSP_gidx_            =refGSP_gidx[0];  
+	refGSP_b1pt_            =refGSP_b1pt[0];  
+	refGSP_b1eta_           =refGSP_b1eta[0]; 
+	refGSP_b1phi_           =refGSP_b1phi[0]; 
+	refGSP_b2pt_            =refGSP_b2pt[0];  
+	refGSP_b2eta_           =refGSP_b2eta[0]; 
+	refGSP_b2phi_           =refGSP_b2phi[0]; 
+	refGSP_b1Match_jtdR_    =refGSP_b1Match_jtdR[0];   
+	refGSP_b2Match_jtdR_    =refGSP_b2Match_jtdR[0];   
+	refGSP_bbdR_            =refGSP_bbdR[0];  
+	refGSP_bbzg_            =refGSP_bbzg[0];  
+	refGSP_SubJtMatched_    =refGSP_SubJtMatched[0];   
 
-    refGSP_b1Match_subjt1dR_ = -1;
-		refGSP_b1Match_subjt2dR_ = -1;
-		refGSP_b2Match_subjt1dR_ = -1;
-		refGSP_b2Match_subjt2dR_ = -1;
-		refGSP_bbSubJtMatchStatus_ = -1;
+	refGSP_b1Match_SubJt1dR_ = -1;
+	refGSP_b1Match_SubJt2dR_ = -1;
+	refGSP_b2Match_SubJt1dR_ = -1;
+	refGSP_b2Match_SubJt2dR_ = -1;
+	refGSP_bbSubJt_dRMatchStatus_ = -1;        
+	refGSP_bbSubJt_dR0p1MatchStatus_ = -1;     
+	refGSP_b1Match_SubJt1PtRat_ = -1;          
+	refGSP_b1Match_SubJt2PtRat_ = -1;
+	refGSP_b2Match_SubJt1PtRat_ = -1;
+	refGSP_b2Match_SubJt2PtRat_ = -1;                                      
+	refGSP_bbSubJt_PtRatMatchStatus_ = -1;     
+	refGSP_bbSubJt_PtRatTightMatchStatus_ = -1;                                      
+	refGSP_bbSubJt_MatchStatus_ = -1;          
 
-		// modify refGSP_SubJtMatched_ dr value
-//		if(refGSP_SubJtMatched_==1) refGSP_SubJtMatched_=0;
-//	  if(refGSP_b1Match_jtdR_ <0.3 && refGSP_b2Match_jtdR_ <0.3) refGSP_SubJtMatched_=1;
+	refGSP_b1Match_refSubJt1dR_ = -1;
+	refGSP_b1Match_refSubJt2dR_ = -1;
+	refGSP_b2Match_refSubJt1dR_ = -1;
+	refGSP_b2Match_refSubJt2dR_ = -1;
+	refGSP_bbrefSubJt_dRMatchStatus_ = -1;  			
+	refGSP_bbrefSubJt_dR0p1MatchStatus_ = -1; 		
+	refGSP_b1Match_refSubJt1PtRat_ = -1; 					
+	refGSP_b1Match_refSubJt2PtRat_ = -1;
+	refGSP_b2Match_refSubJt1PtRat_ = -1;
+	refGSP_b2Match_refSubJt2PtRat_ = -1;                                         
+	refGSP_bbrefSubJt_PtRatMatchStatus_ = -1; 		
+	refGSP_bbrefSubJt_PtRatTightMatchStatus_ = -1;                                         
+	refGSP_bbrefSubJt_MatchStatus_ = -1; 					
 
-		
-		if (refGSP_SubJtMatched_==1 && refGSP_b2pt_>refGSP_b1pt_){
+
+
+	// modify refGSP_SubJtMatched_ dr value
+	//		if(refGSP_SubJtMatched_==1) refGSP_SubJtMatched_=0;
+	//	  if(refGSP_b1Match_jtdR_ <0.3 && refGSP_b2Match_jtdR_ <0.3) refGSP_SubJtMatched_=1;
+
+
+	if (refGSP_SubJtMatched_==1 && refGSP_b2pt_>refGSP_b1pt_){
 		cout<<"hello in one reco jet 2pt > 1pt"<<endl;  // why this appear  // the findParton ask exact flavor, not abs(flavor)
-		}
+	}
 
-		if (refGSP_SubJtMatched_==1 && nSubJet_>=2){
-			refGSP_b1Match_subjt1dR_ =pow( pow(refGSP_b1eta_- jtSubJetEta1_,2)+pow(delta_Phi(refGSP_b1phi_,jtSubJetPhi1_),2) , 0.5);
-      refGSP_b1Match_subjt2dR_ =pow( pow(refGSP_b1eta_- jtSubJetEta2_,2)+pow(delta_Phi(refGSP_b1phi_,jtSubJetPhi2_),2) , 0.5);
-      refGSP_b2Match_subjt1dR_ =pow( pow(refGSP_b2eta_- jtSubJetEta1_,2)+pow(delta_Phi(refGSP_b2phi_,jtSubJetPhi1_),2) , 0.5);
-      refGSP_b2Match_subjt2dR_ =pow( pow(refGSP_b2eta_- jtSubJetEta2_,2)+pow(delta_Phi(refGSP_b2phi_,jtSubJetPhi2_),2) , 0.5);
+	if (refGSP_SubJtMatched_==1 && nSubJet_>=2){
+    // dR Match
+		refGSP_b1Match_SubJt1dR_ =pow( pow(refGSP_b1eta_- jtSubJetEta1_,2)+pow(delta_Phi(refGSP_b1phi_,jtSubJetPhi1_),2) , 0.5);
+		refGSP_b1Match_SubJt2dR_ =pow( pow(refGSP_b1eta_- jtSubJetEta2_,2)+pow(delta_Phi(refGSP_b1phi_,jtSubJetPhi2_),2) , 0.5);
+		refGSP_b2Match_SubJt1dR_ =pow( pow(refGSP_b2eta_- jtSubJetEta1_,2)+pow(delta_Phi(refGSP_b2phi_,jtSubJetPhi1_),2) , 0.5);
+		refGSP_b2Match_SubJt2dR_ =pow( pow(refGSP_b2eta_- jtSubJetEta2_,2)+pow(delta_Phi(refGSP_b2phi_,jtSubJetPhi2_),2) , 0.5);
 
-			refGSP_bbSubJtMatchStatus_=0;
-			if (refGSP_b1Match_subjt1dR_ < refGSP_b1Match_subjt2dR_ && refGSP_b2Match_subjt1dR_ > refGSP_b2Match_subjt2dR_) { refGSP_bbSubJtMatchStatus_=1; }
-      if (refGSP_b1Match_subjt1dR_ > refGSP_b1Match_subjt2dR_ && refGSP_b2Match_subjt1dR_ < refGSP_b2Match_subjt2dR_) { refGSP_bbSubJtMatchStatus_=2; }
-	
-		}
+		refGSP_bbSubJt_dRMatchStatus_=0;
+		if (refGSP_b1Match_SubJt1dR_ < refGSP_b1Match_SubJt2dR_ && refGSP_b2Match_SubJt1dR_ > refGSP_b2Match_SubJt2dR_) { refGSP_bbSubJt_dRMatchStatus_=1; }
+		if (refGSP_b1Match_SubJt1dR_ > refGSP_b1Match_SubJt2dR_ && refGSP_b2Match_SubJt1dR_ < refGSP_b2Match_SubJt2dR_) { refGSP_bbSubJt_dRMatchStatus_=2; }
+
+		refGSP_bbSubJt_dR0p1MatchStatus_=0;
+		if(refGSP_bbSubJt_dRMatchStatus_==1 && refGSP_b1Match_SubJt1dR_ <0.1 && refGSP_b1Match_SubJt2dR_ >0.1 && refGSP_b2Match_SubJt2dR_<0.1 && refGSP_b2Match_SubJt1dR_ >0.1) {refGSP_bbSubJt_dR0p1MatchStatus_=1;}
+    if(refGSP_bbSubJt_dRMatchStatus_==2 && refGSP_b1Match_SubJt1dR_ >0.1 && refGSP_b1Match_SubJt2dR_ <0.1 && refGSP_b2Match_SubJt2dR_>0.1 && refGSP_b2Match_SubJt1dR_ <0.1) {refGSP_bbSubJt_dR0p1MatchStatus_=2;}
+
+		// pt Match
+		if (jtSubJetPt1_ >0){ refGSP_b1Match_SubJt1PtRat_=refGSP_b1pt_ / jtSubJetPt1_ ; }
+    if (jtSubJetPt2_ >0){ refGSP_b1Match_SubJt2PtRat_=refGSP_b1pt_ / jtSubJetPt2_ ; }
+    if (jtSubJetPt1_ >0){ refGSP_b2Match_SubJt1PtRat_=refGSP_b2pt_ / jtSubJetPt1_ ; }
+    if (jtSubJetPt2_ >0){ refGSP_b2Match_SubJt2PtRat_=refGSP_b2pt_ / jtSubJetPt2_ ; }
+
+		refGSP_bbSubJt_PtRatMatchStatus_=0;
+		if(abs(refGSP_b1Match_SubJt1PtRat_-1) < abs(refGSP_b1Match_SubJt2PtRat_-1) && abs(refGSP_b2Match_SubJt1PtRat_ -1) > abs(refGSP_b2Match_SubJt2PtRat_-1))
+		{ refGSP_bbSubJt_PtRatMatchStatus_=1 ; }
+    if(abs(refGSP_b1Match_SubJt1PtRat_-1) > abs(refGSP_b1Match_SubJt2PtRat_-1) && abs(refGSP_b2Match_SubJt1PtRat_ -1) < abs(refGSP_b2Match_SubJt2PtRat_-1))
+    { refGSP_bbSubJt_PtRatMatchStatus_=2 ; }
+
+		refGSP_bbSubJt_PtRatTightMatchStatus_=0;
+	  float dPtRcut=0.3;
+		if( refGSP_bbSubJt_PtRatMatchStatus_==1 && abs(refGSP_b1Match_SubJt1PtRat_-1) < dPtRcut &&  abs(refGSP_b2Match_SubJt2PtRat_-1)<dPtRcut)
+		{refGSP_bbSubJt_PtRatTightMatchStatus_=1;}
+    if( refGSP_bbSubJt_PtRatMatchStatus_==2 && abs(refGSP_b1Match_SubJt2PtRat_-1) < dPtRcut &&  abs(refGSP_b2Match_SubJt1PtRat_-1)<dPtRcut)
+    {refGSP_bbSubJt_PtRatTightMatchStatus_=2;}
+
+		// pt & dR match
+		refGSP_bbSubJt_MatchStatus_=0;
+		if(refGSP_bbSubJt_dRMatchStatus_==1 && refGSP_bbSubJt_PtRatMatchStatus_==1) { refGSP_bbSubJt_MatchStatus_=1;}
+    if(refGSP_bbSubJt_dRMatchStatus_==2 && refGSP_bbSubJt_PtRatMatchStatus_==2) { refGSP_bbSubJt_MatchStatus_=2;}
+
+		refGSP_bbSubJt_TightMatchStatus_=0;
+		if(refGSP_bbSubJt_dR0p1MatchStatus_==1 && refGSP_bbSubJt_PtRatTightMatchStatus_ ==1) {refGSP_bbSubJt_TightMatchStatus_=1;}
+    if(refGSP_bbSubJt_dR0p1MatchStatus_==2 && refGSP_bbSubJt_PtRatTightMatchStatus_ ==2) {refGSP_bbSubJt_TightMatchStatus_=2;}
+
+	} // end if (refGSP_SubJtMatched_==1 && nSubJet_>=2)
+
+
+	if (refGSP_SubJtMatched_==1 && nrefSubJet_>=2){
+    // dR Match
+		refGSP_b1Match_refSubJt1dR_ =pow( pow(refGSP_b1eta_- refSubJetEta1_,2)+pow(delta_Phi(refGSP_b1phi_,refSubJetPhi1_),2) , 0.5);
+		refGSP_b1Match_refSubJt2dR_ =pow( pow(refGSP_b1eta_- refSubJetEta2_,2)+pow(delta_Phi(refGSP_b1phi_,refSubJetPhi2_),2) , 0.5);
+		refGSP_b2Match_refSubJt1dR_ =pow( pow(refGSP_b2eta_- refSubJetEta1_,2)+pow(delta_Phi(refGSP_b2phi_,refSubJetPhi1_),2) , 0.5);
+		refGSP_b2Match_refSubJt2dR_ =pow( pow(refGSP_b2eta_- refSubJetEta2_,2)+pow(delta_Phi(refGSP_b2phi_,refSubJetPhi2_),2) , 0.5);
+
+		refGSP_bbrefSubJt_dRMatchStatus_=0;
+		if (refGSP_b1Match_refSubJt1dR_ < refGSP_b1Match_refSubJt2dR_ && refGSP_b2Match_refSubJt1dR_ > refGSP_b2Match_refSubJt2dR_) { refGSP_bbrefSubJt_dRMatchStatus_=1; }
+		if (refGSP_b1Match_refSubJt1dR_ > refGSP_b1Match_refSubJt2dR_ && refGSP_b2Match_refSubJt1dR_ < refGSP_b2Match_refSubJt2dR_) { refGSP_bbrefSubJt_dRMatchStatus_=2; }
+
+		refGSP_bbrefSubJt_dR0p1MatchStatus_=0;
+		if(refGSP_bbrefSubJt_dRMatchStatus_==1 && refGSP_b1Match_refSubJt1dR_ <0.1 && refGSP_b1Match_refSubJt2dR_ >0.1 && refGSP_b2Match_refSubJt2dR_<0.1 && refGSP_b2Match_refSubJt1dR_ >0.1) {refGSP_bbrefSubJt_dR0p1MatchStatus_=1;}
+    if(refGSP_bbrefSubJt_dRMatchStatus_==2 && refGSP_b1Match_refSubJt1dR_ >0.1 && refGSP_b1Match_refSubJt2dR_ <0.1 && refGSP_b2Match_refSubJt2dR_>0.1 && refGSP_b2Match_refSubJt1dR_ <0.1) {refGSP_bbrefSubJt_dR0p1MatchStatus_=2;}
+
+		// pt Match
+		if (refSubJetPt1_ >0){ refGSP_b1Match_refSubJt1PtRat_=refGSP_b1pt_ / refSubJetPt1_ ; }
+    if (refSubJetPt2_ >0){ refGSP_b1Match_refSubJt2PtRat_=refGSP_b1pt_ / refSubJetPt2_ ; }
+    if (refSubJetPt1_ >0){ refGSP_b2Match_refSubJt1PtRat_=refGSP_b2pt_ / refSubJetPt1_ ; }
+    if (refSubJetPt2_ >0){ refGSP_b2Match_refSubJt2PtRat_=refGSP_b2pt_ / refSubJetPt2_ ; }
+
+		refGSP_bbrefSubJt_PtRatMatchStatus_=0;
+		if(abs(refGSP_b1Match_refSubJt1PtRat_-1) < abs(refGSP_b1Match_refSubJt2PtRat_-1) && abs(refGSP_b2Match_refSubJt1PtRat_ -1) > abs(refGSP_b2Match_refSubJt2PtRat_-1))
+		{ refGSP_bbrefSubJt_PtRatMatchStatus_=1 ; }
+    if(abs(refGSP_b1Match_refSubJt1PtRat_-1) > abs(refGSP_b1Match_refSubJt2PtRat_-1) && abs(refGSP_b2Match_refSubJt1PtRat_ -1) < abs(refGSP_b2Match_refSubJt2PtRat_-1))
+    { refGSP_bbrefSubJt_PtRatMatchStatus_=2 ; }
+
+		refGSP_bbrefSubJt_PtRatTightMatchStatus_=0;
+	  float dPtRcut=0.3;
+		if( refGSP_bbrefSubJt_PtRatMatchStatus_==1 && abs(refGSP_b1Match_refSubJt1PtRat_-1) < dPtRcut &&  abs(refGSP_b2Match_refSubJt2PtRat_-1)<dPtRcut)
+		{refGSP_bbrefSubJt_PtRatTightMatchStatus_=1;}
+    if( refGSP_bbrefSubJt_PtRatMatchStatus_==2 && abs(refGSP_b1Match_refSubJt2PtRat_-1) < dPtRcut &&  abs(refGSP_b2Match_refSubJt1PtRat_-1)<dPtRcut)
+    {refGSP_bbrefSubJt_PtRatTightMatchStatus_=2;}
+
+		// pt & dR match
+		refGSP_bbrefSubJt_MatchStatus_=0;
+		if(refGSP_bbrefSubJt_dRMatchStatus_==1 && refGSP_bbrefSubJt_PtRatMatchStatus_==1) { refGSP_bbrefSubJt_MatchStatus_=1;}
+    if(refGSP_bbrefSubJt_dRMatchStatus_==2 && refGSP_bbrefSubJt_PtRatMatchStatus_==2) { refGSP_bbrefSubJt_MatchStatus_=2;}
+
+		refGSP_bbrefSubJt_TightMatchStatus_=0;
+		if(refGSP_bbrefSubJt_dR0p1MatchStatus_==1 && refGSP_bbrefSubJt_PtRatTightMatchStatus_ ==1) {refGSP_bbrefSubJt_TightMatchStatus_=1;}
+    if(refGSP_bbrefSubJt_dR0p1MatchStatus_==2 && refGSP_bbrefSubJt_PtRatTightMatchStatus_ ==2) {refGSP_bbrefSubJt_TightMatchStatus_=2;}
+
+	} // end if (refGSP_SubJtMatched_==1 && nrefSubJet_>=2)
 
 
 
@@ -452,7 +577,7 @@ void akSoftDrop4PFJetSelector::Terminate()
 	int nbin=50;
 	double binLow=0;
 	double binHigh=1;
-
+/*
 	TH1D *h_jtSubJetPt2ov1_nonB = new TH1D("h_jtSubJetPt2ov1_nonB","h_jtSubJetPt2ov1_nonB",nbin,binLow,binHigh);
 	TH1D *h_jtSubJetPt2ov1_FCRB = new TH1D("h_jtSubJetPt2ov1_FCRB","h_jtSubJetPt2ov1_FCRB",nbin,binLow,binHigh);
 	TH1D *h_jtSubJetPt2ov1_GSPB = new TH1D("h_jtSubJetPt2ov1_GSPB","h_jtSubJetPt2ov1_GSPB",nbin,binLow,binHigh);
@@ -484,15 +609,15 @@ void akSoftDrop4PFJetSelector::Terminate()
 	le_jtSubJetPt2ov1->Draw("SAME");
 
 	c_jtSubJetPt2ov1->SaveAs("plots/jtSubJetPt2ov1.pdf");
-
-
+*/
+/*
 	TH1D *h_jtSubZg_nonB = new TH1D("h_jtSubZg_nonB","h_jtSubZg_nonB",nbin,binLow,binHigh/2); h_jtSubZg_nonB->Sumw2();
 	TH1D *h_jtSubZg_FCRB = new TH1D("h_jtSubZg_FCRB","h_jtSubZg_FCRB",nbin,binLow,binHigh/2); h_jtSubZg_FCRB->Sumw2();
 	TH1D *h_jtSubZg_GSPB = new TH1D("h_jtSubZg_GSPB","h_jtSubZg_GSPB",nbin,binLow,binHigh/2); h_jtSubZg_GSPB->Sumw2();
 
-	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_GSPB","jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)");
-	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_FCRB","jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)==5&&refparton_flavorProcess==1");
-	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_nonB","jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)!=5");
+	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_GSPB","jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)");
+	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_FCRB","jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)==5&&refparton_flavorProcess==1");
+	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_nonB","jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)!=5");
 
 	h_jtSubZg_nonB->Scale(1/h_jtSubZg_nonB->Integral());
 	h_jtSubZg_FCRB->Scale(1/h_jtSubZg_FCRB->Integral());
@@ -520,14 +645,15 @@ void akSoftDrop4PFJetSelector::Terminate()
 	le_jtSubZg->Draw("SAME");
 
 	c_jtSubZg->SaveAs("plots/jtSubZg.pdf");
+*/
 
 	TH1D *h_jtSubZg_dR0p1_nonB = new TH1D("h_jtSubZg_dR0p1_nonB","h_jtSubZg_dR0p1_nonB",nbin,binLow,binHigh/2); h_jtSubZg_dR0p1_nonB->Sumw2();
 	TH1D *h_jtSubZg_dR0p1_FCRB = new TH1D("h_jtSubZg_dR0p1_FCRB","h_jtSubZg_dR0p1_FCRB",nbin,binLow,binHigh/2); h_jtSubZg_dR0p1_FCRB->Sumw2();
 	TH1D *h_jtSubZg_dR0p1_GSPB = new TH1D("h_jtSubZg_dR0p1_GSPB","h_jtSubZg_dR0p1_GSPB",nbin,binLow,binHigh/2); h_jtSubZg_dR0p1_GSPB->Sumw2();
 
-	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_dR0p1_GSPB","jtSubJetdR12>0.1 && jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)");
-	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_dR0p1_FCRB","jtSubJetdR12>0.1 && jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)==5&&refparton_flavorProcess==1");
-	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_dR0p1_nonB","jtSubJetdR12>0.1 && jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)!=5");
+	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_dR0p1_GSPB","jtSubJetdR12>0.1 && jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)");
+	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_dR0p1_FCRB","jtSubJetdR12>0.1 && jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)==5&&refparton_flavorProcess==1");
+	t_akSD4PFJet->Draw("jtSubZg>>h_jtSubZg_dR0p1_nonB","jtSubJetdR12>0.1 && jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)!=5");
 
 	h_jtSubZg_dR0p1_nonB->Scale(1/h_jtSubZg_dR0p1_nonB->Integral());
 	h_jtSubZg_dR0p1_FCRB->Scale(1/h_jtSubZg_dR0p1_FCRB->Integral());
@@ -564,9 +690,9 @@ void akSoftDrop4PFJetSelector::Terminate()
 	TH1D *h_jtSubJetdR12_FCRB = new TH1D("h_jtSubJetdR12_FCRB","h_jtSubJetdR12_FCRB",nbin,binLow,binHigh/2); h_jtSubJetdR12_FCRB->Sumw2();
 	TH1D *h_jtSubJetdR12_GSPB = new TH1D("h_jtSubJetdR12_GSPB","h_jtSubJetdR12_GSPB",nbin,binLow,binHigh/2); h_jtSubJetdR12_GSPB->Sumw2();
 
-	t_akSD4PFJet->Draw("jtSubJetdR12>>h_jtSubJetdR12_GSPB","jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)");
-	t_akSD4PFJet->Draw("jtSubJetdR12>>h_jtSubJetdR12_FCRB","jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)==5&&refparton_flavorProcess==1");
-	t_akSD4PFJet->Draw("jtSubJetdR12>>h_jtSubJetdR12_nonB","jtpt>100&&nSubJet>=2&&abs(refparton_flavorForB)!=5");
+	t_akSD4PFJet->Draw("jtSubJetdR12>>h_jtSubJetdR12_GSPB","jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)");
+	t_akSD4PFJet->Draw("jtSubJetdR12>>h_jtSubJetdR12_FCRB","jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)==5&&refparton_flavorProcess==1");
+	t_akSD4PFJet->Draw("jtSubJetdR12>>h_jtSubJetdR12_nonB","jtpt>100 && abs(jteta)<2&&nSubJet>=2&&abs(refparton_flavorForB)!=5");
 
 	h_jtSubJetdR12_nonB->Scale(1/h_jtSubJetdR12_nonB->Integral());
 	h_jtSubJetdR12_FCRB->Scale(1/h_jtSubJetdR12_FCRB->Integral());
@@ -598,6 +724,20 @@ void akSoftDrop4PFJetSelector::Terminate()
 
 
 
+	TCanvas *c_bbpt= new TCanvas("c_bbpt","c_bbpt");
+	c_bbpt->Divide(2,2);
+	c_bbpt->cd(1);
+	t_akSD4PFJet->Draw("refGSP_b1pt","jtpt>100 && abs(jteta)<2&& refparton_flavorProcess==6 && refGSP_SubJtMatched==1");
+  c_bbpt->cd(2);
+  t_akSD4PFJet->Draw("refGSP_b2pt","jtpt>100 && abs(jteta)<2&& refparton_flavorProcess==6 && refGSP_SubJtMatched==1");
+  c_bbpt->cd(3);
+  t_akSD4PFJet->Draw("refGSP_b1pt","jtpt>100 && abs(jteta)<2&& refparton_flavorProcess==6 && refGSP_SubJtMatched==-1");
+  c_bbpt->cd(4);
+  t_akSD4PFJet->Draw("refGSP_b2pt","jtpt>100 && abs(jteta)<2&& refparton_flavorProcess==6 && refGSP_SubJtMatched==-1");
+	c_bbpt->SaveAs("plots/bbpt_vs_JtMatched.pdf");
+	
+
+
 
 	TCanvas *c_LeadJtPt= new TCanvas("c_LeadJtPt","c_LeadJtPt",800,800);
 	c_LeadJtPt->cd();
@@ -606,89 +746,218 @@ void akSoftDrop4PFJetSelector::Terminate()
 
 	TCanvas *c_FlavorforB = new TCanvas("c_FlavorforB","c_FlavorforB",800,800);
 	c_FlavorforB->cd();
-	t_akSD4PFJet->Draw("refparton_flavorForB","jtpt>100");
+	t_akSD4PFJet->Draw("refparton_flavorForB","jtpt>100 && abs(jteta)<2");
 	c_FlavorforB->SaveAs("plots/refparton_flavorForB.pdf");
 
 	TCanvas *c_FlavorProcess = new TCanvas("c_FlavorProcess","c_FlavorProcess",800,800);
 	c_FlavorProcess->cd();
-	t_akSD4PFJet->Draw("refparton_flavorProcess","jtpt>100");
+	t_akSD4PFJet->Draw("refparton_flavorProcess","jtpt>100 && abs(jteta)<2");
 	c_FlavorProcess->SaveAs("plots/refparton_flavorProcess.pdf");
+
+	TCanvas *c_refGSP_bbJtMatched = new TCanvas("c_refGSP_bbJtMatched","c_refGSP_bbJtMatched",800,800);
+	c_refGSP_bbJtMatched->cd();
+	t_akSD4PFJet->Draw("refGSP_SubJtMatched","jtpt>100 && abs(jteta)<2 && refparton_flavorProcess==6");
+	c_refGSP_bbJtMatched->SaveAs("plots/refGSP_bbJtMatched.pdf");
+
+	TCanvas *c_refGSP_bbSubJt_Match = new TCanvas("c_refGSP_bbSubJt_Match","c_refGSP_bbSubJt_Match",800,800);
+	c_refGSP_bbSubJt_Match->cd();
+	t_akSD4PFJet->Draw("refGSP_bbSubJt_MatchStatus","jtpt>100 && abs(jteta)<2 && refparton_flavorProcess==6 && refGSP_SubJtMatched==1");
+	c_refGSP_bbSubJt_Match->SaveAs("plots/refGSP_bbSubJt_Match.pdf");
+
+  TCanvas *c_refGSP_bbSubJt_dRMatch = new TCanvas("c_refGSP_bbSubJt_dRMatch","c_refGSP_bbSubJt_dRMatch",800,800);
+  c_refGSP_bbSubJt_dRMatch->cd();
+  t_akSD4PFJet->Draw("refGSP_bbSubJt_dRMatchStatus","jtpt>100 && abs(jteta)<2 && refparton_flavorProcess==6 && refGSP_SubJtMatched==1");
+  c_refGSP_bbSubJt_dRMatch->SaveAs("plots/refGSP_bbSubJt_dRMatch.pdf");
 
 
 	TCanvas *c_nSubJet = new TCanvas("c_nSubJet","c_nSubJet",800,800);
 	c_nSubJet->cd();
-	t_akSD4PFJet->Draw("nSubJet","jtpt>100&&abs(refparton_flavorForB)==5");
+	t_akSD4PFJet->Draw("nSubJet","jtpt>100 && abs(jteta)<2&&abs(refparton_flavorForB)==5");
 	c_nSubJet->SaveAs("plots/nSubJet.pdf");
 
+/*
 	TCanvas *c_bbdR = new TCanvas("c_bbdR","c_bbdR",800,800);
 	c_bbdR->Divide(2,2);
 	c_bbdR->cd(1);
-	t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6");
-  c_bbdR->cd(2);
-  t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && refGSP_SubJtMatched==-1 && refparton_flavorProcess==6");
-  c_bbdR->cd(3);
-  t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && refGSP_SubJtMatched==1 && refparton_flavorProcess==6");
+	t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && abs(jteta)<2 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6");
+	c_bbdR->cd(2);
+	t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && abs(jteta)<2 && refGSP_SubJtMatched==-1 && refparton_flavorProcess==6");
+	c_bbdR->cd(3);
+	t_akSD4PFJet->Draw("refGSP_bbdR","jtpt>100 && abs(jteta)<2 && refGSP_SubJtMatched==1 && refparton_flavorProcess==6");
 	c_bbdR->SaveAs("plots/refGSP_bbdR.pdf");
+*/
 
 	TCanvas *c_bbzg = new TCanvas("c_bbzg","c_bbzg",800,800);
 	c_bbzg->Divide(2,2);
 	c_bbzg->cd(1);
-  t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6");
-  c_bbzg->cd(2);
-  t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==1");
-  c_bbzg->cd(3);
-  t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==2");
+	t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && abs(jteta)<2 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6");
+	c_bbzg->cd(2);
+	t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && abs(jteta)<2 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==1");
+	c_bbzg->cd(3);
+	t_akSD4PFJet->Draw("refGSP_bbzg","jtpt>100 && abs(jteta)<2 && refGSP_SubJtMatched!=-2 && refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==2");
 	c_bbzg->SaveAs("plots/refGSP_bbzg.pdf");
 
-	TCanvas *c_subjtMatched_dR = new TCanvas("c_subjtMatched_dR","c_subjtMatched_dR",800,800);
-	c_subjtMatched_dR->Divide(2,2);
-	c_subjtMatched_dR->cd(1);
-	t_akSD4PFJet->Draw("refGSP_b1Match_subjt1dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==1");
-  c_subjtMatched_dR->cd(2);
-  t_akSD4PFJet->Draw("refGSP_b2Match_subjt2dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==1");
-  c_subjtMatched_dR->cd(3);
-  t_akSD4PFJet->Draw("refGSP_b1Match_subjt2dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==2");
-  c_subjtMatched_dR->cd(4);
-  t_akSD4PFJet->Draw("refGSP_b2Match_subjt1dR","refparton_flavorProcess==6 && refGSP_bbSubJtMatchStatus==2");
-	c_subjtMatched_dR->SaveAs("plots/refGSP_b12Match_subjtdR.pdf");
-	
+	TCanvas *c_SubJtMatched_dR = new TCanvas("c_SubJtMatched_dR","c_SubJtMatched_dR",800,800);
+	c_SubJtMatched_dR->Divide(2,2);
+	c_SubJtMatched_dR->cd(1);
+	t_akSD4PFJet->Draw("refGSP_b1Match_SubJt1dR","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==1");
+	c_SubJtMatched_dR->cd(2);
+	t_akSD4PFJet->Draw("refGSP_b2Match_SubJt2dR","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==1");
+	c_SubJtMatched_dR->cd(3);
+	t_akSD4PFJet->Draw("refGSP_b1Match_SubJt2dR","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==2");
+	c_SubJtMatched_dR->cd(4);
+	t_akSD4PFJet->Draw("refGSP_b2Match_SubJt1dR","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==2");
+	c_SubJtMatched_dR->SaveAs("plots/refGSP_b12Match_SubJtdR.pdf");
 
-	plotCompare_fun(t_akSD4PFJet);
+	TCanvas *c_SubJtMatched_SubJtPtRat = new TCanvas("c_SubJtMatched_SubJtPtRat","c_SubJtMatched_SubJtPtRat",800,800);
+  c_SubJtMatched_SubJtPtRat->Divide(2,2);
+  c_SubJtMatched_SubJtPtRat->cd(1);
+  t_akSD4PFJet->Draw("refGSP_b1Match_SubJt1PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==1");
+  c_SubJtMatched_SubJtPtRat->cd(2);
+  t_akSD4PFJet->Draw("refGSP_b2Match_SubJt2PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==1");
+  c_SubJtMatched_SubJtPtRat->cd(3);
+  t_akSD4PFJet->Draw("refGSP_b1Match_SubJt2PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==2");
+  c_SubJtMatched_SubJtPtRat->cd(4);
+  t_akSD4PFJet->Draw("refGSP_b2Match_SubJt1PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==2");
+  c_SubJtMatched_SubJtPtRat->SaveAs("plots/refGSP_b12Match_SubJtPtRat.pdf");
+
+  TCanvas *c_SubJtMatched_SubJtPtRat_dR0p1Cut = new TCanvas("c_SubJtMatched_SubJtPtRat_dR0p1Cut","c_SubJtMatched_SubJtPtRat_dR0p1Cut",800,800);
+  c_SubJtMatched_SubJtPtRat_dR0p1Cut->Divide(2,2);
+  c_SubJtMatched_SubJtPtRat_dR0p1Cut->cd(1);
+  t_akSD4PFJet->Draw("refGSP_b1Match_SubJt1PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dR0p1MatchStatus==1");
+  c_SubJtMatched_SubJtPtRat_dR0p1Cut->cd(2);
+  t_akSD4PFJet->Draw("refGSP_b2Match_SubJt2PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dR0p1MatchStatus==1");
+  c_SubJtMatched_SubJtPtRat_dR0p1Cut->cd(3);
+  t_akSD4PFJet->Draw("refGSP_b1Match_SubJt2PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dR0p1MatchStatus==2");
+  c_SubJtMatched_SubJtPtRat_dR0p1Cut->cd(4);
+  t_akSD4PFJet->Draw("refGSP_b2Match_SubJt1PtRat","refparton_flavorProcess==6 && refGSP_bbSubJt_dR0p1MatchStatus==2");
+  c_SubJtMatched_SubJtPtRat_dR0p1Cut->SaveAs("plots/refGSP_b12Match_SubJtPtRat_dR0p1Cut.pdf");
+
+  TCanvas *c_refSubJtMatched_SubJtPtRat = new TCanvas("c_refSubJtMatched_SubJtPtRat","c_refSubJtMatched_SubJtPtRat",800,800);
+  c_refSubJtMatched_SubJtPtRat->Divide(2,2);
+  c_refSubJtMatched_SubJtPtRat->cd(1);
+  t_akSD4PFJet->Draw("refGSP_b1Match_refSubJt1PtRat","refparton_flavorProcess==6 && refGSP_bbrefSubJt_dRMatchStatus==1");
+  c_refSubJtMatched_SubJtPtRat->cd(2);
+  t_akSD4PFJet->Draw("refGSP_b2Match_refSubJt2PtRat","refparton_flavorProcess==6 && refGSP_bbrefSubJt_dRMatchStatus==1");
+  c_refSubJtMatched_SubJtPtRat->cd(3);
+  t_akSD4PFJet->Draw("refGSP_b1Match_refSubJt2PtRat","refparton_flavorProcess==6 && refGSP_bbrefSubJt_dRMatchStatus==2");
+  c_refSubJtMatched_SubJtPtRat->cd(4);
+  t_akSD4PFJet->Draw("refGSP_b2Match_refSubJt1PtRat","refparton_flavorProcess==6 && refGSP_bbrefSubJt_dRMatchStatus==2");
+  c_refSubJtMatched_SubJtPtRat->SaveAs("plots/refGSP_b12Match_refSubJtPtRat.pdf");
 
 
-	TCut CutCommon="jtpt>100&&nSubJet>=2"; TCut Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)"; 
+//	plotCompare_fun(t_akSD4PFJet);
+
+
+	// plot GSP-B, FCR-B Non B , jtSubZg
+	nbin=50; binLow=0; binHigh=0.5;
+	TCut CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2"; TCut Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)"; 
 	TCut Cut2="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1"; TCut Cut3="abs(refparton_flavorForB)!=5";
 	TString add_savename="";
 	TString plotVariable="jtSubZg"; TString plotTitle="Sub-Jet pt2/pt2+pt1";TString plotXTitle="Zg";
 	TString type1Title="GSP-B"; TString type2Title="FCR-B"; TString type3Title="Non B";
+  Int_t DoNorm=1;
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
-	// plot GSP-bb match, not match, FCR ; Zg
+
+	//  plot GSP-B, FCR-B Non B , jtSubZg with SubJt dR12>0.1
+  nbin=50; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2&&jtSubJetdR12>0.1"; Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
+  Cut2="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1"; Cut3="abs(refparton_flavorForB)!=5";
+  add_savename="SubJt12dR0p1cut";
+  plotVariable="jtSubZg"; plotTitle="Sub-Jet pt2/pt2+pt1";plotXTitle="Zg";
+  type1Title="GSP-B"; type2Title="FCR-B"; type3Title="Non B";
+
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+  // refSubjtdR
+  nbin=50; binLow=0; binHigh=0.6;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
+  Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
+  Cut3="abs(refparton_flavorForB)!=5";
+  add_savename="";
+  plotVariable="jtSubJetdR12";
+  plotTitle="Subj-Jet dR";
+  plotXTitle="dR12";
+  type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+	// plot GSP-bb match, GSP-B single, FCR ; Zg
+	nbin=25; binLow=0; binHigh=0.5;
+	CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+	Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2) ";
+	Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+	Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==1";
+	add_savename="GSP_bbMatch";
+	plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
+	type1Title="GSP-B SubJt bb match"; type2Title="GSP-B one b jet"; type3Title="FCR-B";
+	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+  // plot GSP-bb match, not match, GSP-B single ; Zg
   nbin=25; binLow=0; binHigh=0.5;
-  CutCommon="jtpt>100&&nrefSubJet>=2";
-  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJtMatchStatus==1 || refGSP_bbSubJtMatchStatus==2) ";
-  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
-  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==1";
-  add_savename="GSP_bbMatch";
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==0";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  add_savename="GSP_bbMatch2";
   plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
-  type1Title="GSP-B subjt bb match"; type2Title="GSP-B one b jet"; type3Title="FCR-B";
+  type1Title="GSP-B SubJt bb match"; type2Title="GSP-B bb not Match"; type3Title="GSP-B one b jet";
   plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
- // plot GSP-bb match, not match, FCR ; dR
+  // plot GSP-bb tight match, loose match, GSP-B single ; Zg
   nbin=25; binLow=0; binHigh=0.5;
-  CutCommon="jtpt>100&&nrefSubJet>=2";
-  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJtMatchStatus==1 || refGSP_bbSubJtMatchStatus==2) ";
-  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
-  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==1";
-  add_savename="GSP_bbMatch";
-  plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
-  type1Title="GSP-B subjt bb match"; type2Title="GSP-B one b jet"; type3Title="FCR-B";
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dR0p1MatchStatus==1 || refGSP_bbSubJt_dR0p1MatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2)";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  add_savename="GSP_bbMatchTight";
+  plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
+  type1Title="GSP-B bb dR0.1 Match"; type2Title="GSP-B bb Match"; type3Title="GSP-B one b jet";
   plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
- 
+
+
+	// plot GSP-bb match, GSP one b, FCR ; dR
+	nbin=25; binLow=0; binHigh=0.5;
+	CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+	Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2) ";
+	Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+	Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==1";
+	add_savename="GSP_bbMatch";
+	plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
+	type1Title="GSP-B SubJt bb match"; type2Title="GSP-B one b jet"; type3Title="FCR-B";
+	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+ // plot GSP-bb match, not match, GSP-B single; dR
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_bbSubJt_dRMatchStatus==0";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  add_savename="GSP_bbMatch2";
+  plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
+  type1Title="GSP-B SubJt bb match"; type2Title="GSP-B bb not Match"; type3Title="GSP-B one b jet";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+ // plot GSP-bb tight match, loose match, GSP-B single; dR
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dR0p1MatchStatus==1 || refGSP_bbSubJt_dR0p1MatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2)";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  add_savename="GSP_bbMatchTight";
+  plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
+  type1Title="GSP-B SubJt bb match"; type2Title="GSP-B bb loose Match"; type3Title="GSP-B one b jet";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
 
 	// plot Gluon-spliiting B , differenet dR
 	nbin=50; binLow=0; binHigh=0.5;
-	CutCommon="jtpt>100&&nSubJet>=2"; 
+	CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2"; 
 	Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)&&jtSubJetdR12>0.23";	
 	Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)&&jtSubJetdR12<0.12";
 	Cut3="abs(refparton_flavorForB)==5&&refparton_flavorProcess==1";
@@ -698,12 +967,12 @@ void akSoftDrop4PFJetSelector::Terminate()
 	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
-	// modify "All" input parameter for plot
+	// refSubZg, GSP-B FCR-B Non B
 	nbin=50; binLow=0; binHigh=0.5;
-	CutCommon="jtpt>100&&nrefSubJet>=2";	
-  Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
-  Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
-  Cut3="abs(refparton_flavorForB)!=5";	
+	CutCommon="jtpt>100 && abs(jteta)<2&&nrefSubJet>=2";	
+	Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
+	Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
+	Cut3="abs(refparton_flavorForB)!=5";	
 	add_savename="";
 	plotVariable="refSubZg";	
 	plotTitle="ref Sub-Jet Zg"; plotXTitle="Zg";
@@ -713,44 +982,89 @@ void akSoftDrop4PFJetSelector::Terminate()
 
 	// refSubjtdR
 	nbin=50; binLow=0; binHigh=0.5;
-  CutCommon="jtpt>100&&nrefSubJet>=2";
-  Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
-  Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
-  Cut3="abs(refparton_flavorForB)!=5";
-  add_savename="";
+	CutCommon="jtpt>100 && abs(jteta)<2&&nrefSubJet>=2";
+	Cut1="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==5 || refparton_flavorProcess==6)";
+	Cut2="abs(refparton_flavorForB)==5&&( refparton_flavorProcess==1 )";
+	Cut3="abs(refparton_flavorForB)!=5";
+	add_savename="";
 	plotVariable="refSubJetdR12";
 	plotTitle="ref Subj-Jet dR";
 	plotXTitle="dR12";
-  type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
+	type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
 	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
-	// bbdR 
-  nbin=45; binLow=0; binHigh=4.5;
-  CutCommon="jtpt>100 && refparton_flavorProcess==6";
-  Cut1="refGSP_SubJtMatched==1";
-  Cut2="refGSP_SubJtMatched==-1";
-  Cut3="refGSP_SubJtMatched!=-2";
-  add_savename="vs_subjtMatched";
+  // plot refJt GSP-bb match, not match, GSP-B single ; Zg
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nrefSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbrefSubJt_dRMatchStatus==1 || refGSP_bbrefSubJt_dRMatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_bbrefSubJt_dRMatchStatus==0";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  add_savename="GSP_bbMatch2";
+  plotVariable="refSubZg"; plotTitle="ref Sub-Jet Zg"; plotXTitle="Zg";
+  type1Title="GSP-B SubJt bb match"; type2Title="GSP-B bb not Match"; type3Title="GSP-B one b jet";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+  // plot refJt GSP-bb match, not match, GSP-B single ; dR
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nrefSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbrefSubJt_dRMatchStatus==1 || refGSP_bbrefSubJt_dRMatchStatus==2) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_bbrefSubJt_dRMatchStatus==0";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && refGSP_SubJtMatched==-1";
+  add_savename="GSP_bbMatch2";
+  plotVariable="refSubJetdR12"; plotTitle="ref Subj-Jet dR"; plotXTitle="dR12";
+  type1Title="GSP-B SubJt bb match"; type2Title="GSP-B bb not Match"; type3Title="GSP-B one b jet";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+
+
+	// bbdR vs GSP-B one-jet & GSP seperate jets
+	nbin=45; binLow=0; binHigh=4.5;
+	CutCommon="jtpt>100 && abs(jteta)<2 && refparton_flavorProcess==6";
+	Cut1="refGSP_SubJtMatched==1";
+	Cut2="refGSP_SubJtMatched==-1";
+	Cut3="refGSP_SubJtMatched!=-2";
+	add_savename="vs_SubJtMatched";
+	plotVariable="refGSP_bbdR";
+	plotTitle="MC bb dR";
+	plotXTitle="dR12";
+	type1Title="GSP-B one-jet"; type2Title="GSP seperate jets";type3Title="All GSP-B";
+	DoNorm=0;
+	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title,DoNorm);
+	DoNorm=1;
+
+  // bbdR vs GSP-BB matched & GSP BB not & all GSP BB
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2 && refparton_flavorProcess==6 && refGSP_SubJtMatched!=-2";
+  Cut1="refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2";
+  Cut2="refGSP_bbSubJt_dRMatchStatus==0";
+  Cut3="refGSP_bbSubJt_dRMatchStatus!=-1";
+  add_savename="vs_bbSubJtMatched";
   plotVariable="refGSP_bbdR";
   plotTitle="MC bb dR";
   plotXTitle="dR12";
-  type1Title="GSP-B one-jet"; type2Title="GSP seperate jets";type3Title="All GSP-B";
-  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+  type1Title="GSP-BB matched"; type2Title="GSP-BB not Matched";type3Title="All GSP-BB";
+  DoNorm=0;
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title,DoNorm);
+  DoNorm=1;
+
+
+
 
 
 	// bbzg
-  nbin=25; binLow=0; binHigh=0.5;
-  CutCommon="jtpt>100 && refparton_flavorProcess==6 && refGSP_SubJtMatched!=-2";
-  Cut1="refGSP_bbSubJtMatchStatus==1";
-  Cut2="refGSP_bbSubJtMatchStatus==2";
-  Cut3="refGSP_bbSubJtMatchStatus==0";
-  add_savename="vs_bbSubJtMatch";
-  plotVariable="refGSP_bbzg";
-  plotTitle="MC bb zg";
-  plotXTitle="zg";
-  type1Title="GSP-B pair1"; type2Title="GSP-B pair2";type3Title="GSP-B notMatch";
-  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+	nbin=25; binLow=0; binHigh=0.5;
+	CutCommon="jtpt>100 && abs(jteta)<2 && refparton_flavorProcess==6 && refGSP_SubJtMatched!=-2";
+	Cut1="refGSP_bbSubJt_dRMatchStatus==1";
+	Cut2="refGSP_bbSubJt_dRMatchStatus==2";
+	Cut3="refGSP_bbSubJt_dRMatchStatus==0";
+	add_savename="vs_bbSubJtMatch";
+	plotVariable="refGSP_bbzg";
+	plotTitle="MC bb zg";
+	plotXTitle="zg";
+	type1Title="GSP-B pair1"; type2Title="GSP-B pair2";type3Title="GSP-B notMatch";
+	plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
 
 
@@ -766,7 +1080,8 @@ int plotCompare_fun(TTree *tjet, int nbin, double binLow, double binHigh,
 		TCut CutCommon, TCut Cut1, TCut Cut2, TCut Cut3,
 		TString add_savename,
 		TString plotVariable, TString plotTitle,TString plotXTitle,
-		TString type1Title, TString type2Title, TString type3Title)
+		TString type1Title, TString type2Title, TString type3Title, 
+		Int_t DoNormalize)
 {
 
 	//	if (tjet) // check tjet
@@ -779,15 +1094,27 @@ int plotCompare_fun(TTree *tjet, int nbin, double binLow, double binHigh,
 	tjet->Draw(Form("%s>>h_type2",plotVariable.Data()),CutCommon&&Cut2);
 	tjet->Draw(Form("%s>>h_type3",plotVariable.Data()),CutCommon&&Cut3);
 
+	if(DoNormalize==1){
 	h_type3->Scale(1/h_type3->Integral());
 	h_type2->Scale(1/h_type2->Integral());
 	h_type1->Scale(1/h_type1->Integral());
+	}
 
+	// set plot maximum & minimum
 	double his_max=0;
+	double his_min=h_type3->GetMinimum();
 	his_max=h_type3->GetMaximum();
 	if (h_type2->GetMaximum() > his_max) his_max=h_type2->GetMaximum();
 	if (h_type1->GetMaximum() > his_max) his_max=h_type1->GetMaximum();
-	h_type3->SetMaximum(his_max);
+  if (h_type2->GetMinimum() > his_max) his_max=h_type2->GetMinimum();
+  if (h_type1->GetMinimum() > his_max) his_max=h_type1->GetMinimum();
+	double hisTall=his_max-his_min;
+	his_max=his_max+hisTall*0.1;
+	his_min=his_min-hisTall*0.05;
+  h_type3->SetMaximum(his_max);	
+  h_type3->SetMinimum(his_min);
+	
+
 
 	gStyle->SetOptStat(0);
 	TCanvas *c_Compare = new TCanvas(Form("c_%s",plotVariable.Data()),Form("c_%s",plotVariable.Data()),800,800);
@@ -822,9 +1149,9 @@ int plotCompare_fun(TTree *tjet, int nbin, double binLow, double binHigh,
 
 float delta_Phi(float phi1, float phi2){
 	float dphi= phi1-phi2;
-  if (dphi < -(Float_t)TMath::Pi()) dphi+=2*(Float_t)TMath::Pi();
-  if (dphi >  (Float_t)TMath::Pi()) dphi-=2*(Float_t)TMath::Pi();
- 	return dphi;
+	if (dphi < -(Float_t)TMath::Pi()) dphi+=2*(Float_t)TMath::Pi();
+	if (dphi >  (Float_t)TMath::Pi()) dphi-=2*(Float_t)TMath::Pi();
+	return dphi;
 }
 
 
