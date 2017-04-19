@@ -32,6 +32,7 @@
 *.so
 *.so.*
 *.dylib
+*.pyc
 
 # Executables
 *.exe
@@ -48,6 +49,9 @@
 *.root
 *~
 
+
+# other temp
+*_C_ACLiC_dict_rdict.pcm
 
 
 
