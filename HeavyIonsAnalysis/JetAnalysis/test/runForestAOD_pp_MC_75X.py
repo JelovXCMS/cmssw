@@ -27,7 +27,8 @@ process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
         #"root://eoscms.cern.ch//eos/cms/store/cmst3/group/hintt/CMSSW_7_5_8_patch2/TTbar/RECO/Events_1.root"
-                                '/store/user/mnguyen//ppBjet/Pythia6_TuneZ2_5020GeV/Pythia6_bjet80_TuneZ2_5020GeV_RECO_v2/160205_072451/0000/step3_99.root'
+#                                '/store/user/mnguyen//ppBjet/Pythia6_TuneZ2_5020GeV/Pythia6_bjet80_TuneZ2_5020GeV_RECO_v2/160205_072451/0000/step3_99.root'
+"root://cms-xrd-global.cern.ch///store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/2EF3FB1C-1F0F-E611-B00B-0025905D1D60.root" #bjet_pthat120_pp 3st, n42125
                             )
 )
 
