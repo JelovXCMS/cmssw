@@ -1929,6 +1929,7 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 
 	if(isMC_){
 
+<<<<<<< HEAD
 		if(useHepMC_) {
 			edm::Handle<HepMCProduct> hepMCProduct;
 			iEvent.getByToken(eventInfoTag_,hepMCProduct);
@@ -1938,6 +1939,177 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 			if(beamParticles.first != 0)jets_.beamId1 = beamParticles.first->pdg_id();
 			if(beamParticles.second != 0)jets_.beamId2 = beamParticles.second->pdg_id();
 		}
+=======
+	if(doGenSubJets_) {
+	  jets_.refptG[jets_.nref]  = -999.;
+	  jets_.refetaG[jets_.nref] = -999.;
+          jets_.refphiG[jets_.nref] = -999.;
+          jets_.refmG[jets_.nref]   = -999.;
+
+          std::vector<float> sjpt;
+          std::vector<float> sjeta;
+          std::vector<float> sjphi;
+          std::vector<float> sjm;
+          sjpt.push_back(-999.);
+          sjeta.push_back(-999.);
+          sjphi.push_back(-999.);
+          sjm.push_back(-999.);
+
+          jets_.refSubJetPt.push_back(sjpt);
+          jets_.refSubJetEta.push_back(sjeta);
+          jets_.refSubJetPhi.push_back(sjphi);
+          jets_.refSubJetM.push_back(sjm);
+        }
+      }
+      jets_.reftau1[jets_.nref] = -999.;
+      jets_.reftau2[jets_.nref] = -999.;
+      jets_.reftau3[jets_.nref] = -999.;
+      
+      jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();
+      // matched partons
+      const reco::GenParticle & parton = *(*patjets)[j].genParton();
+
+      if((*patjets)[j].genParton()){
+	jets_.refparton_pt[jets_.nref] = parton.pt();
+	jets_.refparton_flavor[jets_.nref] = parton.pdgId();
+
+	if(saveBfragments_ && abs(jets_.refparton_flavorForB[jets_.nref])==5){
+
+	  usedStringPts.clear();
+
+	  // uncomment this if you want to know the ugly truth about parton matching -matt
+	  //if(jet.pt() > 50 &&abs(parton.pdgId())!=5 && parton.pdgId()!=21)
+	  // cout<<" Identified as a b, but doesn't match b or gluon, id = "<<parton.pdgId()<<endl;
+
+	  jets_.bJetIndex[jets_.bMult] = jets_.nref;
+	  jets_.bStatus[jets_.bMult] = parton.status();
+	  jets_.bVx[jets_.bMult] = parton.vx();
+	  jets_.bVy[jets_.bMult] = parton.vy();
+	  jets_.bVz[jets_.bMult] = parton.vz();
+	  jets_.bPt[jets_.bMult] = parton.pt();
+	  jets_.bEta[jets_.bMult] = parton.eta();
+	  jets_.bPhi[jets_.bMult] = parton.phi();
+	  jets_.bPdg[jets_.bMult] = parton.pdgId();
+	  jets_.bChg[jets_.bMult] = parton.charge();
+	  jets_.bMult++;
+	  saveDaughters(parton);
+	}
+      } else {
+	jets_.refparton_pt[jets_.nref] = -999;
+	jets_.refparton_flavor[jets_.nref] = -999;
+      }
+    }
+    jets_.nref++;
+  }
+
+  if(isMC_){
+  
+    if(useHepMC_) {
+      edm::Handle<HepMCProduct> hepMCProduct;
+      iEvent.getByToken(eventInfoTag_,hepMCProduct);
+      const HepMC::GenEvent* MCEvt = hepMCProduct->GetEvent();
+
+      std::pair<HepMC::GenParticle*,HepMC::GenParticle*> beamParticles = MCEvt->beam_particles();
+      if(beamParticles.first != 0)jets_.beamId1 = beamParticles.first->pdg_id();
+      if(beamParticles.second != 0)jets_.beamId2 = beamParticles.second->pdg_id();
+    }
+    
+    edm::Handle<GenEventInfoProduct> hEventInfo;
+    iEvent.getByToken(eventGenInfoTag_,hEventInfo);
+    //jets_.pthat = hEventInfo->binningValues()[0];
+
+    // binning values and qscale appear to be equivalent, but binning values not always present
+    jets_.pthat = hEventInfo->qScale();
+
+    edm::Handle<vector<reco::GenJet> >genjets;
+    //edm::Handle<edm::View<reco::Jet>> genjets;
+    iEvent.getByToken(genjetTag_, genjets);
+    
+    //get gen-level n-jettiness
+    // edm::Handle<edm::ValueMap<float> > genTau1s;
+    // edm::Handle<edm::ValueMap<float> > genTau2s;
+    // edm::Handle<edm::ValueMap<float> > genTau3s;
+    // if(useGenTaus) {
+    //   Printf("get gen taus");
+    //   iEvent.getByToken(tokenGenTau1_,genTau1s);
+    //   iEvent.getByToken(tokenGenTau2_,genTau2s);
+    //   iEvent.getByToken(tokenGenTau3_,genTau3s);
+    // }
+    
+    jets_.ngen = 0;
+
+    //int igen = 0;
+    for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){
+      //for ( typename edm::View<reco::Jet>::const_iterator genjetIt = genjets->begin() ; genjetIt != genjets->end() ; ++genjetIt ) {
+      const reco::GenJet & genjet = (*genjets)[igen];
+      //edm::Ptr<reco::Jet> genjetPtr = genjets->ptrAt(genjetIt - genjets->begin());
+      //const reco::GenJet genjet = (*dynamic_cast<const reco::GenJet*>(&(*genjetPtr)));
+      float genjet_pt = genjet.pt();
+
+      float tau1 =  -999.;
+      float tau2 =  -999.;
+      float tau3 =  -9999.;
+      if(doGenTaus_) {
+        tau1 =  getTau(1,genjet);
+        tau2 =  getTau(2,genjet);
+        tau3 =  getTau(3,genjet);
+      }
+
+      // find matching patJet if there is one
+      jets_.gendrjt[jets_.ngen] = -1.0;
+      jets_.genmatchindex[jets_.ngen] = -1;
+      
+      for(int ijet = 0 ; ijet < jets_.nref; ++ijet){
+        // poor man's matching, someone fix please
+
+	double deltaPt = fabs(genjet.pt()-jets_.refpt[ijet]); //Note: precision of this ~ .0001, so cut .01
+	double deltaEta = fabs(genjet.eta()-jets_.refeta[ijet]); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+	double deltaPhi = fabs(reco::deltaPhi(genjet.phi(), jets_.refphi[ijet])); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+
+        if(deltaPt < 0.01 && deltaEta < .0001 && deltaPhi < .0001){
+          if(genjet_pt>genPtMin_) {
+            jets_.genmatchindex[jets_.ngen] = (int)ijet;
+            jets_.gendphijt[jets_.ngen] = reco::deltaPhi(jets_.refphi[ijet],genjet.phi());
+            jets_.gendrjt[jets_.ngen] = sqrt(pow(jets_.gendphijt[jets_.ngen],2)+pow(fabs(genjet.eta()-jets_.refeta[ijet]),2));
+          }
+          if(doGenTaus_) {
+            jets_.reftau1[ijet] = tau1;
+            jets_.reftau2[ijet] = tau2;
+            jets_.reftau3[ijet] = tau3;
+          }
+          break;
+        }
+      }
+
+      // threshold to reduce size of output in minbias PbPb
+      if(genjet_pt>genPtMin_){
+	jets_.genpt [jets_.ngen] = genjet_pt;
+	jets_.geneta[jets_.ngen] = genjet.eta();
+	jets_.genphi[jets_.ngen] = genjet.phi();
+        jets_.genm  [jets_.ngen] = genjet.mass();
+	jets_.geny  [jets_.ngen] = genjet.eta();
+
+	if(doNewJetVars_)
+	  fillNewJetVarsGenJet(genjet);      
+
+        if(doGenTaus_) {
+          jets_.gentau1[jets_.ngen] = tau1;
+          jets_.gentau2[jets_.ngen] = tau2;
+          jets_.gentau3[jets_.ngen] = tau3;
+        }
+
+        if(doGenSubJets_)
+          analyzeGenSubjets(genjet);
+
+	if(doSubEvent_){
+	  const GenParticle* gencon = genjet.getGenConstituent(0);
+	  jets_.gensubid[jets_.ngen] = gencon->collisionId();
+	}
+	jets_.ngen++;
+      }
+    }
+  }
+>>>>>>> matagit/newFlavDef75X
 
 		edm::Handle<GenEventInfoProduct> hEventInfo;
 		iEvent.getByToken(eventGenInfoTag_,hEventInfo);
