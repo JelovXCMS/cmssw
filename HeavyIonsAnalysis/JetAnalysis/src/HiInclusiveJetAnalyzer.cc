@@ -654,7 +654,7 @@ HiInclusiveJetAnalyzer::beginJob() {
 		}
 
 		if(isPythia6_){ // for GSP to bb identify for a event, not for a jet
-//			t->Branch("refGSP_Channel"             ,jets_.refGSP_Channel,            "refGSP_Channel/I");
+			//			t->Branch("refGSP_Channel"             ,jets_.refGSP_Channel,            "refGSP_Channel/I");
 			t->Branch("refGSP_gpt"                 ,jets_.refGSP_gpt,                "refGSP_gpt[nref]/F");
 			t->Branch("refGSP_geta"                ,jets_.refGSP_geta,               "refGSP_geta[nref]/F");
 			t->Branch("refGSP_gphi"                ,jets_.refGSP_gphi,               "refGSP_gphi[nref]/F");
@@ -665,17 +665,17 @@ HiInclusiveJetAnalyzer::beginJob() {
 			t->Branch("refGSP_b2pt"                ,jets_.refGSP_b2pt,               "refGSP_b2pt[nref]/F");
 			t->Branch("refGSP_b2eta"               ,jets_.refGSP_b2eta,              "refGSP_b2eta[nref]/F");
 			t->Branch("refGSP_b2phi"               ,jets_.refGSP_b2phi,              "refGSP_b2phi[nref]/F");
-//			t->Branch("refGSP_b1Match_jtIdx"       ,jets_.refGSP_b1Match_jtIdx,      "refGSP_b1Match_jtIdx/I");
+			//			t->Branch("refGSP_b1Match_jtIdx"       ,jets_.refGSP_b1Match_jtIdx,      "refGSP_b1Match_jtIdx/I");
 			t->Branch("refGSP_b1Match_jtdR"        ,jets_.refGSP_b1Match_jtdR,       "refGSP_b1Match_jtdR[nref]/F");
-//			t->Branch("refGSP_b1Match_Subjt1dR"    ,jets_.refGSP_b1Match_Subjt1dR,   "refGSP_b1Match_Subjt1dR/F");
-//			t->Branch("refGSP_b1Match_Subjt2dR"    ,jets_.refGSP_b1Match_Subjt2dR,   "refGSP_b1Match_Subjt2dR/F");
-//			t->Branch("refGSP_b2Match_jtIdx"       ,jets_.refGSP_b2Match_jtIdx,      "refGSP_b2Match_jtIdx/I");
+			//			t->Branch("refGSP_b1Match_Subjt1dR"    ,jets_.refGSP_b1Match_Subjt1dR,   "refGSP_b1Match_Subjt1dR/F");
+			//			t->Branch("refGSP_b1Match_Subjt2dR"    ,jets_.refGSP_b1Match_Subjt2dR,   "refGSP_b1Match_Subjt2dR/F");
+			//			t->Branch("refGSP_b2Match_jtIdx"       ,jets_.refGSP_b2Match_jtIdx,      "refGSP_b2Match_jtIdx/I");
 			t->Branch("refGSP_b2Match_jtdR"        ,jets_.refGSP_b2Match_jtdR,       "refGSP_b2Match_jtdR[nref]/F");
-//			t->Branch("refGSP_b1Match_Subjt1dR"    ,jets_.refGSP_b1Match_Subjt1dR,   "refGSP_b1Match_Subjt1dR/F");
-//			t->Branch("refGSP_b1Match_Subjt2dR"    ,jets_.refGSP_b1Match_Subjt2dR,   "refGSP_b1Match_Subjt2dR/F");
+			//			t->Branch("refGSP_b1Match_Subjt1dR"    ,jets_.refGSP_b1Match_Subjt1dR,   "refGSP_b1Match_Subjt1dR/F");
+			//			t->Branch("refGSP_b1Match_Subjt2dR"    ,jets_.refGSP_b1Match_Subjt2dR,   "refGSP_b1Match_Subjt2dR/F");
 			t->Branch("refGSP_bbdR"                ,jets_.refGSP_bbdR,               "refGSP_bbdR[nref]/F");
-//			t->Branch("refGSP_bbdxy"               ,jets_.refGSP_bbdxy,              "refGSP_bbdxy/F");
-//			t->Branch("refGSP_bbdz"                ,jets_.refGSP_bbdz,               "refGSP_bbdz/F");
+			//			t->Branch("refGSP_bbdxy"               ,jets_.refGSP_bbdxy,              "refGSP_bbdxy/F");
+			//			t->Branch("refGSP_bbdz"                ,jets_.refGSP_bbdz,               "refGSP_bbdz/F");
 			t->Branch("refGSP_bbzg"                ,jets_.refGSP_bbzg,               "refGSP_bbzg[nref]/F");
 			t->Branch("refGSP_SubJtMatched"        ,jets_.refGSP_SubJtMatched,       "refGSP_SubJtMatched[nref]/I");     
 		}
@@ -1838,7 +1838,7 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 						if(partonPairIndex<=0) {cout<<"event : "<<event<<" ,partonPairIndex = "<<partonPairIndex<<" , momIndex = "<<momIndex<<endl;}
 						if(partonMatchIndex >0 && momIndex >0 && partonPairIndex >0){
 							jets_.refGSP_gpt[jets_.nref]          			=(*genparts)[momIndex].pt();
-						  jets_.refGSP_geta [jets_.nref]        			=(*genparts)[momIndex].eta();
+							jets_.refGSP_geta [jets_.nref]        			=(*genparts)[momIndex].eta();
 							jets_.refGSP_gphi [jets_.nref]              =(*genparts)[momIndex].phi();
 							jets_.refGSP_gidx [jets_.nref]              =momIndex;
 							jets_.refGSP_b1pt [jets_.nref]              =(*genparts)[partonMatchIndex].pt();
@@ -1848,21 +1848,21 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 							jets_.refGSP_b2eta [jets_.nref]				      =(*genparts)[partonPairIndex].eta();
 							jets_.refGSP_b2phi [jets_.nref]				      =(*genparts)[partonPairIndex].phi();
 
-              float b1eta=jets_.refGSP_b1eta [jets_.nref];
-              float b1phi=jets_.refGSP_b1phi [jets_.nref];
-              float b2eta=jets_.refGSP_b2eta [jets_.nref];
-              float b2phi=jets_.refGSP_b2phi [jets_.nref];
+							float b1eta=jets_.refGSP_b1eta [jets_.nref];
+							float b1phi=jets_.refGSP_b1phi [jets_.nref];
+							float b2eta=jets_.refGSP_b2eta [jets_.nref];
+							float b2phi=jets_.refGSP_b2phi [jets_.nref];
 
 							// jets_.refGSP_b1Match_jtIdx [jets_.nref];
 
 							jets_.refGSP_b1Match_jtdR [jets_.nref]= pow( pow(b1eta-jet.eta(),2) + pow(deltaPhi(b1phi,jet.phi()),2) , 0.5 ) ;
-//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
-//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
+							//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
+							//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
 
 							// jets_.refGSP_b2Match_jtIdx [jets_.nref];
 							jets_.refGSP_b2Match_jtdR [jets_.nref]= pow( pow(b2eta-jet.eta(),2) + pow(deltaPhi(b2phi,jet.phi()),2) , 0.5 );
-//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
-//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
+							//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
+							//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
 
 							float bbdphi=deltaPhi(b1phi,b2phi);
 
@@ -1871,17 +1871,17 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 							// jets_.refGSP_bbdz [jets_.nref];
 							jets_.refGSP_bbzg [jets_.nref] = jets_.refGSP_b2pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
 							if (jets_.refGSP_b2pt[jets_.nref] >jets_.refGSP_b1pt[jets_.nref]){
-							jets_.refGSP_bbzg [jets_.nref] =  jets_.refGSP_b1pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
+								jets_.refGSP_bbzg [jets_.nref] =  jets_.refGSP_b1pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
 							}
 
 							jets_.refGSP_SubJtMatched [jets_.nref]=-1;
 							if(jets_.refGSP_b1Match_jtdR [jets_.nref] <0.4 && jets_.refGSP_b2Match_jtdR [jets_.nref] <0.4){
-							jets_.refGSP_SubJtMatched [jets_.nref]=1;
+								jets_.refGSP_SubJtMatched [jets_.nref]=1;
 							}
 
 
 						} // end if MatchedPartonId >0 && momIndex >0 && partonPairIndex >0  // index check
-					else {jets_.refGSP_SubJtMatched [jets_.nref]=-2;}
+						else {jets_.refGSP_SubJtMatched [jets_.nref]=-2;}
 
 					} // end GSP-bbbar tag
 
@@ -1962,6 +1962,78 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 		// }
 
 		jets_.ngen = 0;
+
+		//int igen = 0;
+		for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){
+			//for ( typename edm::View<reco::Jet>::const_iterator genjetIt = genjets->begin() ; genjetIt != genjets->end() ; ++genjetIt ) 
+			const reco::GenJet & genjet = (*genjets)[igen];
+			//edm::Ptr<reco::Jet> genjetPtr = genjets->ptrAt(genjetIt - genjets->begin());
+			//const reco::GenJet genjet = (*dynamic_cast<const reco::GenJet*>(&(*genjetPtr)));
+			float genjet_pt = genjet.pt();
+
+			float tau1 =  -999.;
+			float tau2 =  -999.;
+			float tau3 =  -9999.;
+			if(doGenTaus_) {
+				tau1 =  getTau(1,genjet);
+				tau2 =  getTau(2,genjet);
+				tau3 =  getTau(3,genjet);
+			}
+
+			// find matching patJet if there is one
+			jets_.gendrjt[jets_.ngen] = -1.0;
+			jets_.genmatchindex[jets_.ngen] = -1;
+
+			for(int ijet = 0 ; ijet < jets_.nref; ++ijet){
+				// poor man's matching, someone fix please
+
+				double deltaPt = fabs(genjet.pt()-jets_.refpt[ijet]); //Note: precision of this ~ .0001, so cut .01
+				double deltaEta = fabs(genjet.eta()-jets_.refeta[ijet]); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+				double deltaPhi = fabs(reco::deltaPhi(genjet.phi(), jets_.refphi[ijet])); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+
+				if(deltaPt < 0.01 && deltaEta < .0001 && deltaPhi < .0001){
+					if(genjet_pt>genPtMin_) {
+						jets_.genmatchindex[jets_.ngen] = (int)ijet;
+						jets_.gendphijt[jets_.ngen] = reco::deltaPhi(jets_.refphi[ijet],genjet.phi());
+						jets_.gendrjt[jets_.ngen] = sqrt(pow(jets_.gendphijt[jets_.ngen],2)+pow(fabs(genjet.eta()-jets_.refeta[ijet]),2));
+					}
+					if(doGenTaus_) {
+						jets_.reftau1[ijet] = tau1;
+						jets_.reftau2[ijet] = tau2;
+						jets_.reftau3[ijet] = tau3;
+					}
+					break;
+				}
+			}
+
+			// threshold to reduce size of output in minbias PbPb
+			if(genjet_pt>genPtMin_){
+				jets_.genpt [jets_.ngen] = genjet_pt;
+				jets_.geneta[jets_.ngen] = genjet.eta();
+				jets_.genphi[jets_.ngen] = genjet.phi();
+				jets_.genm  [jets_.ngen] = genjet.mass();
+				jets_.geny  [jets_.ngen] = genjet.eta();
+
+				if(doNewJetVars_)
+					fillNewJetVarsGenJet(genjet);      
+
+				if(doGenTaus_) {
+					jets_.gentau1[jets_.ngen] = tau1;
+					jets_.gentau2[jets_.ngen] = tau2;
+					jets_.gentau3[jets_.ngen] = tau3;
+				}
+
+				if(doGenSubJets_)
+					analyzeGenSubjets(genjet);
+
+				if(doSubEvent_){
+					const GenParticle* gencon = genjet.getGenConstituent(0);
+					jets_.gensubid[jets_.ngen] = gencon->collisionId();
+				}
+				jets_.ngen++;
+			}
+		} // end for igen < genjets->size()
+
 
 		//int igen = 0;
 		for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){

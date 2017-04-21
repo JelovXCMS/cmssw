@@ -71,7 +71,8 @@ process = overrideJEC_pp5020(process)
 
 process.TFileService = cms.Service("TFileService",
                                    fileName=cms.string(
-																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n65000.root"
+																	 "Test.root"
+#																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n65000.root"
 #																	 "Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root"
 																	 ))
 
@@ -239,3 +240,20 @@ process.pVertexFilterCutEandG = cms.Path(process.pileupVertexFilterCutEandG)
 process.pAna = cms.EndPath(process.skimanalysis)
 
 # Customization
+
+process.akSoftDrop4PFPatJetFlavourAssociation.jets="ak4PFJets"
+process.akSoftDrop4PFPatJetFlavourAssociation.groomedJets=cms.InputTag("akSoftDrop4PFJets")
+process.akSoftDrop4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4PFJets','SubJets')
+process.akSoftDrop4PFJets.useSoftDrop = True
+process.akSoftDrop4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
+
+process.printEventAKSoftDrop4PFJets = cms.EDAnalyzer("printJetFlavourInfo",
+                                                     jetFlavourInfos    = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation"),
+                                                     subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets"),
+                                                     groomedJets        = cms.InputTag("akSoftDrop4PFJets"),
+                                                     )
+
+
+process.ana_step *= process.printEventAKSoftDrop4PFJets
+
+
