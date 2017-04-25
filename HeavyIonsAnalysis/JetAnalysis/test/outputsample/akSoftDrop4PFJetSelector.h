@@ -115,6 +115,18 @@ public :
    Int_t           refparton_flavorForB_;   //[nref]
    Int_t           refparton_flavorProcess_;   //[nref]
 
+	 Int_t           refFlavorID_jet_hadronID_;
+   Int_t           refFlavorID_jet_partonID_;
+	 Int_t           refFlavorID_jet_ID_;
+
+   Int_t           refFlavorID_Subjet1_hadronID_;
+   Int_t           refFlavorID_Subjet1_partonID_;
+   Int_t           refFlavorID_Subjet1_ID_;
+
+   Int_t           refFlavorID_Subjet2_hadronID_;
+   Int_t           refFlavorID_Subjet2_partonID_;
+   Int_t           refFlavorID_Subjet2_ID_;
+
 	// gsp tag
    Float_t         refGSP_gpt_;   //[nref]
    Float_t         refGSP_geta_;   //[nref]
@@ -461,6 +473,36 @@ public :
    Float_t         refGSP_bbzg[MAX_NJetS];   //[nref]
    Int_t           refGSP_SubJtMatched[MAX_NJetS];   //[nref]
 
+   Int_t           refFlavorID_jet_hadronID [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_hadronPT [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_hadronEta[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_hadronPhi[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_hadronDR [MAX_NJetS];   //[nref]
+   Int_t           refFlavorID_jet_partonID [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_partonPT [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_partonEta[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_partonPhi[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_jet_partonDR [MAX_NJetS];   //[nref]
+   Int_t           refFlavorID_Subjet1_hadronID [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_hadronPT [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_hadronEta[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_hadronPhi[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_hadronDR [MAX_NJetS];   //[nref]
+   Int_t           refFlavorID_Subjet1_partonID [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_partonPT [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_partonEta[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_partonPhi[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet1_partonDR [MAX_NJetS];   //[nref]
+   Int_t           refFlavorID_Subjet2_hadronID [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_hadronPT [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_hadronEta[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_hadronPhi[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_hadronDR [MAX_NJetS];   //[nref]
+   Int_t           refFlavorID_Subjet2_partonID [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_partonPT [MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_partonEta[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_partonPhi[MAX_NJetS];   //[nref]
+   Float_t         refFlavorID_Subjet2_partonDR [MAX_NJetS];   //[nref]
 
 
    Float_t         reftau1[MAX_NJetS];   //[nref]
@@ -862,6 +904,38 @@ public :
    TBranch        *b_refPhi7;   //!
    TBranch        *b_refSkx;   //!
    TBranch        *b_refSky;  */ //!
+
+   TBranch        *b_refFlavorID_jet_hadronID ;   //!
+   TBranch        *b_refFlavorID_jet_hadronPT ;   //!
+   TBranch        *b_refFlavorID_jet_hadronEta;   //!
+   TBranch        *b_refFlavorID_jet_hadronPhi;   //!
+   TBranch        *b_refFlavorID_jet_hadronDR ;   //!
+   TBranch        *b_refFlavorID_jet_partonID ;   //!
+   TBranch        *b_refFlavorID_jet_partonPT ;   //!
+   TBranch        *b_refFlavorID_jet_partonEta;   //!
+   TBranch        *b_refFlavorID_jet_partonPhi;   //!
+   TBranch        *b_refFlavorID_jet_partonDR ;   //!
+   TBranch        *b_refFlavorID_Subjet1_hadronID ;   //!
+   TBranch        *b_refFlavorID_Subjet1_hadronPT ;   //!
+   TBranch        *b_refFlavorID_Subjet1_hadronEta;   //!
+   TBranch        *b_refFlavorID_Subjet1_hadronPhi;   //!
+   TBranch        *b_refFlavorID_Subjet1_hadronDR ;   //!
+   TBranch        *b_refFlavorID_Subjet1_partonID ;   //!
+   TBranch        *b_refFlavorID_Subjet1_partonPT ;   //!
+   TBranch        *b_refFlavorID_Subjet1_partonEta;   //!
+   TBranch        *b_refFlavorID_Subjet1_partonPhi;   //!
+   TBranch        *b_refFlavorID_Subjet1_partonDR ;   //!
+   TBranch        *b_refFlavorID_Subjet2_hadronID ;   //!
+   TBranch        *b_refFlavorID_Subjet2_hadronPT ;   //!
+   TBranch        *b_refFlavorID_Subjet2_hadronEta;   //!
+   TBranch        *b_refFlavorID_Subjet2_hadronPhi;   //!
+   TBranch        *b_refFlavorID_Subjet2_hadronDR ;   //!
+   TBranch        *b_refFlavorID_Subjet2_partonID ;   //!
+   TBranch        *b_refFlavorID_Subjet2_partonPT ;   //!
+   TBranch        *b_refFlavorID_Subjet2_partonEta;   //!
+   TBranch        *b_refFlavorID_Subjet2_partonPhi;   //!
+   TBranch        *b_refFlavorID_Subjet2_partonDR ;   //!
+
    TBranch        *b_reftau1;   //!
    TBranch        *b_reftau2;   //!
    TBranch        *b_reftau3;   //!
@@ -1375,6 +1449,39 @@ void akSoftDrop4PFJetSelector::Init(TTree *tree)
    fChain->SetBranchAddress("refGSP_bbdR", refGSP_bbdR, &b_refGSP_bbdR);
    fChain->SetBranchAddress("refGSP_bbzg", refGSP_bbzg, &b_refGSP_bbzg);
    fChain->SetBranchAddress("refGSP_SubJtMatched", refGSP_SubJtMatched, &b_refGSP_SubJtMatched);
+
+   fChain->SetBranchAddress("refFlavorID_jet_hadronID ", refFlavorID_jet_hadronID , &b_refFlavorID_jet_hadronID );
+   fChain->SetBranchAddress("refFlavorID_jet_hadronPT ", refFlavorID_jet_hadronPT , &b_refFlavorID_jet_hadronPT );
+   fChain->SetBranchAddress("refFlavorID_jet_hadronEta", refFlavorID_jet_hadronEta, &b_refFlavorID_jet_hadronEta);
+   fChain->SetBranchAddress("refFlavorID_jet_hadronPhi", refFlavorID_jet_hadronPhi, &b_refFlavorID_jet_hadronPhi);
+   fChain->SetBranchAddress("refFlavorID_jet_hadronDR ", refFlavorID_jet_hadronDR , &b_refFlavorID_jet_hadronDR );
+   fChain->SetBranchAddress("refFlavorID_jet_partonID ", refFlavorID_jet_partonID , &b_refFlavorID_jet_partonID );
+   fChain->SetBranchAddress("refFlavorID_jet_partonPT ", refFlavorID_jet_partonPT , &b_refFlavorID_jet_partonPT );
+   fChain->SetBranchAddress("refFlavorID_jet_partonEta", refFlavorID_jet_partonEta, &b_refFlavorID_jet_partonEta);
+   fChain->SetBranchAddress("refFlavorID_jet_partonPhi", refFlavorID_jet_partonPhi, &b_refFlavorID_jet_partonPhi);
+   fChain->SetBranchAddress("refFlavorID_jet_partonDR ", refFlavorID_jet_partonDR , &b_refFlavorID_jet_partonDR );
+   fChain->SetBranchAddress("refFlavorID_Subjet1_hadronID ", refFlavorID_Subjet1_hadronID , &b_refFlavorID_Subjet1_hadronID );
+   fChain->SetBranchAddress("refFlavorID_Subjet1_hadronPT ", refFlavorID_Subjet1_hadronPT , &b_refFlavorID_Subjet1_hadronPT );
+   fChain->SetBranchAddress("refFlavorID_Subjet1_hadronEta", refFlavorID_Subjet1_hadronEta, &b_refFlavorID_Subjet1_hadronEta);
+   fChain->SetBranchAddress("refFlavorID_Subjet1_hadronPhi", refFlavorID_Subjet1_hadronPhi, &b_refFlavorID_Subjet1_hadronPhi);
+   fChain->SetBranchAddress("refFlavorID_Subjet1_hadronDR ", refFlavorID_Subjet1_hadronDR , &b_refFlavorID_Subjet1_hadronDR );
+   fChain->SetBranchAddress("refFlavorID_Subjet1_partonID ", refFlavorID_Subjet1_partonID , &b_refFlavorID_Subjet1_partonID );
+   fChain->SetBranchAddress("refFlavorID_Subjet1_partonPT ", refFlavorID_Subjet1_partonPT , &b_refFlavorID_Subjet1_partonPT );
+   fChain->SetBranchAddress("refFlavorID_Subjet1_partonEta", refFlavorID_Subjet1_partonEta, &b_refFlavorID_Subjet1_partonEta);
+   fChain->SetBranchAddress("refFlavorID_Subjet1_partonPhi", refFlavorID_Subjet1_partonPhi, &b_refFlavorID_Subjet1_partonPhi);
+   fChain->SetBranchAddress("refFlavorID_Subjet1_partonDR ", refFlavorID_Subjet1_partonDR , &b_refFlavorID_Subjet1_partonDR );
+   fChain->SetBranchAddress("refFlavorID_Subjet2_hadronID ", refFlavorID_Subjet2_hadronID , &b_refFlavorID_Subjet2_hadronID );
+   fChain->SetBranchAddress("refFlavorID_Subjet2_hadronPT ", refFlavorID_Subjet2_hadronPT , &b_refFlavorID_Subjet2_hadronPT );
+   fChain->SetBranchAddress("refFlavorID_Subjet2_hadronEta", refFlavorID_Subjet2_hadronEta, &b_refFlavorID_Subjet2_hadronEta);
+   fChain->SetBranchAddress("refFlavorID_Subjet2_hadronPhi", refFlavorID_Subjet2_hadronPhi, &b_refFlavorID_Subjet2_hadronPhi);
+   fChain->SetBranchAddress("refFlavorID_Subjet2_hadronDR ", refFlavorID_Subjet2_hadronDR , &b_refFlavorID_Subjet2_hadronDR );
+   fChain->SetBranchAddress("refFlavorID_Subjet2_partonID ", refFlavorID_Subjet2_partonID , &b_refFlavorID_Subjet2_partonID );
+   fChain->SetBranchAddress("refFlavorID_Subjet2_partonPT ", refFlavorID_Subjet2_partonPT , &b_refFlavorID_Subjet2_partonPT );
+   fChain->SetBranchAddress("refFlavorID_Subjet2_partonEta", refFlavorID_Subjet2_partonEta, &b_refFlavorID_Subjet2_partonEta);
+   fChain->SetBranchAddress("refFlavorID_Subjet2_partonPhi", refFlavorID_Subjet2_partonPhi, &b_refFlavorID_Subjet2_partonPhi);
+   fChain->SetBranchAddress("refFlavorID_Subjet2_partonDR ", refFlavorID_Subjet2_partonDR , &b_refFlavorID_Subjet2_partonDR );
+
+
 
 
    fChain->SetBranchAddress("reftau1", reftau1, &b_reftau1);

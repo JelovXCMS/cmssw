@@ -202,7 +202,19 @@ void akSoftDrop4PFJetSelector::SlaveBegin(TTree * /*tree*/)
 	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_PtRatTightMatchStatus",       &refGSP_bbrefSubJt_PtRatTightMatchStatus_);  
 	t_akSD4PFJet->Branch("refGSP_bbrefSubJt_MatchStatus", 					      &refGSP_bbrefSubJt_MatchStatus_); 					
 
-	cout<<"slaveBegin mid"<<endl;
+	cout<<"slaveBegin refFlavorID "<<endl;
+
+	t_akSD4PFJet->Branch("refFlavorID_jet_hadronID", &refFlavorID_jet_hadronID_);
+  t_akSD4PFJet->Branch("refFlavorID_jet_partonID", &refFlavorID_jet_partonID_);
+  t_akSD4PFJet->Branch("refFlavorID_jet_ID", &refFlavorID_jet_ID_);
+
+  t_akSD4PFJet->Branch("refFlavorID_Subjet1_hadronID", &refFlavorID_Subjet1_hadronID_);
+  t_akSD4PFJet->Branch("refFlavorID_Subjet1_partonID", &refFlavorID_Subjet1_partonID_);
+  t_akSD4PFJet->Branch("refFlavorID_Subjet1_ID", &refFlavorID_Subjet1_ID_);
+
+  t_akSD4PFJet->Branch("refFlavorID_Subjet2_hadronID", &refFlavorID_Subjet2_hadronID_);
+  t_akSD4PFJet->Branch("refFlavorID_Subjet2_partonID", &refFlavorID_Subjet2_partonID_);
+  t_akSD4PFJet->Branch("refFlavorID_Subjet2_ID", &refFlavorID_Subjet2_ID_);
 
 
 
@@ -297,6 +309,20 @@ Bool_t akSoftDrop4PFJetSelector::Process(Long64_t entry)
 	refparton_flavor_=            refparton_flavor[0];         
 	refparton_flavorForB_=        refparton_flavorForB[0];   
 	refparton_flavorProcess_=     refparton_flavorProcess[0];  
+
+	
+	refFlavorID_jet_hadronID_ =refFlavorID_jet_hadronID[0];
+  refFlavorID_jet_partonID_ =refFlavorID_jet_partonID[0];
+	refFlavorID_jet_ID_= refFlavorID_jet_hadronID_;
+	if(refFlavorID_jet_ID_==0){refFlavorID_jet_ID_=refFlavorID_jet_partonID_ ; }
+  refFlavorID_Subjet1_hadronID_ =refFlavorID_Subjet1_hadronID[0];
+  refFlavorID_Subjet1_partonID_ =refFlavorID_Subjet1_partonID[0];
+  refFlavorID_Subjet1_ID_= refFlavorID_Subjet1_hadronID_;
+  if(refFlavorID_Subjet1_ID_==0){refFlavorID_Subjet1_ID_=refFlavorID_Subjet1_partonID_ ; }
+  refFlavorID_Subjet2_hadronID_ =refFlavorID_Subjet2_hadronID[0];
+  refFlavorID_Subjet2_partonID_ =refFlavorID_Subjet2_partonID[0];
+  refFlavorID_Subjet2_ID_= refFlavorID_Subjet2_hadronID_;
+  if(refFlavorID_Subjet2_ID_==0){refFlavorID_Subjet2_ID_=refFlavorID_Subjet2_partonID_ ; }
 
 
 	// jtSubJet part
@@ -883,6 +909,54 @@ void akSoftDrop4PFJetSelector::Terminate()
   type1Title="GSP-B"; type2Title="FCR-B";type3Title="Non B";
   plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
 
+	// plot GSP-ghost bb match, GSP-bbdr match, nonGSP-ghost bb match; Zg
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && ( abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)==5 ) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2 ) ";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess!=6 && ( abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)==5 )";
+  add_savename="GSP_bbdr_ghostMatch";
+  plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
+  type1Title="GSP ghost bb match ";type2Title="GSP SubJt bb dR match"; type3Title="NonGSP ghost bb match";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+	
+  // plot GSP-ghost bb match, GSP-bbdr match, nonGSP-ghost bb match; dR
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && ( abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)==5 ) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && (refGSP_bbSubJt_dRMatchStatus==1 || refGSP_bbSubJt_dRMatchStatus==2 ) ";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess!=6 && ( abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)==5 )";
+  add_savename="GSP_bbdr_ghostMatch";
+  plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
+  type1Title="GSP ghost bb match ";type2Title="GSP SubJt bb dR match"; type3Title="NonGSP ghost bb match";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+  // plot GSP-ghost bb match, GSP one ghost b match, FCR ghost one b match; Zg
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && ( abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)==5 ) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && ( (abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)!=5) || (abs(refFlavorID_Subjet1_ID)!=5 &&  abs(refFlavorID_Subjet2_ID)==5)) ";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess!=6 && ( (abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)!=5) || (abs(refFlavorID_Subjet1_ID)!=5 &&  abs(refFlavorID_Subjet2_ID)==5)) ";
+  add_savename="GSP_ghostMatch";
+  plotVariable="jtSubZg"; plotTitle="Sub-Jet Zg"; plotXTitle="Zg";
+  type1Title="GSP ghost bb match ";type2Title="GSP ghost one b match"; type3Title="FCR ghost one match";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+  // plot GSP-ghost bb match, GSP one ghost b match, FCR ghost one b match; dR
+  nbin=25; binLow=0; binHigh=0.5;
+  CutCommon="jtpt>100 && abs(jteta)<2&&nSubJet>=2";
+  Cut1="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && ( abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)==5 ) ";
+  Cut2="abs(refparton_flavorForB)==5 && refparton_flavorProcess==6 && ( (abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)!=5) || (abs(refFlavorID_Subjet1_ID)!=5 &&  abs(refFlavorID_Subjet2_ID)==5)) ";
+  Cut3="abs(refparton_flavorForB)==5 && refparton_flavorProcess!=6 && ( (abs(refFlavorID_Subjet1_ID)==5 &&  abs(refFlavorID_Subjet2_ID)!=5) || (abs(refFlavorID_Subjet1_ID)!=5 &&  abs(refFlavorID_Subjet2_ID)==5)) ";
+  add_savename="GSP_ghostMatch";
+  plotVariable="jtSubJetdR12"; plotTitle="Sub-Jet dR"; plotXTitle="dR";
+  type1Title="GSP ghost bb match ";type2Title="GSP ghost one b match"; type3Title="FCR ghost one match";
+  plotCompare_fun(t_akSD4PFJet,nbin,binLow,binHigh,CutCommon,Cut1,Cut2,Cut3,add_savename,plotVariable,plotTitle,plotXTitle,type1Title,type2Title,type3Title);
+
+
+
+	
 
 	// plot GSP-bb match, GSP-B single, FCR ; Zg
 	nbin=25; binLow=0; binHigh=0.5;

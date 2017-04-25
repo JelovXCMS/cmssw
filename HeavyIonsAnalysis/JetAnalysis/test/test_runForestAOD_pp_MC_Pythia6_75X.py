@@ -5,7 +5,28 @@
 
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
-process.options = cms.untracked.PSet()
+process.options = cms.untracked.PSet(
+
+#	SkipEvent = cms.untracked.vstring('ProductNotFound') # see the following reason to add this. 
+)
+
+## add for avoid Fatal Exception by : ProductNotFound
+##   [0] Processing run: 1 lumi: 1751 event: 1798308
+##	    [1] Running path 'ana_step'
+##			   [2] Calling event method for module Tupel/'tupel'
+##				 Exception Message:
+##				 Principal::getByLabel: Found zero products matching all criteria
+##				 Looking for a container with elements of type: pat::Jet
+##				 Looking for module label: ak4PFpatJetsWithBtagging
+##				 Looking for productInstanceName:
+##     [a] If you wish to continue processing events after a ProductNotFound exception,
+##		 add "SkipEvent = cms.untracked.vstring('ProductNotFound')" to the "options" PSet in the configuration.
+
+process.Timing = cms.Service("Timing",
+      summaryOnly = cms.untracked.bool(True)
+			)
+			
+
 
 #####################################################################################
 # HiForest labelling info
@@ -42,8 +63,8 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100))
-#    input = cms.untracked.int32(-1))
+#    input = cms.untracked.int32(1000))
+    input = cms.untracked.int32(-1))
 
 
 #####################################################################################
@@ -71,8 +92,9 @@ process = overrideJEC_pp5020(process)
 
 process.TFileService = cms.Service("TFileService",
                                    fileName=cms.string(
-																	 "Test.root"
-#																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n65000.root"
+#																	 "Test.root"
+#                                  "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n1000.root"
+																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n65000.root"
 #																	 "Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root"
 																	 ))
 
@@ -89,12 +111,50 @@ process.TFileService = cms.Service("TFileService",
 process.load("HeavyIonsAnalysis.JetAnalysis.FullJetSequence_nominalPP")
 #process.ak3PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 process.ak4PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
-process.ak5PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
-process.ak4CaloJetAnalyzer.isPythia6 = cms.untracked.bool(True)
+process.ak5PFJetAnalyzer.isPythia6 = cms.untracked.bool(False)
+process.ak4CaloJetAnalyzer.isPythia6 = cms.untracked.bool(False)
 process.akSoftDrop4PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
 #process.akSoftDrop4PFJetAnalyzer.doJetConstituents = cms.untracked.bool(True)
 #process.akSoftDrop4PFJetAnalyzer.doNewJetVars = cms.untracked.bool(True)
-process.akSoftDrop5PFJetAnalyzer.isPythia6 = cms.untracked.bool(True)
+process.akSoftDrop5PFJetAnalyzer.isPythia6 = cms.untracked.bool(False)
+
+
+process.ak4PFJetAnalyzer.doGhostFlavorMatch = cms.untracked.bool(True)
+process.akSoftDrop4PFJetAnalyzer.doGhostFlavorMatch = cms.untracked.bool(True)
+#process.akSoftDrop4PFJetAnalyzer.doGhostSubJetFlavor = cms.untracked.bool(True)
+
+
+
+process.akSoftDrop4PFPatJetFlavourAssociation.jets="ak4PFJets"
+process.akSoftDrop4PFPatJetFlavourAssociation.groomedJets=cms.InputTag("akSoftDrop4PFJets")
+process.akSoftDrop4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4PFJets','SubJets')
+process.akSoftDrop4PFJets.useSoftDrop = True
+process.akSoftDrop4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
+
+process.akSoftDrop4PFJetAnalyzer.jetFlavourInfos=cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation")
+process.akSoftDrop4PFJetAnalyzer.subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets")
+process.akSoftDrop4PFJetAnalyzer.groomedJets        = cms.InputTag("akSoftDrop4PFJets")
+
+
+# for ak4PFJets
+process.ak4PFPatJetFlavourAssociation.jets="ak4PFJets"
+#process.ak4PFPatJetFlavourAssociation.groomedJets=cms.InputTag("akSoftDrop4PFJets")
+#process.ak4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4PFJets','SubJets')
+#process.ak4PFJets.useSoftDrop = False
+process.ak4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
+
+process.ak4PFJetAnalyzer.jetFlavourInfos=cms.InputTag("ak4PFPatJetFlavourAssociation")
+#process.ak4PFJetAnalyzer.subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets")
+#process.ak4PFJetAnalyzer.groomedJets        = cms.InputTag("akSoftDrop4PFJets")
+
+
+
+
+#                                                     subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets"),
+#                                                     groomedJets        = cms.InputTag("akSoftDrop4PFJets"),
+
+
+
 
 # Include this to turn on storing the jet constituents and new jet variables for q/g separation
 #process.ak4PFJetAnalyzer.doJetConstituents = cms.untracked.bool(True)
@@ -241,19 +301,19 @@ process.pAna = cms.EndPath(process.skimanalysis)
 
 # Customization
 
-process.akSoftDrop4PFPatJetFlavourAssociation.jets="ak4PFJets"
-process.akSoftDrop4PFPatJetFlavourAssociation.groomedJets=cms.InputTag("akSoftDrop4PFJets")
-process.akSoftDrop4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4PFJets','SubJets')
-process.akSoftDrop4PFJets.useSoftDrop = True
-process.akSoftDrop4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
+#process.akSoftDrop4PFPatJetFlavourAssociation.jets="ak4PFJets"
+#process.akSoftDrop4PFPatJetFlavourAssociation.groomedJets=cms.InputTag("akSoftDrop4PFJets")
+#process.akSoftDrop4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4PFJets','SubJets')
+#process.akSoftDrop4PFJets.useSoftDrop = True
+#process.akSoftDrop4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
 
-process.printEventAKSoftDrop4PFJets = cms.EDAnalyzer("printJetFlavourInfo",
-                                                     jetFlavourInfos    = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation"),
-                                                     subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets"),
-                                                     groomedJets        = cms.InputTag("akSoftDrop4PFJets"),
-                                                     )
+#process.printEventAKSoftDrop4PFJets = cms.EDAnalyzer("printJetFlavourInfo",
+#                                                     jetFlavourInfos    = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation"),
+#                                                     subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets"),
+#                                                     groomedJets        = cms.InputTag("akSoftDrop4PFJets"),
+#                                                     )
 
 
-process.ana_step *= process.printEventAKSoftDrop4PFJets
+#process.ana_step *= process.printEventAKSoftDrop4PFJets
 
 

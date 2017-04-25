@@ -55,6 +55,8 @@
 #include "fastjet/ClusterSequenceArea.hh"
 #include "fastjet/contrib/SoftDrop.hh"
 
+
+
 using namespace std;
 using namespace edm;
 using namespace reco;
@@ -73,6 +75,20 @@ using namespace reco;
 HiInclusiveJetAnalyzer::HiInclusiveJetAnalyzer(const edm::ParameterSet& iConfig) :
 	geo(0)
 {
+
+  // for ghost parton flavor matching with jet, subjets
+ 
+	jetFlavourInfosToken_ = consumes<reco::JetFlavourInfoMatchingCollection>( iConfig.getParameter<edm::InputTag>("jetFlavourInfos") );
+  subjetFlavourInfosToken_ = mayConsume<reco::JetFlavourInfoMatchingCollection>( iConfig.exists("subjetFlavourInfos") ? iConfig.getParameter<edm::InputTag>("subjetFlavourInfos") : edm::InputTag() );
+  groomedJetsToken_ = mayConsume<edm::View<reco::Jet> >( iConfig.exists("groomedJets") ? iConfig.getParameter<edm::InputTag>("groomedJets") : edm::InputTag() );
+	useSubjets_ = ( iConfig.exists("subjetFlavourInfos") && iConfig.exists("groomedJets") );
+  doGhostFlavorMatch_ = iConfig.getUntrackedParameter<bool>("doGhostFlavorMatch",false);
+//  doGhostSubJetFlavor_ = iConfig.getUntrackedParameter<bool>("doGhostSubJetFlavor",false);
+  cout<<"doGhostFlavorMatch_ = "<<doGhostFlavorMatch_<<" , useSubjets_ = "<<useSubjets_<<endl;
+
+
+	// end for ghost parton flavor matching with jet, subjets
+
 
 	doMatch_ = iConfig.getUntrackedParameter<bool>("matchJets",false);
 	jetTagLabel_ = iConfig.getParameter<InputTag>("jetTag");
@@ -109,6 +125,7 @@ HiInclusiveJetAnalyzer::HiInclusiveJetAnalyzer(const edm::ParameterSet& iConfig)
 
 	isPythia6_ = iConfig.getUntrackedParameter<bool>("isPythia6",false);  
 	cout<<"isPythia6 = "<<isPythia6_<<endl;
+
 	isMC_ = iConfig.getUntrackedParameter<bool>("isMC",false);
 	useHepMC_ = iConfig.getUntrackedParameter<bool> ("useHepMC",false);
 	fillGenJets_ = iConfig.getUntrackedParameter<bool>("fillGenJets",false);
@@ -555,6 +572,48 @@ HiInclusiveJetAnalyzer::beginJob() {
 			t->Branch("bProdCode",&jets_.bProdCode,"bProdCode/I");
 			t->Branch("cProdCode",&jets_.cProdCode,"cProdCode/I");
 		}
+		if(doGhostFlavorMatch_){
+       t->Branch("refFlavorID_jet_hadronID ",  &jets_.refFlavorID_jet_hadronID  ,"refFlavorID_jet_hadronID[nref]/I");  
+       t->Branch("refFlavorID_jet_hadronPT ",  &jets_.refFlavorID_jet_hadronPT  ,"refFlavorID_jet_hadronPT[nref]/F");
+       t->Branch("refFlavorID_jet_hadronEta",  &jets_.refFlavorID_jet_hadronEta ,"refFlavorID_jet_hadronEta[nref]/F"); 
+       t->Branch("refFlavorID_jet_hadronPhi",  &jets_.refFlavorID_jet_hadronPhi ,"refFlavorID_jet_hadronPhi[nref]/F");
+       t->Branch("refFlavorID_jet_hadronDR ",  &jets_.refFlavorID_jet_hadronDR  ,"refFlavorID_jet_hadronDR[nref]/F"); 
+
+       t->Branch("refFlavorID_jet_partonID ",  &jets_.refFlavorID_jet_partonID  ,"refFlavorID_jet_partonID[nref]/I"); 
+       t->Branch("refFlavorID_jet_partonPT ",  &jets_.refFlavorID_jet_partonPT  ,"refFlavorID_jet_partonPT[nref]/F"); 
+       t->Branch("refFlavorID_jet_partonEta",  &jets_.refFlavorID_jet_partonEta ,"refFlavorID_jet_partonEta[nref]/F"); 
+       t->Branch("refFlavorID_jet_partonPhi",  &jets_.refFlavorID_jet_partonPhi ,"refFlavorID_jet_partonPhi[nref]/F"); 
+       t->Branch("refFlavorID_jet_partonDR ",  &jets_.refFlavorID_jet_partonDR  ,"refFlavorID_jet_partonDR[nref]/F");  
+
+			if(useSubjets_){
+       t->Branch("refFlavorID_Subjet1_hadronID ",  &jets_.refFlavorID_Subjet1_hadronID  ,"refFlavorID_Subjet1_hadronID[nref]/I");
+       t->Branch("refFlavorID_Subjet1_hadronPT ",  &jets_.refFlavorID_Subjet1_hadronPT  ,"refFlavorID_Subjet1_hadronPT[nref]/F");
+       t->Branch("refFlavorID_Subjet1_hadronEta",  &jets_.refFlavorID_Subjet1_hadronEta ,"refFlavorID_Subjet1_hadronEta[nref]/F");
+       t->Branch("refFlavorID_Subjet1_hadronPhi",  &jets_.refFlavorID_Subjet1_hadronPhi ,"refFlavorID_Subjet1_hadronPhi[nref]/F");
+       t->Branch("refFlavorID_Subjet1_hadronDR ",  &jets_.refFlavorID_Subjet1_hadronDR  ,"refFlavorID_Subjet1_hadronDR[nref]/F");
+
+       t->Branch("refFlavorID_Subjet1_partonID ",  &jets_.refFlavorID_Subjet1_partonID  ,"refFlavorID_Subjet1_partonID[nref]/I");
+       t->Branch("refFlavorID_Subjet1_partonPT ",  &jets_.refFlavorID_Subjet1_partonPT  ,"refFlavorID_Subjet1_partonPT[nref]/F");
+       t->Branch("refFlavorID_Subjet1_partonEta",  &jets_.refFlavorID_Subjet1_partonEta ,"refFlavorID_Subjet1_partonEta[nref]/F");
+       t->Branch("refFlavorID_Subjet1_partonPhi",  &jets_.refFlavorID_Subjet1_partonPhi ,"refFlavorID_Subjet1_partonPhi[nref]/F");
+       t->Branch("refFlavorID_Subjet1_partonDR ",  &jets_.refFlavorID_Subjet1_partonDR  ,"refFlavorID_Subjet1_partonDR[nref]/F");
+
+       t->Branch("refFlavorID_Subjet2_hadronID ",  &jets_.refFlavorID_Subjet2_hadronID  ,"refFlavorID_Subjet2_hadronID[nref]/I");
+       t->Branch("refFlavorID_Subjet2_hadronPT ",  &jets_.refFlavorID_Subjet2_hadronPT  ,"refFlavorID_Subjet2_hadronPT[nref]/F");
+       t->Branch("refFlavorID_Subjet2_hadronEta",  &jets_.refFlavorID_Subjet2_hadronEta ,"refFlavorID_Subjet2_hadronEta[nref]/F");
+       t->Branch("refFlavorID_Subjet2_hadronPhi",  &jets_.refFlavorID_Subjet2_hadronPhi ,"refFlavorID_Subjet2_hadronPhi[nref]/F");
+       t->Branch("refFlavorID_Subjet2_hadronDR ",  &jets_.refFlavorID_Subjet2_hadronDR  ,"refFlavorID_Subjet2_hadronDR[nref]/F");
+
+       t->Branch("refFlavorID_Subjet2_partonID ",  &jets_.refFlavorID_Subjet2_partonID  ,"refFlavorID_Subjet2_partonID[nref]/I");
+       t->Branch("refFlavorID_Subjet2_partonPT ",  &jets_.refFlavorID_Subjet2_partonPT  ,"refFlavorID_Subjet2_partonPT[nref]/F");
+       t->Branch("refFlavorID_Subjet2_partonEta",  &jets_.refFlavorID_Subjet2_partonEta ,"refFlavorID_Subjet2_partonEta[nref]/F");
+       t->Branch("refFlavorID_Subjet2_partonPhi",  &jets_.refFlavorID_Subjet2_partonPhi ,"refFlavorID_Subjet2_partonPhi[nref]/F");
+       t->Branch("refFlavorID_Subjet2_partonDR ",  &jets_.refFlavorID_Subjet2_partonDR  ,"refFlavorID_Subjet2_partonDR[nref]/F");
+
+			} // end if useSubjets_
+		}// end if doGhostFlavorMatch_
+
+
 
 		if(doNewJetVars_){
 			t->Branch("refnCands",jets_.refnCands,"refnCands[nref]/I");
@@ -1068,10 +1127,95 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 		jets_.genSDConstituentsM.clear();
 	}
 
+// for ghost parton flavor matching with jet, subjets
+
+  edm::Handle<reco::JetFlavourInfoMatchingCollection> theJetFlavourInfos;
+	iEvent.getByToken(jetFlavourInfosToken_, theJetFlavourInfos );
+
+  edm::Handle<reco::JetFlavourInfoMatchingCollection> theSubjetFlavourInfos;
+  edm::Handle<edm::View<reco::Jet> > groomedJets;
+
+	std::vector<int> matchedIndices;
+
+/*
+  for ( reco::JetFlavourInfoMatchingCollection::const_iterator j  = theJetFlavourInfos->begin();
+                                     j != theJetFlavourInfos->end();
+                                     ++j ) {
+    std::cout << "-------------------- Jet Flavour Info --------------------" << std::endl;
+
+    const reco::Jet *aJet = (*j).first.get();
+    reco::JetFlavourInfo aInfo = (*j).second;
+    std::cout << std::setprecision(2) << std::setw(6) << std::fixed
+              << "[printJetFlavourInfo] Jet " << (j - theJetFlavourInfos->begin()) << " pt, eta, phi = " << aJet->pt() << ", "
+                                                                                   << aJet->eta() << ", "
+//                                                                                   << aJet->rapidity() << ", "
+                                                                                   << aJet->phi()
+<< std::endl;
+
+	} // end for reco::JetFlavourInfoMatchingCollection::const_iterator j  = theJetFlavourInfos->begin()
+*/
+
+// end for ghost parton flavor matching with jet, subjets
+
+ 
+	if(doGhostFlavorMatch_ && theJetFlavourInfos->size()!=jets->size()){
+
+	cout<<"\n   warning !!! theJetFlavourInfos->size()!=jets->size()  !!!"<<endl;
+	cout<<"   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     \n"<<endl;
+
+	}
+
+  if( useSubjets_ )
+  {
+    iEvent.getByToken(subjetFlavourInfosToken_, theSubjetFlavourInfos);
+    iEvent.getByToken(groomedJetsToken_, groomedJets);
+
+    // match groomed and original jet
+    std::vector<bool> jetLocks(theJetFlavourInfos->size(),false);
+    std::vector<int>  jetIndices;
+
+    for(size_t gj=0; gj<groomedJets->size(); ++gj)
+    {
+      double matchedDR2 = 1e9;
+      int matchedIdx = -1;
+
+      if( groomedJets->at(gj).pt()>0. ) // skips pathological cases of groomed jets with Pt=0
+      {
+        for(reco::JetFlavourInfoMatchingCollection::const_iterator jIt_FlavorInfos  = theJetFlavourInfos->begin();
+                                       jIt_FlavorInfos != theJetFlavourInfos->end();
+                                       ++jIt_FlavorInfos)
+        {
+          if( jetLocks.at(jIt_FlavorInfos - theJetFlavourInfos->begin()) ) continue; // skip jets that have already been matched
+
+          double tempDR2 = reco::deltaR2( jIt_FlavorInfos->first->rapidity(), jIt_FlavorInfos->first->phi(), groomedJets->at(gj).rapidity(), groomedJets->at(gj).phi() );
+          if( tempDR2 < matchedDR2 )
+          {
+            matchedDR2 = tempDR2;
+            matchedIdx = (jIt_FlavorInfos - theJetFlavourInfos->begin());
+          }
+        }
+      }
+
+      if( matchedIdx>=0 ) jetLocks.at(matchedIdx) = true;
+      jetIndices.push_back(matchedIdx);
+    } // end for  gj<groomedJets->size()
+    for(size_t j_sz=0; j_sz<theJetFlavourInfos->size(); ++j_sz)
+    {
+      std::vector<int>::iterator matchedIndex = std::find( jetIndices.begin(), jetIndices.end(), j_sz );
+
+      matchedIndices.push_back( matchedIndex != jetIndices.end() ? std::distance(jetIndices.begin(),matchedIndex) : -1 );
+    }
+  } // end if useSubjets_
+
+
+// end for ghost parton flavor matching with jet, subjets
 
 
 	for(unsigned int j = 0; j < jets->size(); ++j){
 		const reco::Jet& jet = (*jets)[j];
+
+		// for comparision to flavourmatchingCollection
+//		cout<< std::setprecision(2) << std::setw(32) << std::fixed<<"[reco::Jet info] Jet " <<std::setw(4)<< j <<" pt, eta, phi = " << jet.pt()<<", "<<jet.eta()<<", "<<jet.phi()<<endl;
 
 		if(jet.pt() < jetPtMin_) continue;
 		if (useJEC_ && usePat_){
@@ -1619,8 +1763,234 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 						if(ppt > hardPtMin_) jets_.signalHardSum[jets_.nref] += ppt;
 					}
 				}
-			}
-		}
+			} // end for i<genparts->size()
+
+// for ghost parton flavor matching with jet, subjets
+		if (doGenSubJets_){
+	  // initialize value 
+
+
+
+
+    reco::JetFlavourInfoMatchingCollection::const_iterator jIt_FlavorInfos =theJetFlavourInfos->begin();
+    jIt_FlavorInfos+=j;
+//    const reco::Jet *aJet = (*jIt_FlavorInfos).first.get(); // comment for temp not use
+    reco::JetFlavourInfo aInfo = (*jIt_FlavorInfos).second;
+
+		jets_.refFlavorID_jet_hadronID[jets_.nref]=aInfo.getHadronFlavour();
+		jets_.refFlavorID_jet_partonID[jets_.nref]=aInfo.getPartonFlavour();
+
+
+//    std::cout << std::setprecision(2) << std::setw(32) << std::fixed<< "[printJetFlavourInfo] Jet " <<std::setw(4)<< (jIt_FlavorInfos - theJetFlavourInfos->begin()) << " pt, eta, phi = " << aJet->pt() << ", "<< aJet->eta() << ", " << aJet->phi()<< std::endl;
+
+/*
+    // ----------------------- Hadrons -------------------------------
+
+    std::cout << "                      Hadron-based flavour: " << aInfo.getHadronFlavour() << std::endl;
+
+    const reco::GenParticleRefVector & bHadrons = aInfo.getbHadrons();
+    std::cout << "                      # of clustered b hadrons: " << bHadrons.size() << std::endl;
+    for(reco::GenParticleRefVector::const_iterator it = bHadrons.begin(); it != bHadrons.end(); ++it)
+    {
+      float dist = reco::deltaR( aJet->eta(), aJet->phi(), (*it)->eta(), (*it)->phi() );
+      float dist2 = reco::deltaR( aJet->rapidity(), aJet->phi(), (*it)->rapidity(), (*it)->phi() );
+      std::cout << "                        b hadron " << (it-bHadrons.begin())
+                << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                        << ", " << (*it)->status()
+                                                                                        << ", (" << (*it)->pt()
+                                                                                        << ","  << (*it)->eta()
+                                                                                        << ","  << (*it)->rapidity()
+                                                                                        << ","  << (*it)->phi()
+                                                                                        << "), " << dist
+                                                                                        << ", " << dist2 << std::endl;
+    }
+
+    const reco::GenParticleRefVector & cHadrons = aInfo.getcHadrons();
+    std::cout << "                      # of clustered c hadrons: " << cHadrons.size() << std::endl;
+    for(reco::GenParticleRefVector::const_iterator it = cHadrons.begin(); it != cHadrons.end(); ++it)
+    {
+      float dist = reco::deltaR( aJet->eta(), aJet->phi(), (*it)->eta(), (*it)->phi() );
+      float dist2 = reco::deltaR( aJet->rapidity(), aJet->phi(), (*it)->rapidity(), (*it)->phi() );
+      std::cout << "                        c hadron " << (it-cHadrons.begin())
+                << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                        << ", " << (*it)->status()
+                                                                                        << ", (" << (*it)->pt()
+                                                                                        << ","  << (*it)->eta()
+                                                                                        << ","  << (*it)->rapidity()
+                                                                                        << ","  << (*it)->phi()
+                                                                                        << "), " << dist
+                                                                                        << ", " << dist2 << std::endl;
+    }
+    // ----------------------- Partons -------------------------------
+    std::cout << "                      Parton-based flavour: " << aInfo.getPartonFlavour() << std::endl;
+
+    const reco::GenParticleRefVector & partons = aInfo.getPartons();
+    std::cout << "                      # of clustered partons: " << partons.size() << std::endl;
+    for(reco::GenParticleRefVector::const_iterator it = partons.begin(); it != partons.end(); ++it)
+    {
+      float dist = reco::deltaR( aJet->eta(), aJet->phi(), (*it)->eta(), (*it)->phi() );
+      float dist2 = reco::deltaR( aJet->rapidity(), aJet->phi(), (*it)->rapidity(), (*it)->phi() );
+      std::cout << "                        Parton " << (it-partons.begin())
+                << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                        << ", " << (*it)->status()
+                                                                                        << ", (" << (*it)->pt()
+                                                                                        << ","  << (*it)->eta()
+                                                                                        << ","  << (*it)->rapidity()
+                                                                                        << ","  << (*it)->phi()
+                                                                                        << "), " << dist
+                                                                                        << ", " << dist2 << std::endl;
+    }
+    // ----------------------- Leptons -------------------------------
+    const reco::GenParticleRefVector & leptons = aInfo.getLeptons();
+    std::cout << "                      # of clustered leptons: " << leptons.size() << std::endl;
+    for(reco::GenParticleRefVector::const_iterator it = leptons.begin(); it != leptons.end(); ++it)
+    {
+      float dist = reco::deltaR( aJet->eta(), aJet->phi(), (*it)->eta(), (*it)->phi() );
+      float dist2 = reco::deltaR( aJet->rapidity(), aJet->phi(), (*it)->rapidity(), (*it)->phi() );
+
+      std::cout << "                        Lepton " << (it-leptons.begin())
+                << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                        << ", " << (*it)->status()
+                                                                                        << ", (" << (*it)->pt()
+                                                                                        << ","  << (*it)->eta()
+                                                                                        << ","  << (*it)->rapidity()
+                                                                                        << ","  << (*it)->phi()
+                                                                                        << "), " << dist
+                                                                                        << ", " << dist2 << std::endl;
+
+    }
+*/
+    if( useSubjets_ )
+    {
+      if( matchedIndices.at(jIt_FlavorInfos - theJetFlavourInfos->begin())<0 )
+      {
+        // std::cout << "  ----------------------- Subjet Flavour Info -----------------------" << std::endl;
+        std::cout << "  No subjets assigned to this jet" << std::endl;
+        continue;
+      }
+
+      // loop over subjets
+      // std::cout << "  ----------------------- Subjet Flavour Info -----------------------" << std::endl;
+      for(size_t s=0; s < groomedJets->at(matchedIndices.at(jIt_FlavorInfos - theJetFlavourInfos->begin())).numberOfDaughters(); ++s)
+      {
+        const edm::Ptr<reco::Candidate> & subjet = groomedJets->at(matchedIndices.at(jIt_FlavorInfos - theJetFlavourInfos->begin())).daughterPtr(s);
+
+        for ( reco::JetFlavourInfoMatchingCollection::const_iterator sj  = theSubjetFlavourInfos->begin();
+                                           sj != theSubjetFlavourInfos->end();
+                                           ++sj ) {
+          if( subjet != edm::Ptr<reco::Candidate>((*sj).first.id(), (*sj).first.get(), (*sj).first.key()) ) continue;
+
+//          const reco::Jet *aSubjet = (*sj).first.get(); // comment for temp not use
+          aInfo = (*sj).second;
+
+					if(s==0){
+					jets_.refFlavorID_Subjet1_hadronID[jets_.nref]=aInfo.getHadronFlavour();
+          jets_.refFlavorID_Subjet1_partonID[jets_.nref]=aInfo.getPartonFlavour();
+					}
+					if(s==1){
+          jets_.refFlavorID_Subjet2_hadronID[jets_.nref]=aInfo.getHadronFlavour();
+          jets_.refFlavorID_Subjet2_partonID[jets_.nref]=aInfo.getPartonFlavour();	
+					}
+/*
+          std::cout << std::setprecision(2) << std::setw(6) << std::fixed
+                    << "  [printSubjetFlavourInfo] Subjet " << s << " pt, eta, rapidity, phi, dR(eta-phi), dR(rap-phi) = "
+                                                                 << aSubjet->pt() << ", "
+                                                                 << aSubjet->eta() << ", "
+                                                                 << aSubjet->rapidity() << ", "
+                                                                 << aSubjet->phi() << ", "
+                                                                 << reco::deltaR( aSubjet->eta(), aSubjet->phi(), aJet->eta(), aJet->phi() ) << ", "
+                                                                 << reco::deltaR( aSubjet->rapidity(), aSubjet->phi(), aJet->rapidity(), aJet->phi() )
+                                                                 << std::endl;
+          // ----------------------- Hadrons -------------------------------
+          std::cout << "                           Hadron-based flavour: " << aInfo.getHadronFlavour() << std::endl;
+
+          const reco::GenParticleRefVector & bHadrons = aInfo.getbHadrons();
+          std::cout << "                           # of assigned b hadrons: " << bHadrons.size() << std::endl;
+          for(reco::GenParticleRefVector::const_iterator it = bHadrons.begin(); it != bHadrons.end(); ++it)
+          {
+            float dist = reco::deltaR( aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi() );
+            float dist2 = reco::deltaR( aSubjet->rapidity(), aSubjet->phi(), (*it)->rapidity(), (*it)->phi() );
+            std::cout << "                             b hadron " << (it-bHadrons.begin())
+                      << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                              << ", " << (*it)->status()
+                                                                                              << ", (" << (*it)->pt()
+                                                                                              << ","  << (*it)->eta()
+                                                                                              << ","  << (*it)->rapidity()
+                                                                                              << ","  << (*it)->phi()
+                                                                                              << "), " << dist
+                                                                                              << ", " << dist2 << std::endl;
+          }
+
+          const reco::GenParticleRefVector & cHadrons = aInfo.getcHadrons();
+          std::cout << "                           # of assigned c hadrons: " << cHadrons.size() << std::endl;
+          for(reco::GenParticleRefVector::const_iterator it = cHadrons.begin(); it != cHadrons.end(); ++it)
+          {
+            float dist = reco::deltaR( aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi() );
+            float dist2 = reco::deltaR( aSubjet->rapidity(), aSubjet->phi(), (*it)->rapidity(), (*it)->phi() );
+            std::cout << "                             c hadron " << (it-cHadrons.begin())
+                      << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                              << ", " << (*it)->status()
+                                                                                              << ", (" << (*it)->pt()
+                                                                                              << ","  << (*it)->eta()
+                                                                                              << ","  << (*it)->rapidity()
+                                                                                              << ","  << (*it)->phi()
+                                                                                              << "), " << dist
+                                                                                              << ", " << dist2 << std::endl;
+          }
+          // ----------------------- Partons -------------------------------
+          std::cout << "                           Parton-based flavour: " << aInfo.getPartonFlavour() << std::endl;
+
+          const reco::GenParticleRefVector & partons = aInfo.getPartons();
+          std::cout << "                           # of assigned partons: " << partons.size() << std::endl;
+          for(reco::GenParticleRefVector::const_iterator it = partons.begin(); it != partons.end(); ++it)
+          {
+            float dist = reco::deltaR( aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi() );
+            float dist2 = reco::deltaR( aSubjet->rapidity(), aSubjet->phi(), (*it)->rapidity(), (*it)->phi() );
+            std::cout << "                             Parton " << (it-partons.begin())
+                      << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                              << ", " << (*it)->status()
+                                                                                              << ", (" << (*it)->pt()
+                                                                                              << ","  << (*it)->eta()
+                                                                                              << ","  << (*it)->rapidity()
+                                                                                              << ","  << (*it)->phi()
+                                                                                              << "), " << dist
+                                                                                              << ", " << dist2 << std::endl;
+          }
+          // ----------------------- Leptons -------------------------------
+          const reco::GenParticleRefVector & leptons = aInfo.getLeptons();
+          std::cout << "                           # of assigned leptons: " << leptons.size() << std::endl;
+          for(reco::GenParticleRefVector::const_iterator it = leptons.begin(); it != leptons.end(); ++it)
+          {
+
+            float dist = reco::deltaR( aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi() );
+            float dist2 = reco::deltaR( aSubjet->rapidity(), aSubjet->phi(), (*it)->rapidity(), (*it)->phi() );
+
+            std::cout << "                             Lepton " << (it-leptons.begin())
+                      << " PdgID, status, (pt,eta,rapidity,phi), dR(eta-phi), dR(rap-phi) = " << (*it)->pdgId()
+                                                                                              << ", " << (*it)->status()
+                                                                                              << ", (" << (*it)->pt()
+                                                                                              << ","  << (*it)->eta()
+                                                                                              << ","  << (*it)->rapidity()
+                                                                                              << ","  << (*it)->phi()
+                                                                                              << "), " << dist
+                                                                                              << ", " << dist2 << std::endl;
+
+          }
+*/
+        } // end   reco::JetFlavourInfoMatchingCollection::const_iterator sj
+      } // end   for(size_t s=0; s<groomedJets->at(matchedIndices.at(j - theJetFlavourInfos->begin())).numberOfDaughters(); ++s)
+    } // end    if useSubjets_ 
+
+
+	} // end if doGenSubJets_
+
+
+
+// end for ghost parton flavor matching with jet, subjets
+
+
+
+		} // end if isMC_
 
 		if(isMC_ && usePat_){
 
@@ -1636,6 +2006,10 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 				jets_.refy[jets_.nref] = genjet->eta();
 				jets_.refdphijt[jets_.nref] = reco::deltaPhi(jet.phi(), genjet->phi());
 				jets_.refdrjt[jets_.nref] = reco::deltaR(jet.eta(),jet.phi(),genjet->eta(),genjet->phi());
+
+//    cout<< std::setprecision(2) << std::setw(32) << std::fixed<<"[ref jet info] Jet " <<std::setw(4)<< j <<" pt, eta, phi = " << genjet->pt()<<", "<<genjet->eta()<<", "<<genjet->phi()<<endl;
+
+
 
 				if(doSubEvent_){
 					const GenParticle* gencon = genjet->getGenConstituent(0);
@@ -1802,11 +2176,17 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 			jets_.reftau2[jets_.nref] = -999.;
 			jets_.reftau3[jets_.nref] = -999.;
 
-			jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();
+//			jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour(); // not work after update ghost flavor match
+	
+		int partonFlavor= jets_.refFlavorID_jet_hadronID[jets_.nref];
+		if (partonFlavor==0) {
+			partonFlavor=jets_.refFlavorID_jet_partonID[jets_.nref];
+		}	
+		jets_.refparton_flavorForB[jets_.nref] = partonFlavor;
 
 			// Matt's Flavor Productio code 
 			if(isPythia6_){
-				int partonFlavor = (*patjets)[j].partonFlavour();
+//				int partonFlavor = (*patjets)[j].partonFlavour();
 				//      jets_.refparton_flavorForB[jets_.nref] = partonFlavor;
 
 				if(abs(partonFlavor)==4||abs(partonFlavor)==5){
@@ -1923,7 +2303,8 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 				jets_.refparton_pt[jets_.nref] = -999;
 				jets_.refparton_flavor[jets_.nref] = -999;
 			}
-		}
+
+		} // end  if isMC_ && usePat_
 		jets_.nref++;
 	} // end for j < jets->size() 
 
@@ -2421,6 +2802,9 @@ void HiInclusiveJetAnalyzer::analyzeSubjets(const reco::Jet jet) {
 			sjeta.push_back(dp.eta());
 			sjphi.push_back(dp.phi());
 			sjm.push_back(dp.mass());
+
+//	    cout<< std::setprecision(2) << std::setw(32) << std::fixed<<"[reco::SubJet info] Subjet "<<std::setw(4)<<k<<" pt, eta, phi = " << dp.pt()<<", "<<dp.eta()<<", "<<dp.phi()<<endl;
+
 		}
 	} else {
 		sjpt.push_back(-999.);
