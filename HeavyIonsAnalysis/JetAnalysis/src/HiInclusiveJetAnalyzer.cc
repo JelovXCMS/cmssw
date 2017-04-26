@@ -59,6 +59,7 @@ using namespace std;
 using namespace edm;
 using namespace reco;
 
+//template class std::vector<std::vector<std::vector<float> > >;
 
 // class ExtraInfo : public fastjet::PseudoJet::UserInfoBase {
 // public:
@@ -113,6 +114,7 @@ HiInclusiveJetAnalyzer::HiInclusiveJetAnalyzer(const edm::ParameterSet& iConfig)
 	useHepMC_ = iConfig.getUntrackedParameter<bool> ("useHepMC",false);
 	fillGenJets_ = iConfig.getUntrackedParameter<bool>("fillGenJets",false);
 
+	doExtendedFlavorTagging_ = iConfig.getUntrackedParameter<bool>("doExtendedFlavorTagging",false);
 	doTrigger_ = iConfig.getUntrackedParameter<bool>("doTrigger",false);
 	doHiJetID_ = iConfig.getUntrackedParameter<bool>("doHiJetID",false);
 	if(doHiJetID_) jetIDweightFile_ = iConfig.getUntrackedParameter<string>("jetIDWeight","weights.xml");
@@ -126,7 +128,7 @@ HiInclusiveJetAnalyzer::HiInclusiveJetAnalyzer(const edm::ParameterSet& iConfig)
 		genjetTag_ = consumes<vector<reco::GenJet> > (iConfig.getParameter<InputTag>("genjetTag"));
 		//genjetTag_ = consumes<edm::View<reco::Jet>>(iConfig.getParameter<InputTag>("genjetTag"));
 		if(useHepMC_) eventInfoTag_ = consumes<HepMCProduct> (iConfig.getParameter<InputTag>("eventInfoTag"));
-		eventGenInfoTag_ = consumes<GenEventInfoProduct> (iConfig.getParameter<InputTag>("eventInfoTag"));
+			eventGenInfoTag_ = consumes<GenEventInfoProduct> (iConfig.getParameter<InputTag>("eventInfoTag"));
 	}
 	verbose_ = iConfig.getUntrackedParameter<bool>("verbose",false);
 
@@ -153,6 +155,13 @@ HiInclusiveJetAnalyzer::HiInclusiveJetAnalyzer(const edm::ParameterSet& iConfig)
 	doExtraCTagging_ = iConfig.getUntrackedParameter<bool>("doExtraCTagging",false);
 
 	genParticleSrc_ = consumes<reco::GenParticleCollection> (iConfig.getUntrackedParameter<edm::InputTag>("genParticles",edm::InputTag("hiGenParticles")));
+
+	if(doExtendedFlavorTagging_){
+		jetFlavourInfosToken_ = consumes<reco::JetFlavourInfoMatchingCollection>( iConfig.getParameter<edm::InputTag>("jetFlavourInfos") );
+		subjetFlavourInfosToken_ = mayConsume<reco::JetFlavourInfoMatchingCollection>( iConfig.exists("subjetFlavourInfos") ? iConfig.getParameter<edm::InputTag>("subjetFlavourInfos") : edm::InputTag() );
+		groomedJetsToken_ = mayConsume<edm::View<reco::Jet> >( iConfig.exists("groomedJets") ? iConfig.getParameter<edm::InputTag>("groomedJets") : edm::InputTag() );
+		useSubjets_ = ( iConfig.exists("subjetFlavourInfos") && iConfig.exists("groomedJets") );
+	}
 
 	if(doTrigger_){
 		L1gtReadout_ = consumes< L1GlobalTriggerReadoutRecord > (iConfig.getParameter<edm::InputTag>("L1gtReadout"));
@@ -353,11 +362,30 @@ HiInclusiveJetAnalyzer::beginJob() {
 	t->Branch("jttau2",jets_.jttau2,"jttau2[nref]/F");
 	t->Branch("jttau3",jets_.jttau3,"jttau3[nref]/F");
 
+	if(doExtendedFlavorTagging_){
+		t->Branch("jtHadronFlavor",jets_.jtHadronFlavor,"jtHadronFlavor[nref]/F");
+		t->Branch("jtPartonFlavor",jets_.jtPartonFlavor,"jtPartonFlavor[nref]/F");
+	}
+
 	if(doSubJets_) {
 		t->Branch("jtSubJetPt",&jets_.jtSubJetPt);
 		t->Branch("jtSubJetEta",&jets_.jtSubJetEta);
 		t->Branch("jtSubJetPhi",&jets_.jtSubJetPhi);
 		t->Branch("jtSubJetM",&jets_.jtSubJetM);
+		if(doExtendedFlavorTagging_){
+			t->Branch("jtSubJetHadronFlavor",&jets_.jtSubJetHadronFlavor);
+			t->Branch("jtSubJetPartonFlavor",&jets_.jtSubJetPartonFlavor);
+			t->Branch("jtSubJetHadronDR",&jets_.jtSubJetHadronDR);
+			t->Branch("jtSubJetHadronPt",&jets_.jtSubJetHadronPt);
+			t->Branch("jtSubJetHadronEta",&jets_.jtSubJetHadronEta);
+			t->Branch("jtSubJetHadronPhi",&jets_.jtSubJetHadronPhi);
+			t->Branch("jtSubJetHadronPdg",&jets_.jtSubJetHadronPdg);
+			t->Branch("jtSubJetPartonDR",&jets_.jtSubJetPartonDR);
+			t->Branch("jtSubJetPartonPt",&jets_.jtSubJetPartonPt);
+			t->Branch("jtSubJetPartonEta",&jets_.jtSubJetPartonEta);
+			t->Branch("jtSubJetPartonPhi",&jets_.jtSubJetPartonPhi);
+			t->Branch("jtSubJetPartonPdg",&jets_.jtSubJetPartonPdg);
+		}
 	}
 
 	if(doJetConstituents_){
@@ -875,7 +903,6 @@ HiInclusiveJetAnalyzer::beginJob() {
 		 }
 		 */
 	TH1D::SetDefaultSumw2();
-
 }
 
 
@@ -1520,7 +1547,26 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 		jets_.jttau2[jets_.nref] = -999.;
 		jets_.jttau3[jets_.nref] = -999.;
 
-		if(doSubJets_) analyzeSubjets(jet);
+		edm::Handle<reco::JetFlavourInfoMatchingCollection> theJetFlavourInfos;
+		edm::Handle<reco::JetFlavourInfoMatchingCollection> theSubjetFlavourInfos;
+		edm::Handle<edm::View<reco::Jet> > groomedJets; 
+		if(doExtendedFlavorTagging_){
+			iEvent.getByToken(jetFlavourInfosToken_, theJetFlavourInfos );
+			if(useSubjets_){
+				iEvent.getByToken(subjetFlavourInfosToken_, theSubjetFlavourInfos);
+				iEvent.getByToken(groomedJetsToken_, groomedJets);
+			}   
+
+			for(reco::JetFlavourInfoMatchingCollection::const_iterator j= theJetFlavourInfos->begin(); j!=theJetFlavourInfos->end(); j++){
+				const reco::Jet *flavorMatch = (*j).first.get();	
+				if(abs(flavorMatch->pt() - jet.pt()) < 0.1){
+					jets_.jtHadronFlavor[jets_.nref] = (*j).second.getHadronFlavour();
+					jets_.jtPartonFlavor[jets_.nref] = (*j).second.getPartonFlavour();
+				}	
+			}
+		}
+
+		if(doSubJets_) analyzeSubjets(jet, jets_.nref, theSubjetFlavourInfos, groomedJets);
 
 		if(usePat_){
 			if( (*patjets)[j].hasUserFloat(jetName_+"Njettiness:tau1") )
@@ -1543,589 +1589,610 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 				jets_.jtPfNEM[jets_.nref] = (*patjets)[j].photonMultiplicity();
 				jets_.jtPfMUM[jets_.nref] = (*patjets)[j].muonMultiplicity();
 			}
+	
 
-			if(doStandardJetID_){
-				jets_.fHPD[jets_.nref] = (*patjets)[j].jetID().fHPD;
-				jets_.fRBX[jets_.nref] = (*patjets)[j].jetID().fRBX;
-				jets_.n90[jets_.nref] = (*patjets)[j].n90();
+		if(doStandardJetID_){
+			jets_.fHPD[jets_.nref] = (*patjets)[j].jetID().fHPD;
+			jets_.fRBX[jets_.nref] = (*patjets)[j].jetID().fRBX;
+			jets_.n90[jets_.nref] = (*patjets)[j].n90();
 
-				jets_.fSubDet1[jets_.nref] = (*patjets)[j].jetID().fSubDetector1;
-				jets_.fSubDet2[jets_.nref] = (*patjets)[j].jetID().fSubDetector2;
-				jets_.fSubDet3[jets_.nref] = (*patjets)[j].jetID().fSubDetector3;
-				jets_.fSubDet4[jets_.nref] = (*patjets)[j].jetID().fSubDetector4;
-				jets_.restrictedEMF[jets_.nref] = (*patjets)[j].jetID().restrictedEMF;
-				jets_.nHCAL[jets_.nref] = (*patjets)[j].jetID().nHCALTowers;
-				jets_.nECAL[jets_.nref] = (*patjets)[j].jetID().nECALTowers;
-				jets_.apprHPD[jets_.nref] = (*patjets)[j].jetID().approximatefHPD;
-				jets_.apprRBX[jets_.nref] = (*patjets)[j].jetID().approximatefRBX;
+			jets_.fSubDet1[jets_.nref] = (*patjets)[j].jetID().fSubDetector1;
+			jets_.fSubDet2[jets_.nref] = (*patjets)[j].jetID().fSubDetector2;
+			jets_.fSubDet3[jets_.nref] = (*patjets)[j].jetID().fSubDetector3;
+			jets_.fSubDet4[jets_.nref] = (*patjets)[j].jetID().fSubDetector4;
+			jets_.restrictedEMF[jets_.nref] = (*patjets)[j].jetID().restrictedEMF;
+			jets_.nHCAL[jets_.nref] = (*patjets)[j].jetID().nHCALTowers;
+			jets_.nECAL[jets_.nref] = (*patjets)[j].jetID().nECALTowers;
+			jets_.apprHPD[jets_.nref] = (*patjets)[j].jetID().approximatefHPD;
+			jets_.apprRBX[jets_.nref] = (*patjets)[j].jetID().approximatefRBX;
 
-				//       jets_.n90[jets_.nref] = (*patjets)[j].jetID().hitsInN90;
-				jets_.n2RPC[jets_.nref] = (*patjets)[j].jetID().numberOfHits2RPC;
-				jets_.n3RPC[jets_.nref] = (*patjets)[j].jetID().numberOfHits3RPC;
-				jets_.nRPC[jets_.nref] = (*patjets)[j].jetID().numberOfHitsRPC;
+			//       jets_.n90[jets_.nref] = (*patjets)[j].jetID().hitsInN90;
+			jets_.n2RPC[jets_.nref] = (*patjets)[j].jetID().numberOfHits2RPC;
+			jets_.n3RPC[jets_.nref] = (*patjets)[j].jetID().numberOfHits3RPC;
+			jets_.nRPC[jets_.nref] = (*patjets)[j].jetID().numberOfHitsRPC;
 
-				jets_.fEB[jets_.nref] = (*patjets)[j].jetID().fEB;
-				jets_.fEE[jets_.nref] = (*patjets)[j].jetID().fEE;
-				jets_.fHB[jets_.nref] = (*patjets)[j].jetID().fHB;
-				jets_.fHE[jets_.nref] = (*patjets)[j].jetID().fHE;
-				jets_.fHO[jets_.nref] = (*patjets)[j].jetID().fHO;
-				jets_.fLong[jets_.nref] = (*patjets)[j].jetID().fLong;
-				jets_.fShort[jets_.nref] = (*patjets)[j].jetID().fShort;
-				jets_.fLS[jets_.nref] = (*patjets)[j].jetID().fLS;
-				jets_.fHFOOT[jets_.nref] = (*patjets)[j].jetID().fHFOOT;
-			}
-
+			jets_.fEB[jets_.nref] = (*patjets)[j].jetID().fEB;
+			jets_.fEE[jets_.nref] = (*patjets)[j].jetID().fEE;
+			jets_.fHB[jets_.nref] = (*patjets)[j].jetID().fHB;
+			jets_.fHE[jets_.nref] = (*patjets)[j].jetID().fHE;
+			jets_.fHO[jets_.nref] = (*patjets)[j].jetID().fHO;
+			jets_.fLong[jets_.nref] = (*patjets)[j].jetID().fLong;
+			jets_.fShort[jets_.nref] = (*patjets)[j].jetID().fShort;
+			jets_.fLS[jets_.nref] = (*patjets)[j].jetID().fLS;
+			jets_.fHFOOT[jets_.nref] = (*patjets)[j].jetID().fHFOOT;
 		}
 
-		if(isMC_){
-
-			if(isPythia6_){
-
-				bool hasPrimB = false;
-				bool hasPrimC = false;
-				for(UInt_t i = 4; i < 8; ++i){
-					if( abs( (*genparts)[i].pdgId() )==5) hasPrimB = true;
-					if( abs( (*genparts)[i].pdgId() )==4) hasPrimC = true;
-				}
-
-				if(hasPrimB){
-					if( abs( (*genparts)[4].pdgId() )==5 || abs( (*genparts)[5].pdgId() )==5 ){
-						if(abs( (*genparts)[6].pdgId() )==5 && abs( (*genparts)[7].pdgId() )==5) jets_.bProdCode = 3;  // double FEX
-						else jets_.bProdCode = 2; //single FEX
-					}
-					else if(abs( (*genparts)[6].pdgId() )==5 && abs( (*genparts)[7].pdgId() )==5) jets_.bProdCode = 1;  // FCR
-				}
-				if(hasPrimC){
-					if( abs( (*genparts)[4].pdgId() )==4 || abs( (*genparts)[5].pdgId() )==4 ){
-						if(abs( (*genparts)[6].pdgId() )==4 && abs( (*genparts)[7].pdgId() )==4) jets_.cProdCode = 3;  // double FEX
-						else jets_.cProdCode = 2; //single FEX
-					}
-					else if(abs( (*genparts)[6].pdgId() )==4 && abs( (*genparts)[7].pdgId() )==4) jets_.cProdCode = 1;  // FCR
-				}		
-			} // end if isPythia6_
-
-
-
-			for(UInt_t i = 0; i < genparts->size(); ++i){
-				const reco::GenParticle& p = (*genparts)[i];
-				if ( p.status()!=1 || p.charge()==0) continue;
-				double dr = deltaR(jet,p);
-				if(dr < rParam){
-					double ppt = p.pt();
-					jets_.genChargedSum[jets_.nref] += ppt;
-					if(ppt > hardPtMin_) jets_.genHardSum[jets_.nref] += ppt;
-					if(p.collisionId() == 0){
-						jets_.signalChargedSum[jets_.nref] += ppt;
-						if(ppt > hardPtMin_) jets_.signalHardSum[jets_.nref] += ppt;
-					}
-				}
-			}
-		}
-
-		if(isMC_ && usePat_){
-
-
-			const reco::GenJet * genjet = (*patjets)[j].genJet();
-
-			if(genjet){
-				jets_.refpt[jets_.nref] = genjet->pt();
-				jets_.refeta[jets_.nref] = genjet->eta();
-				jets_.refphi[jets_.nref] = genjet->phi();
-				jets_.refm[jets_.nref] = genjet->mass();
-				jets_.refarea[jets_.nref] = genjet->jetArea();
-				jets_.refy[jets_.nref] = genjet->eta();
-				jets_.refdphijt[jets_.nref] = reco::deltaPhi(jet.phi(), genjet->phi());
-				jets_.refdrjt[jets_.nref] = reco::deltaR(jet.eta(),jet.phi(),genjet->eta(),genjet->phi());
-
-				if(doSubEvent_){
-					const GenParticle* gencon = genjet->getGenConstituent(0);
-					jets_.subid[jets_.nref] = gencon->collisionId();
-				}
-
-				if(doNewJetVars_)
-					fillNewJetVarsRefJet(*genjet);
-
-				if(doGenSubJets_)
-					analyzeRefSubjets(*genjet);
-
-			}else{
-				jets_.refpt[jets_.nref] = -999.;
-				jets_.refeta[jets_.nref] = -999.;
-				jets_.refphi[jets_.nref] = -999.;
-				jets_.refm[jets_.nref] = -999.;
-				jets_.refarea[jets_.nref] = -999.;
-				jets_.refy[jets_.nref] = -999.;
-				jets_.refdphijt[jets_.nref] = -999.;
-				jets_.refdrjt[jets_.nref] = -999.;
-
-				if(doNewJetVars_){
-					jets_.refnCands[jets_.nref] = -999;
-					jets_.refnChCands[jets_.nref] = -999;
-					jets_.refnNeCands[jets_.nref] = -999;
-					jets_.refchargedSumConst[jets_.nref] = -999;
-					jets_.refchargedNConst  [jets_.nref] = -999;  
-					jets_.refeSumConst      [jets_.nref] = -999;  
-					jets_.refeNConst        [jets_.nref] = -999;  
-					jets_.refmuSumConst     [jets_.nref] = -999;  
-					jets_.refmuNConst       [jets_.nref] = -999;  
-					jets_.refphotonSumConst [jets_.nref] = -999; 
-					jets_.refphotonNConst   [jets_.nref] = -999;  
-					jets_.refneutralSumConst[jets_.nref] = -999;
-					jets_.refneutralNConst  [jets_.nref] = -999;  
-					jets_.refMByPt[jets_.nref] = -999.;
-					jets_.refRMSCand[jets_.nref] = -999.;
-					jets_.refAxis1[jets_.nref] = -999.;
-					jets_.refAxis2[jets_.nref] = -999.;
-					jets_.refSigma[jets_.nref] = -999.;
-					jets_.refrm3[jets_.nref] = -999.;
-					jets_.refrm2[jets_.nref] = -999.;
-					jets_.refrm1[jets_.nref] = -999.;
-					jets_.refrm0p5[jets_.nref] = -999.;
-					jets_.refR[jets_.nref] = -999.;
-					jets_.refpull[jets_.nref] = -999.;
-					jets_.refpTD[jets_.nref] = -999.;
-					jets_.refSDm[jets_.nref] = -999;
-					jets_.refSDpt[jets_.nref] = -999;
-					jets_.refSDeta[jets_.nref] = -999;
-					jets_.refSDphi[jets_.nref] = -999;
-					jets_.refSDptFrac[jets_.nref] = -999;
-					jets_.refSDrm0p5[jets_.nref] = -999;
-					jets_.refSDrm1[jets_.nref] = -999;
-					jets_.refSDrm2[jets_.nref] = -999;
-					jets_.refSDrm3[jets_.nref] = -999;
-
-					jets_.refTbeta20p2[jets_.nref] = -999; 
-					jets_.refTbeta20p3[jets_.nref] = -999; 
-					jets_.refTbeta20p4[jets_.nref] = -999; 
-					jets_.refTbeta20p5[jets_.nref] = -999; 
-
-					jets_.refTbeta30p2[jets_.nref] = -999; 
-					jets_.refTbeta30p3[jets_.nref] = -999; 
-					jets_.refTbeta30p4[jets_.nref] = -999; 
-					jets_.refTbeta30p5[jets_.nref] = -999; 
-
-					jets_.refCbeta20p2[jets_.nref] = -999; 
-					jets_.refCbeta20p3[jets_.nref] = -999; 
-					jets_.refCbeta20p4[jets_.nref] = -999; 
-					jets_.refCbeta20p5[jets_.nref] = -999; 
-
-					jets_.refZ11[jets_.nref] = -999;
-					jets_.refZ20[jets_.nref] = -999;
-					jets_.refZ22[jets_.nref] = -999;
-					jets_.refZ31[jets_.nref] = -999;
-					jets_.refZ33[jets_.nref] = -999;
-					jets_.refZ40[jets_.nref] = -999;
-					jets_.refZ42[jets_.nref] = -999;
-					jets_.refZ44[jets_.nref] = -999;
-					jets_.refZ51[jets_.nref] = -999;
-					jets_.refZ53[jets_.nref] = -999;
-					jets_.refZ55[jets_.nref] = -999;
-
-
-					jets_.refPhi1[jets_.nref] = -999;
-					jets_.refPhi2[jets_.nref] = -999;
-					jets_.refPhi3[jets_.nref] = -999;
-					jets_.refPhi4[jets_.nref] = -999;
-					jets_.refPhi5[jets_.nref] = -999;
-					jets_.refPhi6[jets_.nref] = -999;
-					jets_.refPhi7[jets_.nref] = -999;
-
-					jets_.refSkx[jets_.nref] = -999;
-					jets_.refSky[jets_.nref] = -999;
-				}
-
-				if( doJetConstituents_ ){
-					std::vector<int>   refCId;	  
-					std::vector<float> refCE;
-					std::vector<float> refCPt;
-					std::vector<float> refCEta;
-					std::vector<float> refCPhi;
-					std::vector<float> refCM;
-					refCId.push_back(-999);	  
-					refCE.push_back(-999);
-					refCPt.push_back(-999);
-					refCEta.push_back(-999);
-					refCPhi.push_back(-999);
-					refCM.push_back(-999);
-
-					jets_.refConstituentsId.push_back(refCId);
-					jets_.refConstituentsE.push_back(refCE);
-					jets_.refConstituentsPt.push_back(refCPt);
-					jets_.refConstituentsEta.push_back(refCEta);
-					jets_.refConstituentsPhi.push_back(refCPhi);
-					jets_.refConstituentsM.push_back(refCM);
-
-					std::vector<int> refSDId;
-					std::vector<float> refSDCE;
-					std::vector<float> refSDCPt;
-					std::vector<float> refSDCEta;
-					std::vector<float> refSDCPhi;
-					std::vector<float> refSDCM;
-
-					refSDId.push_back(-999);
-					refSDCE.push_back(-999);
-					refSDCPt.push_back(-999);
-					refSDCEta.push_back(-999);
-					refSDCPhi.push_back(-999);
-					refSDCM.push_back(-999);
-
-					jets_.refSDConstituentsId.push_back(refSDId);
-					jets_.refSDConstituentsE.push_back(refSDCE);
-					jets_.refSDConstituentsPt.push_back(refSDCPt);
-					jets_.refSDConstituentsEta.push_back(refSDCEta);
-					jets_.refSDConstituentsPhi.push_back(refSDCPhi);
-					jets_.refSDConstituentsM.push_back(refSDCM);
-				}
-
-				if(doGenSubJets_) {
-					jets_.refptG[jets_.nref]  = -999.;
-					jets_.refetaG[jets_.nref] = -999.;
-					jets_.refphiG[jets_.nref] = -999.;
-					jets_.refmG[jets_.nref]   = -999.;
-
-					std::vector<float> sjpt;
-					std::vector<float> sjeta;
-					std::vector<float> sjphi;
-					std::vector<float> sjm;
-					sjpt.push_back(-999.);
-					sjeta.push_back(-999.);
-					sjphi.push_back(-999.);
-					sjm.push_back(-999.);
-
-					jets_.refSubJetPt.push_back(sjpt);
-					jets_.refSubJetEta.push_back(sjeta);
-					jets_.refSubJetPhi.push_back(sjphi);
-					jets_.refSubJetM.push_back(sjm);
-				}
-			}
-			jets_.reftau1[jets_.nref] = -999.;
-			jets_.reftau2[jets_.nref] = -999.;
-			jets_.reftau3[jets_.nref] = -999.;
-
-			jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();
-
-			// Matt's Flavor Productio code 
-			if(isPythia6_){
-				int partonFlavor = (*patjets)[j].partonFlavour();
-				//      jets_.refparton_flavorForB[jets_.nref] = partonFlavor;
-
-				if(abs(partonFlavor)==4||abs(partonFlavor)==5){
-
-					int partonMatchIndex = findMatchedParton(jet.eta(), jet.phi(), 0.3, genparts, partonFlavor);
-					if(partonMatchIndex<0){
-						cout<< " couldn't find the parton "<<endl;
-						jets_.refparton_flavorProcess[jets_.nref] = 0;
-					}
-					else{
-						int flavorProcess =  getFlavorProcess(partonMatchIndex, genparts);
-						jets_.refparton_flavorProcess[jets_.nref] = flavorProcess;
-					}
-
-					// GSP-bbbar tag
-					if( jets_.refparton_flavorProcess[jets_.nref] == 6){
-						int MatchedPartonId= (*genparts)[partonMatchIndex].pdgId();
-						int partonPairIndex=-1;
-						int momIndex = findMatchedParton( (float)(*genparts)[partonMatchIndex].mother(0)->eta() , (float)(*genparts)[partonMatchIndex].mother(0)->phi(),(float)0.001,genparts, 0);
-						if (momIndex >=0 && (*genparts)[momIndex].pdgId()==21){ // double check momidex && momId = gluon
-							for( UInt_t i_dau =0; i_dau < (*genparts)[momIndex].numberOfDaughters(); i_dau++){
-								if( (*genparts)[momIndex].daughter(i_dau)->pdgId()== -MatchedPartonId ){       
-									partonPairIndex=findMatchedParton( (*genparts)[momIndex].daughter(i_dau)->eta(), (*genparts)[momIndex].daughter(i_dau)->phi(),0.001,genparts , 0);
-									break; // terminate for i_dau
-								} 
-							} // end i_dau < (*genparts)[momIndex].numberOfDaughters()
-						} // end if momIndex >=0 && (*genparts)[momIndex].pdgId()==21
-
-						if(partonPairIndex<=0) {cout<<"event : "<<event<<" ,partonPairIndex = "<<partonPairIndex<<" , momIndex = "<<momIndex<<endl;}
-						if(partonMatchIndex >0 && momIndex >0 && partonPairIndex >0){
-							jets_.refGSP_gpt[jets_.nref]          			=(*genparts)[momIndex].pt();
-							jets_.refGSP_geta [jets_.nref]        			=(*genparts)[momIndex].eta();
-							jets_.refGSP_gphi [jets_.nref]              =(*genparts)[momIndex].phi();
-							jets_.refGSP_gidx [jets_.nref]              =momIndex;
-							jets_.refGSP_b1pt [jets_.nref]              =(*genparts)[partonMatchIndex].pt();
-							jets_.refGSP_b1eta [jets_.nref]				      =(*genparts)[partonMatchIndex].eta();
-							jets_.refGSP_b1phi [jets_.nref]				      =(*genparts)[partonMatchIndex].phi();
-							jets_.refGSP_b2pt [jets_.nref]				      =(*genparts)[partonPairIndex].pt();
-							jets_.refGSP_b2eta [jets_.nref]				      =(*genparts)[partonPairIndex].eta();
-							jets_.refGSP_b2phi [jets_.nref]				      =(*genparts)[partonPairIndex].phi();
-
-							float b1eta=jets_.refGSP_b1eta [jets_.nref];
-							float b1phi=jets_.refGSP_b1phi [jets_.nref];
-							float b2eta=jets_.refGSP_b2eta [jets_.nref];
-							float b2phi=jets_.refGSP_b2phi [jets_.nref];
-
-							// jets_.refGSP_b1Match_jtIdx [jets_.nref];
-
-							jets_.refGSP_b1Match_jtdR [jets_.nref]= pow( pow(b1eta-jet.eta(),2) + pow(deltaPhi(b1phi,jet.phi()),2) , 0.5 ) ;
-							//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
-							//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
-
-							// jets_.refGSP_b2Match_jtIdx [jets_.nref];
-							jets_.refGSP_b2Match_jtdR [jets_.nref]= pow( pow(b2eta-jet.eta(),2) + pow(deltaPhi(b2phi,jet.phi()),2) , 0.5 );
-							//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
-							//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
-
-							float bbdphi=deltaPhi(b1phi,b2phi);
-
-							jets_.refGSP_bbdR [jets_.nref] = pow( pow(b1eta-b2eta,2) + pow(bbdphi,2), 0.5);
-							// jets_.refGSP_bbdxy [jets_.nref];
-							// jets_.refGSP_bbdz [jets_.nref];
-							jets_.refGSP_bbzg [jets_.nref] = jets_.refGSP_b2pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
-							if (jets_.refGSP_b2pt[jets_.nref] >jets_.refGSP_b1pt[jets_.nref]){
-								jets_.refGSP_bbzg [jets_.nref] =  jets_.refGSP_b1pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
-							}
-
-							jets_.refGSP_SubJtMatched [jets_.nref]=-1;
-							if(jets_.refGSP_b1Match_jtdR [jets_.nref] <0.4 && jets_.refGSP_b2Match_jtdR [jets_.nref] <0.4){
-								jets_.refGSP_SubJtMatched [jets_.nref]=1;
-							}
-
-
-						} // end if MatchedPartonId >0 && momIndex >0 && partonPairIndex >0  // index check
-						else {jets_.refGSP_SubJtMatched [jets_.nref]=-2;}
-
-					} // end GSP-bbbar tag
-
-
-				} // end if abs(partonFlavor)==4||abs(partonFlavor)==5
-				else jets_.refparton_flavorProcess[jets_.nref] = 0;
-
-			}
-
-			// matched partons
-			const reco::GenParticle & parton = *(*patjets)[j].genParton();
-
-			if((*patjets)[j].genParton()){
-				jets_.refparton_pt[jets_.nref] = parton.pt();
-				jets_.refparton_flavor[jets_.nref] = parton.pdgId();
-
-				if(saveBfragments_ && abs(jets_.refparton_flavorForB[jets_.nref])==5){
-
-					usedStringPts.clear();
-
-					// uncomment this if you want to know the ugly truth about parton matching -matt
-					//if(jet.pt() > 50 &&abs(parton.pdgId())!=5 && parton.pdgId()!=21)
-					// cout<<" Identified as a b, but doesn't match b or gluon, id = "<<parton.pdgId()<<endl;
-
-					jets_.bJetIndex[jets_.bMult] = jets_.nref;
-					jets_.bStatus[jets_.bMult] = parton.status();
-					jets_.bVx[jets_.bMult] = parton.vx();
-					jets_.bVy[jets_.bMult] = parton.vy();
-					jets_.bVz[jets_.bMult] = parton.vz();
-					jets_.bPt[jets_.bMult] = parton.pt();
-					jets_.bEta[jets_.bMult] = parton.eta();
-					jets_.bPhi[jets_.bMult] = parton.phi();
-					jets_.bPdg[jets_.bMult] = parton.pdgId();
-					jets_.bChg[jets_.bMult] = parton.charge();
-					jets_.bMult++;
-					saveDaughters(parton);
-				}
-			} else {
-				jets_.refparton_pt[jets_.nref] = -999;
-				jets_.refparton_flavor[jets_.nref] = -999;
-			}
-		}
-		jets_.nref++;
-	} // end for j < jets->size() 
+	}
 
 	if(isMC_){
 
-		if(useHepMC_) {
-			edm::Handle<HepMCProduct> hepMCProduct;
-			iEvent.getByToken(eventInfoTag_,hepMCProduct);
-			const HepMC::GenEvent* MCEvt = hepMCProduct->GetEvent();
+		if(isPythia6_){
 
-			std::pair<HepMC::GenParticle*,HepMC::GenParticle*> beamParticles = MCEvt->beam_particles();
-			if(beamParticles.first != 0)jets_.beamId1 = beamParticles.first->pdg_id();
-			if(beamParticles.second != 0)jets_.beamId2 = beamParticles.second->pdg_id();
+			bool hasPrimB = false;
+			bool hasPrimC = false;
+			for(UInt_t i = 4; i < 8; ++i){
+				if( abs( (*genparts)[i].pdgId() )==5) hasPrimB = true;
+				if( abs( (*genparts)[i].pdgId() )==4) hasPrimC = true;
+			}
+
+			if(hasPrimB){
+				if( abs( (*genparts)[4].pdgId() )==5 || abs( (*genparts)[5].pdgId() )==5 ){
+					if(abs( (*genparts)[6].pdgId() )==5 && abs( (*genparts)[7].pdgId() )==5) jets_.bProdCode = 3;  // double FEX
+					else jets_.bProdCode = 2; //single FEX
+				}
+				else if(abs( (*genparts)[6].pdgId() )==5 && abs( (*genparts)[7].pdgId() )==5) jets_.bProdCode = 1;  // FCR
+			}
+			if(hasPrimC){
+				if( abs( (*genparts)[4].pdgId() )==4 || abs( (*genparts)[5].pdgId() )==4 ){
+					if(abs( (*genparts)[6].pdgId() )==4 && abs( (*genparts)[7].pdgId() )==4) jets_.cProdCode = 3;  // double FEX
+					else jets_.cProdCode = 2; //single FEX
+				}
+				else if(abs( (*genparts)[6].pdgId() )==4 && abs( (*genparts)[7].pdgId() )==4) jets_.cProdCode = 1;  // FCR
+			}		
+		} // end if isPythia6_
+
+
+
+		for(UInt_t i = 0; i < genparts->size(); ++i){
+			const reco::GenParticle& p = (*genparts)[i];
+			if ( p.status()!=1 || p.charge()==0) continue;
+			double dr = deltaR(jet,p);
+			if(dr < rParam){
+				double ppt = p.pt();
+				jets_.genChargedSum[jets_.nref] += ppt;
+				if(ppt > hardPtMin_) jets_.genHardSum[jets_.nref] += ppt;
+				if(p.collisionId() == 0){
+					jets_.signalChargedSum[jets_.nref] += ppt;
+					if(ppt > hardPtMin_) jets_.signalHardSum[jets_.nref] += ppt;
+				}
+			}
+		}
+	}
+
+	if(isMC_ && usePat_){
+
+
+		const reco::GenJet * genjet = (*patjets)[j].genJet();
+
+		if(genjet){
+			jets_.refpt[jets_.nref] = genjet->pt();
+			jets_.refeta[jets_.nref] = genjet->eta();
+			jets_.refphi[jets_.nref] = genjet->phi();
+			jets_.refm[jets_.nref] = genjet->mass();
+			jets_.refarea[jets_.nref] = genjet->jetArea();
+			jets_.refy[jets_.nref] = genjet->eta();
+			jets_.refdphijt[jets_.nref] = reco::deltaPhi(jet.phi(), genjet->phi());
+			jets_.refdrjt[jets_.nref] = reco::deltaR(jet.eta(),jet.phi(),genjet->eta(),genjet->phi());
+
+			if(doSubEvent_){
+				const GenParticle* gencon = genjet->getGenConstituent(0);
+				jets_.subid[jets_.nref] = gencon->collisionId();
+			}
+
+			if(doNewJetVars_)
+				fillNewJetVarsRefJet(*genjet);
+
+			if(doGenSubJets_)
+				analyzeRefSubjets(*genjet);
+
+		}else{
+			jets_.refpt[jets_.nref] = -999.;
+			jets_.refeta[jets_.nref] = -999.;
+			jets_.refphi[jets_.nref] = -999.;
+			jets_.refm[jets_.nref] = -999.;
+			jets_.refarea[jets_.nref] = -999.;
+			jets_.refy[jets_.nref] = -999.;
+			jets_.refdphijt[jets_.nref] = -999.;
+			jets_.refdrjt[jets_.nref] = -999.;
+
+			if(doNewJetVars_){
+				jets_.refnCands[jets_.nref] = -999;
+				jets_.refnChCands[jets_.nref] = -999;
+				jets_.refnNeCands[jets_.nref] = -999;
+				jets_.refchargedSumConst[jets_.nref] = -999;
+				jets_.refchargedNConst  [jets_.nref] = -999;  
+				jets_.refeSumConst      [jets_.nref] = -999;  
+				jets_.refeNConst        [jets_.nref] = -999;  
+				jets_.refmuSumConst     [jets_.nref] = -999;  
+				jets_.refmuNConst       [jets_.nref] = -999;  
+				jets_.refphotonSumConst [jets_.nref] = -999; 
+				jets_.refphotonNConst   [jets_.nref] = -999;  
+				jets_.refneutralSumConst[jets_.nref] = -999;
+				jets_.refneutralNConst  [jets_.nref] = -999;  
+				jets_.refMByPt[jets_.nref] = -999.;
+				jets_.refRMSCand[jets_.nref] = -999.;
+				jets_.refAxis1[jets_.nref] = -999.;
+				jets_.refAxis2[jets_.nref] = -999.;
+				jets_.refSigma[jets_.nref] = -999.;
+				jets_.refrm3[jets_.nref] = -999.;
+				jets_.refrm2[jets_.nref] = -999.;
+				jets_.refrm1[jets_.nref] = -999.;
+				jets_.refrm0p5[jets_.nref] = -999.;
+				jets_.refR[jets_.nref] = -999.;
+				jets_.refpull[jets_.nref] = -999.;
+				jets_.refpTD[jets_.nref] = -999.;
+				jets_.refSDm[jets_.nref] = -999;
+				jets_.refSDpt[jets_.nref] = -999;
+				jets_.refSDeta[jets_.nref] = -999;
+				jets_.refSDphi[jets_.nref] = -999;
+				jets_.refSDptFrac[jets_.nref] = -999;
+				jets_.refSDrm0p5[jets_.nref] = -999;
+				jets_.refSDrm1[jets_.nref] = -999;
+				jets_.refSDrm2[jets_.nref] = -999;
+				jets_.refSDrm3[jets_.nref] = -999;
+
+				jets_.refTbeta20p2[jets_.nref] = -999; 
+				jets_.refTbeta20p3[jets_.nref] = -999; 
+				jets_.refTbeta20p4[jets_.nref] = -999; 
+				jets_.refTbeta20p5[jets_.nref] = -999; 
+
+				jets_.refTbeta30p2[jets_.nref] = -999; 
+				jets_.refTbeta30p3[jets_.nref] = -999; 
+				jets_.refTbeta30p4[jets_.nref] = -999; 
+				jets_.refTbeta30p5[jets_.nref] = -999; 
+
+				jets_.refCbeta20p2[jets_.nref] = -999; 
+				jets_.refCbeta20p3[jets_.nref] = -999; 
+				jets_.refCbeta20p4[jets_.nref] = -999; 
+				jets_.refCbeta20p5[jets_.nref] = -999; 
+
+				jets_.refZ11[jets_.nref] = -999;
+				jets_.refZ20[jets_.nref] = -999;
+				jets_.refZ22[jets_.nref] = -999;
+				jets_.refZ31[jets_.nref] = -999;
+				jets_.refZ33[jets_.nref] = -999;
+				jets_.refZ40[jets_.nref] = -999;
+				jets_.refZ42[jets_.nref] = -999;
+				jets_.refZ44[jets_.nref] = -999;
+				jets_.refZ51[jets_.nref] = -999;
+				jets_.refZ53[jets_.nref] = -999;
+				jets_.refZ55[jets_.nref] = -999;
+
+
+				jets_.refPhi1[jets_.nref] = -999;
+				jets_.refPhi2[jets_.nref] = -999;
+				jets_.refPhi3[jets_.nref] = -999;
+				jets_.refPhi4[jets_.nref] = -999;
+				jets_.refPhi5[jets_.nref] = -999;
+				jets_.refPhi6[jets_.nref] = -999;
+				jets_.refPhi7[jets_.nref] = -999;
+
+				jets_.refSkx[jets_.nref] = -999;
+				jets_.refSky[jets_.nref] = -999;
+			}
+
+			if( doJetConstituents_ ){
+				std::vector<int>   refCId;	  
+				std::vector<float> refCE;
+				std::vector<float> refCPt;
+				std::vector<float> refCEta;
+				std::vector<float> refCPhi;
+				std::vector<float> refCM;
+				refCId.push_back(-999);	  
+				refCE.push_back(-999);
+				refCPt.push_back(-999);
+				refCEta.push_back(-999);
+				refCPhi.push_back(-999);
+				refCM.push_back(-999);
+
+				jets_.refConstituentsId.push_back(refCId);
+				jets_.refConstituentsE.push_back(refCE);
+				jets_.refConstituentsPt.push_back(refCPt);
+				jets_.refConstituentsEta.push_back(refCEta);
+				jets_.refConstituentsPhi.push_back(refCPhi);
+				jets_.refConstituentsM.push_back(refCM);
+
+				std::vector<int> refSDId;
+				std::vector<float> refSDCE;
+				std::vector<float> refSDCPt;
+				std::vector<float> refSDCEta;
+				std::vector<float> refSDCPhi;
+				std::vector<float> refSDCM;
+
+				refSDId.push_back(-999);
+				refSDCE.push_back(-999);
+				refSDCPt.push_back(-999);
+				refSDCEta.push_back(-999);
+				refSDCPhi.push_back(-999);
+				refSDCM.push_back(-999);
+
+				jets_.refSDConstituentsId.push_back(refSDId);
+				jets_.refSDConstituentsE.push_back(refSDCE);
+				jets_.refSDConstituentsPt.push_back(refSDCPt);
+				jets_.refSDConstituentsEta.push_back(refSDCEta);
+				jets_.refSDConstituentsPhi.push_back(refSDCPhi);
+				jets_.refSDConstituentsM.push_back(refSDCM);
+			}
+
+			if(doGenSubJets_) {
+				jets_.refptG[jets_.nref]  = -999.;
+				jets_.refetaG[jets_.nref] = -999.;
+				jets_.refphiG[jets_.nref] = -999.;
+				jets_.refmG[jets_.nref]   = -999.;
+
+				std::vector<float> sjpt;
+				std::vector<float> sjeta;
+				std::vector<float> sjphi;
+				std::vector<float> sjm;
+				sjpt.push_back(-999.);
+				sjeta.push_back(-999.);
+				sjphi.push_back(-999.);
+				sjm.push_back(-999.);
+
+				jets_.refSubJetPt.push_back(sjpt);
+				jets_.refSubJetEta.push_back(sjeta);
+				jets_.refSubJetPhi.push_back(sjphi);
+				jets_.refSubJetM.push_back(sjm);
+			}
+		}
+		jets_.reftau1[jets_.nref] = -999.;
+		jets_.reftau2[jets_.nref] = -999.;
+		jets_.reftau3[jets_.nref] = -999.;
+
+		jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();
+
+		// Matt's Flavor Productio code 
+		if(isPythia6_){
+			int partonFlavor = (*patjets)[j].partonFlavour();
+			//      jets_.refparton_flavorForB[jets_.nref] = partonFlavor;
+
+			if(abs(partonFlavor)==4||abs(partonFlavor)==5){
+
+				int partonMatchIndex = findMatchedParton(jet.eta(), jet.phi(), 0.3, genparts, partonFlavor);
+				if(partonMatchIndex<0){
+					cout<< " couldn't find the parton "<<endl;
+					jets_.refparton_flavorProcess[jets_.nref] = 0;
+				}
+				else{
+					int flavorProcess =  getFlavorProcess(partonMatchIndex, genparts);
+					jets_.refparton_flavorProcess[jets_.nref] = flavorProcess;
+				}
+
+				// GSP-bbbar tag
+				if( jets_.refparton_flavorProcess[jets_.nref] == 6){
+					int MatchedPartonId= (*genparts)[partonMatchIndex].pdgId();
+					int partonPairIndex=-1;
+					int momIndex = findMatchedParton( (float)(*genparts)[partonMatchIndex].mother(0)->eta() , (float)(*genparts)[partonMatchIndex].mother(0)->phi(),(float)0.001,genparts, 0);
+					if (momIndex >=0 && (*genparts)[momIndex].pdgId()==21){ // double check momidex && momId = gluon
+						for( UInt_t i_dau =0; i_dau < (*genparts)[momIndex].numberOfDaughters(); i_dau++){
+							if( (*genparts)[momIndex].daughter(i_dau)->pdgId()== -MatchedPartonId ){       
+								partonPairIndex=findMatchedParton( (*genparts)[momIndex].daughter(i_dau)->eta(), (*genparts)[momIndex].daughter(i_dau)->phi(),0.001,genparts , 0);
+								break; // terminate for i_dau
+							} 
+						} // end i_dau < (*genparts)[momIndex].numberOfDaughters()
+					} // end if momIndex >=0 && (*genparts)[momIndex].pdgId()==21
+
+					if(partonPairIndex<=0) {cout<<"event : "<<event<<" ,partonPairIndex = "<<partonPairIndex<<" , momIndex = "<<momIndex<<endl;}
+					if(partonMatchIndex >0 && momIndex >0 && partonPairIndex >0){
+						jets_.refGSP_gpt[jets_.nref]          			=(*genparts)[momIndex].pt();
+						jets_.refGSP_geta [jets_.nref]        			=(*genparts)[momIndex].eta();
+						jets_.refGSP_gphi [jets_.nref]              =(*genparts)[momIndex].phi();
+						jets_.refGSP_gidx [jets_.nref]              =momIndex;
+						jets_.refGSP_b1pt [jets_.nref]              =(*genparts)[partonMatchIndex].pt();
+						jets_.refGSP_b1eta [jets_.nref]				      =(*genparts)[partonMatchIndex].eta();
+						jets_.refGSP_b1phi [jets_.nref]				      =(*genparts)[partonMatchIndex].phi();
+						jets_.refGSP_b2pt [jets_.nref]				      =(*genparts)[partonPairIndex].pt();
+						jets_.refGSP_b2eta [jets_.nref]				      =(*genparts)[partonPairIndex].eta();
+						jets_.refGSP_b2phi [jets_.nref]				      =(*genparts)[partonPairIndex].phi();
+
+						float b1eta=jets_.refGSP_b1eta [jets_.nref];
+						float b1phi=jets_.refGSP_b1phi [jets_.nref];
+						float b2eta=jets_.refGSP_b2eta [jets_.nref];
+						float b2phi=jets_.refGSP_b2phi [jets_.nref];
+
+						// jets_.refGSP_b1Match_jtIdx [jets_.nref];
+
+						jets_.refGSP_b1Match_jtdR [jets_.nref]= pow( pow(b1eta-jet.eta(),2) + pow(deltaPhi(b1phi,jet.phi()),2) , 0.5 ) ;
+						//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
+						//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
+
+						// jets_.refGSP_b2Match_jtIdx [jets_.nref];
+						jets_.refGSP_b2Match_jtdR [jets_.nref]= pow( pow(b2eta-jet.eta(),2) + pow(deltaPhi(b2phi,jet.phi()),2) , 0.5 );
+						//							jets_.refGSP_b1Match_Subjt1dR [jets_.nref];
+						//							jets_.refGSP_b1Match_Subjt2dR [jets_.nref];
+
+						float bbdphi=deltaPhi(b1phi,b2phi);
+
+						jets_.refGSP_bbdR [jets_.nref] = pow( pow(b1eta-b2eta,2) + pow(bbdphi,2), 0.5);
+						// jets_.refGSP_bbdxy [jets_.nref];
+						// jets_.refGSP_bbdz [jets_.nref];
+						jets_.refGSP_bbzg [jets_.nref] = jets_.refGSP_b2pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
+						if (jets_.refGSP_b2pt[jets_.nref] >jets_.refGSP_b1pt[jets_.nref]){
+							jets_.refGSP_bbzg [jets_.nref] =  jets_.refGSP_b1pt[jets_.nref] / (jets_.refGSP_b1pt[jets_.nref]+jets_.refGSP_b2pt[jets_.nref]);
+						}
+
+						jets_.refGSP_SubJtMatched [jets_.nref]=-1;
+						if(jets_.refGSP_b1Match_jtdR [jets_.nref] <0.4 && jets_.refGSP_b2Match_jtdR [jets_.nref] <0.4){
+							jets_.refGSP_SubJtMatched [jets_.nref]=1;
+						}
+
+
+					} // end if MatchedPartonId >0 && momIndex >0 && partonPairIndex >0  // index check
+					else {jets_.refGSP_SubJtMatched [jets_.nref]=-2;}
+
+				} // end GSP-bbbar tag
+
+
+			} // end if abs(partonFlavor)==4||abs(partonFlavor)==5
+			else jets_.refparton_flavorProcess[jets_.nref] = 0;
+
 		}
 
-		edm::Handle<GenEventInfoProduct> hEventInfo;
-		iEvent.getByToken(eventGenInfoTag_,hEventInfo);
-		//jets_.pthat = hEventInfo->binningValues()[0];
+		// matched partons
+		const reco::GenParticle & parton = *(*patjets)[j].genParton();
 
-		// binning values and qscale appear to be equivalent, but binning values not always present
-		jets_.pthat = hEventInfo->qScale();
+		if((*patjets)[j].genParton()){
+			jets_.refparton_pt[jets_.nref] = parton.pt();
+			jets_.refparton_flavor[jets_.nref] = parton.pdgId();
 
-		edm::Handle<vector<reco::GenJet> >genjets;
-		//edm::Handle<edm::View<reco::Jet>> genjets;
-		iEvent.getByToken(genjetTag_, genjets);
+			if(saveBfragments_ && abs(jets_.refparton_flavorForB[jets_.nref])==5){
 
-		//get gen-level n-jettiness
-		// edm::Handle<edm::ValueMap<float> > genTau1s;
-		// edm::Handle<edm::ValueMap<float> > genTau2s;
-		// edm::Handle<edm::ValueMap<float> > genTau3s;
-		// if(useGenTaus) {
-		//   Printf("get gen taus");
-		//   iEvent.getByToken(tokenGenTau1_,genTau1s);
-		//   iEvent.getByToken(tokenGenTau2_,genTau2s);
-		//   iEvent.getByToken(tokenGenTau3_,genTau3s);
-		// }
+				usedStringPts.clear();
 
-		jets_.ngen = 0;
+				// uncomment this if you want to know the ugly truth about parton matching -matt
+				//if(jet.pt() > 50 &&abs(parton.pdgId())!=5 && parton.pdgId()!=21)
+				// cout<<" Identified as a b, but doesn't match b or gluon, id = "<<parton.pdgId()<<endl;
 
-		//int igen = 0;
-		for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){
-			//for ( typename edm::View<reco::Jet>::const_iterator genjetIt = genjets->begin() ; genjetIt != genjets->end() ; ++genjetIt ) 
-			const reco::GenJet & genjet = (*genjets)[igen];
-			//edm::Ptr<reco::Jet> genjetPtr = genjets->ptrAt(genjetIt - genjets->begin());
-			//const reco::GenJet genjet = (*dynamic_cast<const reco::GenJet*>(&(*genjetPtr)));
-			float genjet_pt = genjet.pt();
-
-			float tau1 =  -999.;
-			float tau2 =  -999.;
-			float tau3 =  -9999.;
-			if(doGenTaus_) {
-				tau1 =  getTau(1,genjet);
-				tau2 =  getTau(2,genjet);
-				tau3 =  getTau(3,genjet);
+				jets_.bJetIndex[jets_.bMult] = jets_.nref;
+				jets_.bStatus[jets_.bMult] = parton.status();
+				jets_.bVx[jets_.bMult] = parton.vx();
+				jets_.bVy[jets_.bMult] = parton.vy();
+				jets_.bVz[jets_.bMult] = parton.vz();
+				jets_.bPt[jets_.bMult] = parton.pt();
+				jets_.bEta[jets_.bMult] = parton.eta();
+				jets_.bPhi[jets_.bMult] = parton.phi();
+				jets_.bPdg[jets_.bMult] = parton.pdgId();
+				jets_.bChg[jets_.bMult] = parton.charge();
+				jets_.bMult++;
+				saveDaughters(parton);
 			}
+		} else {
+			jets_.refparton_pt[jets_.nref] = -999;
+			jets_.refparton_flavor[jets_.nref] = -999;
+		}
+	}
+	jets_.nref++;
+} // end for j < jets->size() 
 
-			// find matching patJet if there is one
-			jets_.gendrjt[jets_.ngen] = -1.0;
-			jets_.genmatchindex[jets_.ngen] = -1;
+if(isMC_){
 
-			for(int ijet = 0 ; ijet < jets_.nref; ++ijet){
-				// poor man's matching, someone fix please
+	if(useHepMC_) {
+		edm::Handle<HepMCProduct> hepMCProduct;
+		iEvent.getByToken(eventInfoTag_,hepMCProduct);
+		const HepMC::GenEvent* MCEvt = hepMCProduct->GetEvent();
 
-				double deltaPt = fabs(genjet.pt()-jets_.refpt[ijet]); //Note: precision of this ~ .0001, so cut .01
-				double deltaEta = fabs(genjet.eta()-jets_.refeta[ijet]); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
-				double deltaPhi = fabs(reco::deltaPhi(genjet.phi(), jets_.refphi[ijet])); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+		std::pair<HepMC::GenParticle*,HepMC::GenParticle*> beamParticles = MCEvt->beam_particles();
+		if(beamParticles.first != 0)jets_.beamId1 = beamParticles.first->pdg_id();
+		if(beamParticles.second != 0)jets_.beamId2 = beamParticles.second->pdg_id();
+	}
 
-				if(deltaPt < 0.01 && deltaEta < .0001 && deltaPhi < .0001){
-					if(genjet_pt>genPtMin_) {
-						jets_.genmatchindex[jets_.ngen] = (int)ijet;
-						jets_.gendphijt[jets_.ngen] = reco::deltaPhi(jets_.refphi[ijet],genjet.phi());
-						jets_.gendrjt[jets_.ngen] = sqrt(pow(jets_.gendphijt[jets_.ngen],2)+pow(fabs(genjet.eta()-jets_.refeta[ijet]),2));
-					}
-					if(doGenTaus_) {
-						jets_.reftau1[ijet] = tau1;
-						jets_.reftau2[ijet] = tau2;
-						jets_.reftau3[ijet] = tau3;
-					}
-					break;
+	//edm::Handle<GenEventInfoProduct> hEventInfo;
+	//iEvent.getByToken(eventGenInfoTag_,hEventInfo);
+	//jets_.pthat = hEventInfo->binningValues()[0];
+
+	// binning values and qscale appear to be equivalent, but binning values not always present
+	//jets_.pthat = hEventInfo->qScale();
+
+	//edm::Handle<edm::View<reco::Jet>> genjets;
+
+	//get gen-level n-jettiness
+	// edm::Handle<edm::ValueMap<float> > genTau1s;
+	// edm::Handle<edm::ValueMap<float> > genTau2s;
+	// edm::Handle<edm::ValueMap<float> > genTau3s;
+	// if(useGenTaus) {
+	//   Printf("get gen taus");
+	//   iEvent.getByToken(tokenGenTau1_,genTau1s);
+	//   iEvent.getByToken(tokenGenTau2_,genTau2s);
+	//   iEvent.getByToken(tokenGenTau3_,genTau3s);
+	// }
+
+	edm::Handle<GenEventInfoProduct> hEventInfo;
+	iEvent.getByToken(eventGenInfoTag_,hEventInfo);
+	//jets_.pthat = hEventInfo->binningValues()[0];
+
+	// binning values and qscale appear to be equivalent, but binning values not always present
+	jets_.pthat = hEventInfo->qScale();
+
+	edm::Handle<vector<reco::GenJet> >genjets;
+	//edm::Handle<edm::View<reco::Jet>> genjets;
+	iEvent.getByToken(genjetTag_, genjets);
+
+	//get gen-level n-jettiness
+	// edm::Handle<edm::ValueMap<float> > genTau1s;
+	// edm::Handle<edm::ValueMap<float> > genTau2s;
+	// edm::Handle<edm::ValueMap<float> > genTau3s;
+	// if(useGenTaus) {
+	//   Printf("get gen taus");
+	//   iEvent.getByToken(tokenGenTau1_,genTau1s);
+	//   iEvent.getByToken(tokenGenTau2_,genTau2s);
+	//   iEvent.getByToken(tokenGenTau3_,genTau3s);
+	// }
+
+	jets_.ngen = 0;
+
+	//int igen = 0;
+	for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){
+		//for ( typename edm::View<reco::Jet>::const_iterator genjetIt = genjets->begin() ; genjetIt != genjets->end() ; ++genjetIt ) 
+		const reco::GenJet & genjet = (*genjets)[igen];
+		//edm::Ptr<reco::Jet> genjetPtr = genjets->ptrAt(genjetIt - genjets->begin());
+		//const reco::GenJet genjet = (*dynamic_cast<const reco::GenJet*>(&(*genjetPtr)));
+		float genjet_pt = genjet.pt();
+
+		float tau1 =  -999.;
+		float tau2 =  -999.;
+		float tau3 =  -9999.;
+		if(doGenTaus_) {
+			tau1 =  getTau(1,genjet);
+			tau2 =  getTau(2,genjet);
+			tau3 =  getTau(3,genjet);
+		}
+
+		// find matching patJet if there is one
+		jets_.gendrjt[jets_.ngen] = -1.0;
+		jets_.genmatchindex[jets_.ngen] = -1;
+
+		for(int ijet = 0 ; ijet < jets_.nref; ++ijet){
+			// poor man's matching, someone fix please
+
+			double deltaPt = fabs(genjet.pt()-jets_.refpt[ijet]); //Note: precision of this ~ .0001, so cut .01
+			double deltaEta = fabs(genjet.eta()-jets_.refeta[ijet]); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+			double deltaPhi = fabs(reco::deltaPhi(genjet.phi(), jets_.refphi[ijet])); //Note: precision of this is  ~.0000001, but keep it low, .0001 is well below cone size and typical pointing resolution
+
+			if(deltaPt < 0.01 && deltaEta < .0001 && deltaPhi < .0001){
+				if(genjet_pt>genPtMin_) {
+					jets_.genmatchindex[jets_.ngen] = (int)ijet;
+					jets_.gendphijt[jets_.ngen] = reco::deltaPhi(jets_.refphi[ijet],genjet.phi());
+					jets_.gendrjt[jets_.ngen] = sqrt(pow(jets_.gendphijt[jets_.ngen],2)+pow(fabs(genjet.eta()-jets_.refeta[ijet]),2));
 				}
-			}
-
-			// threshold to reduce size of output in minbias PbPb
-			if(genjet_pt>genPtMin_){
-				jets_.genpt [jets_.ngen] = genjet_pt;
-				jets_.geneta[jets_.ngen] = genjet.eta();
-				jets_.genphi[jets_.ngen] = genjet.phi();
-				jets_.genm  [jets_.ngen] = genjet.mass();
-				jets_.geny  [jets_.ngen] = genjet.eta();
-
-				if(doNewJetVars_)
-					fillNewJetVarsGenJet(genjet);      
-
 				if(doGenTaus_) {
-					jets_.gentau1[jets_.ngen] = tau1;
-					jets_.gentau2[jets_.ngen] = tau2;
-					jets_.gentau3[jets_.ngen] = tau3;
+					jets_.reftau1[ijet] = tau1;
+					jets_.reftau2[ijet] = tau2;
+					jets_.reftau3[ijet] = tau3;
 				}
-
-				if(doGenSubJets_)
-					analyzeGenSubjets(genjet);
-
-				if(doSubEvent_){
-					const GenParticle* gencon = genjet.getGenConstituent(0);
-					jets_.gensubid[jets_.ngen] = gencon->collisionId();
-				}
-				jets_.ngen++;
+				break;
 			}
-		} // end for igen < genjets->size()
+		}
 
+		// threshold to reduce size of output in minbias PbPb
+		if(genjet_pt>genPtMin_){
+			jets_.genpt [jets_.ngen] = genjet_pt;
+			jets_.geneta[jets_.ngen] = genjet.eta();
+			jets_.genphi[jets_.ngen] = genjet.phi();
+			jets_.genm  [jets_.ngen] = genjet.mass();
+			jets_.geny  [jets_.ngen] = genjet.eta();
 
-		//int igen = 0;
-		for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){
-			//for ( typename edm::View<reco::Jet>::const_iterator genjetIt = genjets->begin() ; genjetIt != genjets->end() ; ++genjetIt ) {}
-			const reco::GenJet & genjet = (*genjets)[igen];
-			//edm::Ptr<reco::Jet> genjetPtr = genjets->ptrAt(genjetIt - genjets->begin());
-			//const reco::GenJet genjet = (*dynamic_cast<const reco::GenJet*>(&(*genjetPtr)));
-			float genjet_pt = genjet.pt();
+			if(doNewJetVars_)
+				fillNewJetVarsGenJet(genjet);      
 
-			float tau1 =  -999.;
-			float tau2 =  -999.;
-			float tau3 =  -9999.;
 			if(doGenTaus_) {
-				tau1 =  getTau(1,genjet);
-				tau2 =  getTau(2,genjet);
-				tau3 =  getTau(3,genjet);
+				jets_.gentau1[jets_.ngen] = tau1;
+				jets_.gentau2[jets_.ngen] = tau2;
+				jets_.gentau3[jets_.ngen] = tau3;
 			}
 
-			// find matching patJet if there is one
-			jets_.gendrjt[jets_.ngen] = -1.0;
-			jets_.genmatchindex[jets_.ngen] = -1;
+			if(doGenSubJets_)
+				analyzeGenSubjets(genjet);
 
-			for(int ijet = 0 ; ijet < jets_.nref; ++ijet){
-				// poor man's matching, someone fix please
-				if(fabs(genjet.pt()-jets_.refpt[ijet])<0.00001 &&
-						fabs(genjet.eta()-jets_.refeta[ijet])<0.00001){
-					if(genjet_pt>genPtMin_) {
-						jets_.genmatchindex[jets_.ngen] = (int)ijet;
-						jets_.gendphijt[jets_.ngen] = reco::deltaPhi(jets_.refphi[ijet],genjet.phi());
-						jets_.gendrjt[jets_.ngen] = sqrt(pow(jets_.gendphijt[jets_.ngen],2)+pow(fabs(genjet.eta()-jets_.refeta[ijet]),2));
-					}
-					if(doGenTaus_) {
-						jets_.reftau1[ijet] = tau1;
-						jets_.reftau2[ijet] = tau2;
-						jets_.reftau3[ijet] = tau3;
-					}
-					break;
+			if(doSubEvent_){
+				const GenParticle* gencon = genjet.getGenConstituent(0);
+				jets_.gensubid[jets_.ngen] = gencon->collisionId();
+			}
+			jets_.ngen++;
+		}
+	} // end for igen < genjets->size()
+
+
+	//int igen = 0;
+	for(unsigned int igen = 0 ; igen < genjets->size(); ++igen){
+		//for ( typename edm::View<reco::Jet>::const_iterator genjetIt = genjets->begin() ; genjetIt != genjets->end() ; ++genjetIt ) {}
+		const reco::GenJet & genjet = (*genjets)[igen];
+		//edm::Ptr<reco::Jet> genjetPtr = genjets->ptrAt(genjetIt - genjets->begin());
+		//const reco::GenJet genjet = (*dynamic_cast<const reco::GenJet*>(&(*genjetPtr)));
+		float genjet_pt = genjet.pt();
+
+		float tau1 =  -999.;
+		float tau2 =  -999.;
+		float tau3 =  -9999.;
+		if(doGenTaus_) {
+			tau1 =  getTau(1,genjet);
+			tau2 =  getTau(2,genjet);
+			tau3 =  getTau(3,genjet);
+		}
+
+		// find matching patJet if there is one
+		jets_.gendrjt[jets_.ngen] = -1.0;
+		jets_.genmatchindex[jets_.ngen] = -1;
+
+		for(int ijet = 0 ; ijet < jets_.nref; ++ijet){
+			// poor man's matching, someone fix please
+			if(fabs(genjet.pt()-jets_.refpt[ijet])<0.00001 &&
+					fabs(genjet.eta()-jets_.refeta[ijet])<0.00001){
+				if(genjet_pt>genPtMin_) {
+					jets_.genmatchindex[jets_.ngen] = (int)ijet;
+					jets_.gendphijt[jets_.ngen] = reco::deltaPhi(jets_.refphi[ijet],genjet.phi());
+					jets_.gendrjt[jets_.ngen] = sqrt(pow(jets_.gendphijt[jets_.ngen],2)+pow(fabs(genjet.eta()-jets_.refeta[ijet]),2));
 				}
-			}
-
-			// threshold to reduce size of output in minbias PbPb
-			if(genjet_pt>genPtMin_){
-				jets_.genpt [jets_.ngen] = genjet_pt;
-				jets_.geneta[jets_.ngen] = genjet.eta();
-				jets_.genphi[jets_.ngen] = genjet.phi();
-				jets_.genm  [jets_.ngen] = genjet.mass();
-				jets_.geny  [jets_.ngen] = genjet.eta();
-
-				if(doNewJetVars_)
-					fillNewJetVarsGenJet(genjet);      
-
 				if(doGenTaus_) {
-					jets_.gentau1[jets_.ngen] = tau1;
-					jets_.gentau2[jets_.ngen] = tau2;
-					jets_.gentau3[jets_.ngen] = tau3;
+					jets_.reftau1[ijet] = tau1;
+					jets_.reftau2[ijet] = tau2;
+					jets_.reftau3[ijet] = tau3;
 				}
-
-				if(doGenSubJets_)
-					analyzeGenSubjets(genjet);
-
-				if(doSubEvent_){
-					const GenParticle* gencon = genjet.getGenConstituent(0);
-					jets_.gensubid[jets_.ngen] = gencon->collisionId();
-				}
-				jets_.ngen++;
+				break;
 			}
-		} // end for igen < genjets->size()
+		}
 
-		/*
-			 if(isPythia6_){  //for GSP to bb identify for a event, not for a jet
+		// threshold to reduce size of output in minbias PbPb
+		if(genjet_pt>genPtMin_){
+			jets_.genpt [jets_.ngen] = genjet_pt;
+			jets_.geneta[jets_.ngen] = genjet.eta();
+			jets_.genphi[jets_.ngen] = genjet.phi();
+			jets_.genm  [jets_.ngen] = genjet.mass();
+			jets_.geny  [jets_.ngen] = genjet.eta();
 
-			 int highestb_idx=-1;
-			 int pairedb_idx=-1;
-			 int GspTobb_gidx=-1;
+			if(doNewJetVars_)
+				fillNewJetVarsGenJet(genjet);      
 
-			 for(UInt_t igenpart=8; igenpart < genparts->size(); ++i){ // search highest b from gluon splitting in event (start from idx 8)
-			 const reco::GenParticle& GenPart = (*genparts)[igenpart];
-			 if( abs( GenPart.pdgId() )==5 && GenPart.mother(0)->pdgId()== ) 
+			if(doGenTaus_) {
+				jets_.gentau1[jets_.ngen] = tau1;
+				jets_.gentau2[jets_.ngen] = tau2;
+				jets_.gentau3[jets_.ngen] = tau3;
+			}
+
+			if(doGenSubJets_)
+				analyzeGenSubjets(genjet);
+
+			if(doSubEvent_){
+				const GenParticle* gencon = genjet.getGenConstituent(0);
+				jets_.gensubid[jets_.ngen] = gencon->collisionId();
+			}
+			jets_.ngen++;
+		}
+	} // end for igen < genjets->size()
+
+	/*
+		 if(isPythia6_){  //for GSP to bb identify for a event, not for a jet
+
+		 int highestb_idx=-1;
+		 int pairedb_idx=-1;
+		 int GspTobb_gidx=-1;
+
+		 for(UInt_t igenpart=8; igenpart < genparts->size(); ++i){ // search highest b from gluon splitting in event (start from idx 8)
+		 const reco::GenParticle& GenPart = (*genparts)[igenpart];
+		 if( abs( GenPart.pdgId() )==5 && GenPart.mother(0)->pdgId()== ) 
 
 
-			 } // end for igenpart < genparts->size()
+		 } // end for igenpart < genparts->size()
 
 
-			 } // end if is Pythia6_
-			 */
+		 } // end if is Pythia6_
+		 */
 
-	} // end if isMC_ 
+} // end if isMC_ 
 
 
-	t->Fill();
+t->Fill();
 
-	memset(&jets_,0,sizeof jets_);
+memset(&jets_,0,sizeof jets_);
 } // end HiInclusiveJetAnalyzer::analyze
 
 
@@ -2408,12 +2475,25 @@ float HiInclusiveJetAnalyzer::getTau(unsigned num, const reco::GenJet object) co
 
 
 //--------------------------------------------------------------------------------------------------
-void HiInclusiveJetAnalyzer::analyzeSubjets(const reco::Jet jet) {
+void HiInclusiveJetAnalyzer::analyzeSubjets(const reco::Jet jet, int idx, edm::Handle<reco::JetFlavourInfoMatchingCollection> theSubjetFlavourInfos, edm::Handle<edm::View<reco::Jet> > groomedJets) {
 
 	std::vector<float> sjpt;
 	std::vector<float> sjeta;
 	std::vector<float> sjphi;
 	std::vector<float> sjm;
+	std::vector<float> hadronFlavor;
+	std::vector<float> partonFlavor;
+	std::vector<std::vector<float>> hadronDR;
+	std::vector<std::vector<float>> hadronPt;
+	std::vector<std::vector<float>> hadronEta;
+	std::vector<std::vector<float>> hadronPhi;
+	std::vector<std::vector<float>> hadronPdg;
+	std::vector<std::vector<float>> partonDR;
+	std::vector<std::vector<float>> partonPt;
+	std::vector<std::vector<float>> partonEta;
+	std::vector<std::vector<float>> partonPhi;
+	std::vector<std::vector<float>> partonPdg;
+
 	if(jet.numberOfDaughters()>0) {
 		for (unsigned k = 0; k < jet.numberOfDaughters(); ++k) {
 			const reco::Candidate & dp = *jet.daughter(k);
@@ -2421,18 +2501,82 @@ void HiInclusiveJetAnalyzer::analyzeSubjets(const reco::Jet jet) {
 			sjeta.push_back(dp.eta());
 			sjphi.push_back(dp.phi());
 			sjm.push_back(dp.mass());
+			if(doExtendedFlavorTagging_){
+				vector<float> hdr, hpt, heta, hphi, hpdg, pdr, ppt, peta, pphi, ppdg;
+				for ( reco::JetFlavourInfoMatchingCollection::const_iterator sj  = theSubjetFlavourInfos->begin(); sj != theSubjetFlavourInfos->end(); sj++ ) { 
+					const reco::Jet *subjd = dynamic_cast<const reco::Jet*>(jet.daughter(k));
+					if(abs(subjd->pt() - (*sj).first.get()->pt()) < 0.1 ){
+						const reco::Jet *aSubjet = (*sj).first.get();
+						reco::JetFlavourInfo aInfo = (*sj).second;	
+						hadronFlavor.push_back(aInfo.getHadronFlavour());
+						partonFlavor.push_back(aInfo.getPartonFlavour());
+						const reco::GenParticleRefVector &bHadrons = aInfo.getbHadrons();
+						for(reco::GenParticleRefVector::const_iterator it = bHadrons.begin(); it != bHadrons.end(); ++it){
+							hdr.push_back(reco::deltaR(aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi()));
+							hpt.push_back((*it)->pt());
+							heta.push_back((*it)->eta());
+							hphi.push_back((*it)->phi());
+							hpdg.push_back((*it)->pdgId());
+						}
+						const reco::GenParticleRefVector &cHadrons = aInfo.getcHadrons();
+						for(reco::GenParticleRefVector::const_iterator it = cHadrons.begin(); it != cHadrons.end(); ++it){
+							hdr.push_back(reco::deltaR(aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi()));
+							hpt.push_back((*it)->pt());
+							heta.push_back((*it)->eta());
+							hphi.push_back((*it)->phi());
+							hpdg.push_back((*it)->pdgId());
+						}
+						const reco::GenParticleRefVector & partons = aInfo.getPartons();
+						for(reco::GenParticleRefVector::const_iterator it = partons.begin(); it != partons.end(); ++it){
+							pdr.push_back(reco::deltaR( aSubjet->eta(), aSubjet->phi(), (*it)->eta(), (*it)->phi() ));
+							ppt.push_back((*it)->pt());
+							peta.push_back((*it)->eta());
+							pphi.push_back((*it)->phi());
+							ppdg.push_back((*it)->pdgId());
+						}
+					}
+				}
+				hadronDR.push_back(hdr);
+				hadronPt.push_back(hpt);
+				hadronEta.push_back(heta);
+				hadronPhi.push_back(hphi);
+				hadronPdg.push_back(hpdg);
+				partonDR.push_back(pdr);
+				partonPt.push_back(ppt);
+				partonEta.push_back(peta);
+				partonPhi.push_back(pphi);
+				partonPdg.push_back(ppdg);
+			}	
+
 		}
 	} else {
 		sjpt.push_back(-999.);
 		sjeta.push_back(-999.);
 		sjphi.push_back(-999.);
 		sjm.push_back(-999.);
+		if(doExtendedFlavorTagging_){
+			hadronFlavor.push_back(-999);
+			partonFlavor.push_back(-999);
+		}
 	}
 	jets_.jtSubJetPt.push_back(sjpt);
 	jets_.jtSubJetEta.push_back(sjeta);
 	jets_.jtSubJetPhi.push_back(sjphi);
 	jets_.jtSubJetM.push_back(sjm);
-
+	if(doExtendedFlavorTagging_){
+		jets_.jtSubJetHadronFlavor.push_back(hadronFlavor);
+		jets_.jtSubJetPartonFlavor.push_back(partonFlavor); 
+		jets_.jtSubJetHadronDR.push_back(hadronDR);
+		jets_.jtSubJetHadronPt.push_back(hadronPt);
+		jets_.jtSubJetHadronEta.push_back(hadronEta);
+		jets_.jtSubJetHadronPhi.push_back(hadronPhi);
+		jets_.jtSubJetHadronPdg.push_back(hadronPdg);
+		jets_.jtSubJetPartonDR.push_back(partonDR);
+		jets_.jtSubJetPartonPt.push_back(partonPt);
+		jets_.jtSubJetPartonEta.push_back(partonEta);
+		jets_.jtSubJetPartonPhi.push_back(partonPhi);
+		jets_.jtSubJetPartonPdg.push_back(partonPdg);
+	}	
 }
 
 

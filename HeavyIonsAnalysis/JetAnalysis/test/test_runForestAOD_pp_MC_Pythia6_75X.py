@@ -27,11 +27,11 @@ process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
 #                                "file:test_sample/pp_MC_PYTHIA6_bjet30.root"
-#																"file:test_sample/pp_MC_PYTHIA6_bjet120.root"
+																"file:test_sample/pp_MC_PYTHIA6_bjet120.root"
 
- "root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp 1st, n23711
-,
-"root://cms-xrd-global.cern.ch///store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/2EF3FB1C-1F0F-E611-B00B-0025905D1D60.root" #bjet_pthat120_pp 3st, n42125
+# "root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp 1st, n23711
+#,
+#"root://cms-xrd-global.cern.ch///store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/2EF3FB1C-1F0F-E611-B00B-0025905D1D60.root" #bjet_pthat120_pp 3st, n42125
 
 #" root://xrootd-cms.infn.it//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp
 
@@ -42,7 +42,7 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100))
+    input = cms.untracked.int32(1000))
 #    input = cms.untracked.int32(-1))
 
 
@@ -247,13 +247,18 @@ process.akSoftDrop4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4
 process.akSoftDrop4PFJets.useSoftDrop = True
 process.akSoftDrop4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
 
-process.printEventAKSoftDrop4PFJets = cms.EDAnalyzer("printJetFlavourInfo",
-                                                     jetFlavourInfos    = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation"),
-                                                     subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets"),
-                                                     groomedJets        = cms.InputTag("akSoftDrop4PFJets"),
-                                                     )
+process.akSoftDrop4PFJetAnalyzer.doExtendedFlavorTagging = cms.untracked.bool(True)
+process.akSoftDrop4PFJetAnalyzer.jetFlavourInfos    = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation")
+process.akSoftDrop4PFJetAnalyzer.subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets")
+process.akSoftDrop4PFJetAnalyzer.groomedJets = cms.InputTag("akSoftDrop4PFJets")
+
+#process.printEventAKSoftDrop4PFJets = cms.EDAnalyzer("printJetFlavourInfo",
+#                                                     jetFlavourInfos    = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation"),
+#                                                     subjetFlavourInfos = cms.InputTag("akSoftDrop4PFPatJetFlavourAssociation","SubJets"),
+#                                                     groomedJets        = cms.InputTag("akSoftDrop4PFJets"),
+#                                                     )
 
 
-process.ana_step *= process.printEventAKSoftDrop4PFJets
+#process.ana_step *= process.printEventAKSoftDrop4PFJets
 
 

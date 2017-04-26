@@ -69,20 +69,20 @@ jetSequences = cms.Sequence(
     genParticlesForJets +
 #    ak3GenJets +
     ak4GenJets +
-    ak5GenJets +
+#    ak5GenJets +
 #    ak3PFJets +
-    ak5PFJets +
+#    ak5PFJets +
     akSoftDrop4PFJets +
-    akSoftDrop5PFJets +
+#    akSoftDrop5PFJets +
     akFilter4PFJets +
-    akFilter5PFJets +
+#    akFilter5PFJets +
     akSoftDrop4GenJets +
-    akSoftDrop5GenJets +
+#    akSoftDrop5GenJets +
     highPurityTracks +
 #    ak3PFJetSequence +
     ak4PFJetSequence +
-    ak5PFJetSequence +
+#    ak5PFJetSequence +
     #ak4CaloJetSequence +
-    akSoftDrop4PFJetSequence +
-    akSoftDrop5PFJetSequence
+    akSoftDrop4PFJetSequence 
+#    akSoftDrop5PFJetSequence
 )
