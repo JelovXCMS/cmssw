@@ -36,6 +36,8 @@
 #include "SimDataFormats/JetMatching/interface/JetFlavourInfo.h"
 #include "SimDataFormats/JetMatching/interface/JetFlavourInfoMatching.h"
 
+#include "DataFormats/Math/interface/deltaR.h"
+
 #include "fastjet/contrib/Njettiness.hh"
 #include "TMVA/Reader.h"
 //

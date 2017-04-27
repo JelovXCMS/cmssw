@@ -1559,7 +1559,8 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 
 			for(reco::JetFlavourInfoMatchingCollection::const_iterator j= theJetFlavourInfos->begin(); j!=theJetFlavourInfos->end(); j++){
 				const reco::Jet *flavorMatch = (*j).first.get();	
-				if(abs(flavorMatch->pt() - jet.pt()) < 0.1){
+//				if(abs(flavorMatch->pt() - jet.pt()) < 0.1)
+				if( sqrt(reco::deltaR2(flavorMatch->eta(), flavorMatch->phi(), jet.eta(), jet.phi() )) <0.05  ){
 					jets_.jtHadronFlavor[jets_.nref] = (*j).second.getHadronFlavour();
 					jets_.jtPartonFlavor[jets_.nref] = (*j).second.getPartonFlavour();
 				}	
@@ -1849,12 +1850,19 @@ HiInclusiveJetAnalyzer::analyze(const Event& iEvent,
 		jets_.reftau2[jets_.nref] = -999.;
 		jets_.reftau3[jets_.nref] = -999.;
 
-		jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();
+		//jets_.refparton_flavorForB[jets_.nref] = (*patjets)[j].partonFlavour();  // not work , might due to removal of legacy flavor match 
+
+	  jets_.refparton_flavorForB[jets_.nref] = jets_.jtHadronFlavor[jets_.nref] ;
+    if (jets_.refparton_flavorForB[jets_.nref] ==0 ){
+		jets_.refparton_flavorForB[jets_.nref] = jets_.jtPartonFlavor[jets_.nref] ;
+		}
+
 
 		// Matt's Flavor Productio code 
 		if(isPythia6_){
-			int partonFlavor = (*patjets)[j].partonFlavour();
+			//			int partonFlavor = (*patjets)[j].partonFlavour();
 			//      jets_.refparton_flavorForB[jets_.nref] = partonFlavor;
+			int partonFlavor = jets_.refparton_flavorForB[jets_.nref];
 
 			if(abs(partonFlavor)==4||abs(partonFlavor)==5){
 
@@ -2505,7 +2513,9 @@ void HiInclusiveJetAnalyzer::analyzeSubjets(const reco::Jet jet, int idx, edm::H
 				vector<float> hdr, hpt, heta, hphi, hpdg, pdr, ppt, peta, pphi, ppdg;
 				for ( reco::JetFlavourInfoMatchingCollection::const_iterator sj  = theSubjetFlavourInfos->begin(); sj != theSubjetFlavourInfos->end(); sj++ ) { 
 					const reco::Jet *subjd = dynamic_cast<const reco::Jet*>(jet.daughter(k));
-					if(abs(subjd->pt() - (*sj).first.get()->pt()) < 0.1 ){
+//					if(abs(subjd->pt() - (*sj).first.get()->pt()) < 0.1 )
+            if( sqrt(reco::deltaR2(subjd->eta(), subjd->phi(), (*sj).first.get()->eta(), (*sj).first.get()->phi() )) <0.05  ){
+
 						const reco::Jet *aSubjet = (*sj).first.get();
 						reco::JetFlavourInfo aInfo = (*sj).second;	
 						hadronFlavor.push_back(aInfo.getHadronFlavour());
@@ -2534,8 +2544,8 @@ void HiInclusiveJetAnalyzer::analyzeSubjets(const reco::Jet jet, int idx, edm::H
 							pphi.push_back((*it)->phi());
 							ppdg.push_back((*it)->pdgId());
 						}
-					}
-				}
+					} // end if reco::deltaR2 subjd (*sj).first.get()
+				} // end for const_iterator sj  = theSubjetFlavourInfos->begin() 
 				hadronDR.push_back(hdr);
 				hadronPt.push_back(hpt);
 				hadronEta.push_back(heta);

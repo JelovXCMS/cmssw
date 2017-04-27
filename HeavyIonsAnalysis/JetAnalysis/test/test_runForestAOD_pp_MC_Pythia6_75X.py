@@ -30,7 +30,7 @@ process.source = cms.Source("PoolSource",
 																"file:test_sample/pp_MC_PYTHIA6_bjet120.root"
 
 # "root://cms-xrd-global.cern.ch//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp 1st, n23711
-#,
+,
 #"root://cms-xrd-global.cern.ch///store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/2EF3FB1C-1F0F-E611-B00B-0025905D1D60.root" #bjet_pthat120_pp 3st, n42125
 
 #" root://xrootd-cms.infn.it//store/himc/HINppWinter16DR/Pythia6_bJet120_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/00000/5270484A-9D07-E611-B734-34E6D7BDDEE8.root" #bjet_pthat120_pp
@@ -42,8 +42,8 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(200))
-#    input = cms.untracked.int32(-1))
+#    input = cms.untracked.int32(1000))
+    input = cms.untracked.int32(-1))
 
 
 #####################################################################################
@@ -71,8 +71,9 @@ process = overrideJEC_pp5020(process)
 
 process.TFileService = cms.Service("TFileService",
                                    fileName=cms.string(
-																	 "Test.root"
+#																	 "Test.root"
 #																	 "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n65000.root"
+                                  "Test_HiForestAOD_pp_MC_PYTHIA6_bjet120_n23000.root"
 #																	 "Test_HiForestAOD_pp_MC_PYTHIA6_Dijet120.root"
 																	 ))
 
@@ -241,7 +242,8 @@ process.pAna = cms.EndPath(process.skimanalysis)
 
 # Customization
 
-process.akSoftDrop4PFPatJetFlavourAssociation.jets="ak4PFJets"
+#process.akSoftDrop4PFPatJetFlavourAssociation.jets="ak4PFJets"
+process.akSoftDrop4PFPatJetFlavourAssociation.jets="akSoftDrop4PFJets"
 process.akSoftDrop4PFPatJetFlavourAssociation.groomedJets=cms.InputTag("akSoftDrop4PFJets")
 process.akSoftDrop4PFPatJetFlavourAssociation.subjets= cms.InputTag('akSoftDrop4PFJets','SubJets')
 process.akSoftDrop4PFJets.useSoftDrop = True
