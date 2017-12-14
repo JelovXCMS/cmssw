@@ -17,6 +17,9 @@
 #include <limits>
 #include <cmath>
 
+#include <TFile.h>
+#include <TH1.h>
+
 using namespace std;
 using namespace reco;
 using namespace edm;
@@ -310,10 +313,21 @@ void SoftDropJetProducer::runAlgorithm( edm::Event & iEvent, edm::EventSetup con
     transformedJet = (*sd)(transformedJet);
     fjJets_.push_back( transformedJet ); //put CA reclusterd jet after softDrop into vector which will be written to event
 
+
     double sym = transformedJet.structure_of<fastjet::contrib::SoftDrop>().symmetry();
     int ndrop = transformedJet.structure_of<fastjet::contrib::SoftDrop>().dropped_count();
     std::vector<double> dropped_symmetry = transformedJet.structure_of<fastjet::contrib::SoftDrop>().dropped_symmetry();
   
+    std::cout<<"test start from here"<<endl;
+		// test 1 , read TH2
+//		TFile *fin= new TFile("fout.root","read");
+//		TH1F *h1=(TH1F*)fin->Get("h_de_subjet1pt_over_de_jetpt_Zg10");
+		
+
+		// test 2 , manually run SD
+
+
+
     // //DEBUGGING BEGIN 
     // std::cout << "SoftDropProducer: " << moduleLabel_ << std::endl; 
     // std::cout << "sym: " << sym << std::endl;

@@ -35,7 +35,7 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10000))
+    input = cms.untracked.int32(1000))
 
 #####################################################################################
 # Load Global Tag, Geometry, etc.
@@ -57,20 +57,20 @@ from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_pp50
 process = overrideJEC_pp5020(process)
 
 from CondCore.DBCommon.CondDBSetup_cfi import *
-process.jpTagConds = cms.ESSource("PoolDBESSource", CondDBSetup,
-                connect = cms.string('sqlite_file:JPcalib_MC75X_ppqcdAll.db'),
-                toGet = cms.VPSet(         # overide Global Tag use EcalTBWeights_EBEE_offline
-                        cms.PSet(
-                                record = cms.string('BTagTrackProbability2DRcd') ,
-                                tag = cms.string('probBTagPDF2D_tag_mc')
-                                ),
-                        cms.PSet(
-                                record = cms.string('BTagTrackProbability3DRcd') ,
-                                tag = cms.string('probBTagPDF3D_tag_mc')
-                                )
-                        )
-                )
-process.es_prefer_jpTagConds = cms.ESPrefer("PoolDBESSource","jpTagConds")
+## process.jpTagConds = cms.ESSource("PoolDBESSource", CondDBSetup,
+##                 connect = cms.string('sqlite_file:JPcalib_MC75X_ppqcdAll.db'),
+##                 toGet = cms.VPSet(         # overide Global Tag use EcalTBWeights_EBEE_offline
+##                         cms.PSet(
+##                                 record = cms.string('BTagTrackProbability2DRcd') ,
+##                                 tag = cms.string('probBTagPDF2D_tag_mc')
+##                                 ),
+##                         cms.PSet(
+##                                 record = cms.string('BTagTrackProbability3DRcd') ,
+##                                 tag = cms.string('probBTagPDF3D_tag_mc')
+##                                 )
+##                         )
+##                 )								
+##process.es_prefer_jpTagConds = cms.ESPrefer("PoolDBESSource","jpTagConds")
 
 #####################################################################################
 # Define tree output
