@@ -19,6 +19,15 @@
 
 #include "RecoJets/JetProducers/plugins/VirtualJetProducer.h"
 
+#include "FWCore/ParameterSet/interface/FileInPath.h"
+#include <TFile.h>
+#include <TH1.h>
+#include <TH1F.h>
+#include <TH2F.h>
+#include <iostream>
+using namespace std;
+
+
 namespace cms
 {
   class SoftDropJetProducer : public VirtualJetProducer
@@ -65,7 +74,9 @@ namespace cms
     edm::EDGetTokenT<reco::CandidateView> input_candidateview_token_SD_;
     edm::EDGetTokenT<std::vector<edm::FwdPtr<reco::PFCandidate> > > input_candidatefwdptr_token_SD_;
     edm::EDGetTokenT<std::vector<edm::FwdPtr<pat::PackedCandidate> > > input_packedcandidatefwdptr_token_SD_;
-    
+  
+		double SjJES[500][2];
+	
   };
 }
 #endif

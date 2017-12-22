@@ -17,13 +17,26 @@
 #include <limits>
 #include <cmath>
 
+#include "FWCore/ParameterSet/interface/FileInPath.h"
 #include <TFile.h>
 #include <TH1.h>
+#include <TH1F.h>
+#include <TH2F.h>
+#include <TMath.h>
+
+#include <TRandom3.h>
+
+#include "fastjet/ClusterSequence.hh"
+#include "fastjet/ClusterSequenceArea.hh"
+#include "fastjet/contrib/ConstituentSubtractor.hh"
+
 
 using namespace std;
 using namespace reco;
 using namespace edm;
 using namespace cms;
+
+
 
 SoftDropJetProducer::SoftDropJetProducer(edm::ParameterSet const& iConfig):
   VirtualJetProducer( iConfig ),
@@ -46,12 +59,17 @@ SoftDropJetProducer::SoftDropJetProducer(edm::ParameterSet const& iConfig):
   produces<edm::ValueMap<int> > ("droppedBranches");
   //produces<edm::ValueMap<std::vector<double>> > ("droppedSym");
   //produces<edm::AssociationVector<reco::JetRefBaseProd,std::vector<double>> > ("droppedSym");
-  //produces<edm::AssociationVector<std::vector<double> > ("droppedSym");  
+  //produces<edm::AssociationVector<std::vector<double> > ("droppedSym"); 
+
 }
 
 //______________________________________________________________________________
 void SoftDropJetProducer::produce( edm::Event & iEvent, const edm::EventSetup & iSetup )
 {
+	if(gRandom) delete gRandom;
+	gRandom = new TRandom3(0);
+	gRandom->SetSeed(0);
+
   // use the default production from one collection
   //VirtualJetProducer::produce( iEvent, iSetup );
 
@@ -98,7 +116,9 @@ void SoftDropJetProducer::produce( edm::Event & iEvent, const edm::EventSetup & 
   edm::Handle< std::vector<edm::FwdPtr<reco::PFCandidate> > > pfinputsHandleAsFwdPtr;
   edm::Handle< std::vector<edm::FwdPtr<pat::PackedCandidate> > > packedinputsHandleAsFwdPtr;
 
+
   bool isView = iEvent.getByToken(input_candidateview_token_SD_, inputsHandle);
+
   if ( isView ) {
     if ( verbosity_ >= 1 ) {
       std::cout << "found inputs in event" << std::endl; }
@@ -207,6 +227,44 @@ void SoftDropJetProducer::output( edm::Event & iEvent, const edm::EventSetup & i
 void SoftDropJetProducer::runAlgorithm( edm::Event & iEvent, edm::EventSetup const& iSetup)
 {
 
+
+//    string defName="RecoJets/JetProducers/plugins/fout.root";
+//		string defName="HeavyIonsAnalysis/JetAnalysis/test/fout_qcd.root";
+//    edm::FileInPath f(defName);
+//    TFile *fin= TFile::Open(f.fullPath().c_str(),"read");
+
+//   string defName="root://cms-xrd-global.cern.ch//store/user/chengchi/HIHFJet2017/fout_qcd.root";
+	 string defName="fout_bjt.root";
+   TFile *fin= TFile::Open(defName.c_str(),"read");
+
+	 const int nPtBins=2;
+	 const int nZgBins=8;
+   double ZgMin=0.1;
+   double ZgBinWidth=(0.5-ZgMin)/nZgBins;
+   double ZgBins[nZgBins];
+	
+	for(int iZgBins=0; iZgBins<nZgBins; iZgBins++){
+		ZgBins[iZgBins]=ZgMin+(double)iZgBins*ZgBinWidth;
+	}
+
+
+	 TH2F *h2[nPtBins][nZgBins];
+	 TH1F *h1[nPtBins];
+
+	 for(int iPtBins=0; iPtBins<nPtBins; iPtBins++){
+			h1[iPtBins]=(TH1F*)fin->Get(Form("h_jetJER_pt%i",iPtBins));
+		for(int iZgBins=0; iZgBins<nZgBins; iZgBins++){
+			h2[iPtBins][iZgBins]=(TH2F*)fin->Get(Form("h2_Sj1Sj2_jet_CorrPt_Pt%i_Zg%i",iPtBins,iZgBins));
+		}
+	 }
+
+
+
+
+//   TH1F *h1=(TH1F*)fin->Get("h_de_subjet1pt_over_de_jetpt_Zg3");
+
+
+
   //std::cout << "<SoftDropJetProducer::runAlgorithm (moduleLabel = " << moduleLabel_ << ")>:" << std::endl;
   
   if ( !doAreaFastjet_ && !doRhoFastjet_) {
@@ -251,12 +309,20 @@ void SoftDropJetProducer::runAlgorithm( edm::Event & iEvent, edm::EventSetup con
   lSym.clear();
   lDroppedBranches.clear();
   lDroppedSym.clear();
-  
+ 
+//	int ijet_c=0;
+ 
   static const reco::PFCandidate dummySinceTranslateIsNotStatic;
   // clusterSequence_coll clusterSequences;
   // jetDefinition_coll jetDefinitions;
   for ( std::vector<fastjet::PseudoJet>::const_iterator ijet = origJets.begin(),
           ijetEnd = origJets.end(); ijet != ijetEnd; ++ijet ) {
+
+		unsigned ijet_fromIt= ijet-origJets.begin();
+
+		std::cout<<"ijet_fromIt = "<<ijet_fromIt<<endl;
+		//ijet_c++;
+
     fjClusterSeqRecluster_.reset();
     std::vector<fastjet::PseudoJet> inputsRecluster;
     //    inputsRecluster.clear();
@@ -311,22 +377,134 @@ void SoftDropJetProducer::runAlgorithm( edm::Event & iEvent, edm::EventSetup con
     // }
     //std::cout << "orig jet pt: " << transformedJet.perp() << std::endl;
     transformedJet = (*sd)(transformedJet);
-    fjJets_.push_back( transformedJet ); //put CA reclusterd jet after softDrop into vector which will be written to event
+//    fjJets_.push_back( transformedJet ); //put CA reclusterd jet after softDrop into vector which will be written to event
 
 
     double sym = transformedJet.structure_of<fastjet::contrib::SoftDrop>().symmetry();
     int ndrop = transformedJet.structure_of<fastjet::contrib::SoftDrop>().dropped_count();
     std::vector<double> dropped_symmetry = transformedJet.structure_of<fastjet::contrib::SoftDrop>().dropped_symmetry();
-  
-    std::cout<<"test start from here"<<endl;
+ 
+
+ 
+//    std::cout<<"test start from here"<<endl;
 		// test 1 , read TH2
-//		TFile *fin= new TFile("fout.root","read");
+
+
+//		string defName="RecoJets/JetProducers/plugins/fout.root";
+//		edm::FileInPath f(defName);
+
+//		TFile *fin= new TFile(f.fullPath().c_str(),"read");
 //		TH1F *h1=(TH1F*)fin->Get("h_de_subjet1pt_over_de_jetpt_Zg10");
-		
+//		cout<<"h1 random 1 = "<<h1->GetRandom()<<endl;
+//    cout<<"h1 random 2 = "<<h1->GetRandom()<<endl;
+
 
 		// test 2 , manually run SD
+		
+		// recluster by CA , not needed.
+/*
+		std::vector<fastjet::PseudoJet> tempJetsParticles=tempJets[0].constituents();
+
+		fastjet::JetDefinition CAJetDef(fastjet::cambridge_algorithm,9);
+		fastjet::ClusterSequence SeCA(tempJetsParticles,CAJetDef);
+
+		vector<fastjet::PseudoJet> tempJetsCA=SeCA.inclusive_jets();
+*/
 
 
+		fastjet::PseudoJet MaSDjet = tempJets[0];
+
+	  fastjet::PseudoJet MaSDsubjet1, MaSDsubjet2; 
+    if ( MaSDjet == 0 ) {
+      //fjClusterSeqRecluster_->delete_self_when_unused();
+      if(sd) { delete sd; sd = 0;}
+      continue;
+    }
+
+		// SD drop
+		double Zgcut=0.1;
+
+		double SJ1pt=0;
+		double SJ2pt=0;
+		double Zgtest=0;
+		int JetPtBin=0;
+		int JetZgBin=0;
+
+		double JES=0.05;
+		double JES_SJ1=0;
+		double JES_SJ2=0;	
+
+		if(tempJets[0].perp()<140) {
+			JetPtBin=0;
+//			JES=0.054;
+//			JES=0.016;
+			JES=h1[0]->GetRandom()-h1[0]->GetMean();
+		}else{
+			JetPtBin=1;
+//			JES=0.049;
+//			JES=0.016;	
+      JES=h1[1]->GetRandom()-h1[1]->GetMean();
+		}
+
+
+
+		if(MaSDjet.has_parents(MaSDsubjet1,MaSDsubjet2)){
+
+		// determine variation here
+				Zgtest=((TMath::Min(MaSDsubjet1.perp(),MaSDsubjet2.perp()))/(MaSDsubjet1.perp()+MaSDsubjet2.perp() ));
+				if(MaSDsubjet1.perp()>=MaSDsubjet2.perp()){
+					SJ1pt=MaSDsubjet1.perp(); SJ2pt=MaSDsubjet2.perp();					
+				}else{
+					SJ2pt=MaSDsubjet1.perp(); SJ1pt=MaSDsubjet2.perp();					
+				}
+				JetZgBin=0;	
+				for(int iZgBins=0; iZgBins<nZgBins; iZgBins++){
+					if(Zgtest>ZgBins[iZgBins] && Zgtest<=(ZgBins[iZgBins]+ZgBinWidth)){
+					JetZgBin=iZgBins;
+					}
+				}							
+				h2[JetPtBin][JetZgBin]->GetRandom2(JES_SJ1,JES_SJ2);
+				SJ1pt=SJ1pt*(1+JES_SJ1*JES);
+				SJ2pt=SJ1pt*(1+JES_SJ2*JES);
+			  Zgtest=SJ2pt/(SJ2pt+SJ1pt);
+
+			while( Zgtest <Zgcut){
+				MaSDjet=MaSDsubjet1;
+				if(MaSDjet.has_parents(MaSDsubjet1,MaSDsubjet2)){
+        Zgtest=((TMath::Min(MaSDsubjet1.perp(),MaSDsubjet2.perp()))/(MaSDsubjet1.perp()+MaSDsubjet2.perp() ));
+        if(MaSDsubjet1.perp()>=MaSDsubjet2.perp()){
+          SJ1pt=MaSDsubjet1.perp(); SJ2pt=MaSDsubjet2.perp();
+        }else{
+          SJ2pt=MaSDsubjet1.perp(); SJ1pt=MaSDsubjet2.perp();
+					cout<<"SJ pt swap"<<endl;
+        }
+        JetZgBin=0;
+        for(int iZgBins=0; iZgBins<nZgBins; iZgBins++){
+          if(Zgtest>ZgBins[iZgBins] && Zgtest<=(ZgBins[iZgBins]+ZgBinWidth)){
+          JetZgBin=iZgBins;
+          }
+        }
+        h2[JetPtBin][JetZgBin]->GetRandom2(JES_SJ1,JES_SJ2);
+        SJ1pt=SJ1pt*(1+JES_SJ1*JES);
+        SJ2pt=SJ1pt*(1+JES_SJ2*JES);
+        Zgtest=SJ2pt/(SJ2pt+SJ1pt);
+
+				}else{break;}
+			} // end while zgcut
+		} // end if has parents
+
+	  fjJets_.push_back( MaSDjet );
+
+//		cout<<"MaSDsubjet1.px() = "<<MaSDsubjet1.px()<<" ,MaSDsubjet1.py() = "<<MaSDsubjet1.py()<<endl;
+//    cout<<"MaSDsubjet2.px() = "<<MaSDsubjet2.px()<<" ,MaSDsubjet2.py() = "<<MaSDsubjet2.py()<<endl;
+		cout<<"Zg = "<<((SJ2pt)/(SJ1pt+SJ2pt))<<" , SJ1pt = "<<SJ1pt<<" ,SJ2pt = "<<SJ2pt<<endl;
+
+		SjJES[ijet_fromIt][0]=JES_SJ1*JES;
+		SjJES[ijet_fromIt][1]=JES_SJ2*JES;
+
+//	  cout<<"SjJES[ijet_c][0] = "<<SjJES[ijet_fromIt][0]<<endl;
+		cout<<"SjJES[ijet_c][1] = "<<SjJES[ijet_fromIt][1]<<endl;
+//		ijet_c++;
 
     // //DEBUGGING BEGIN 
     // std::cout << "SoftDropProducer: " << moduleLabel_ << std::endl; 
@@ -376,6 +554,17 @@ void SoftDropJetProducer::runAlgorithm( edm::Event & iEvent, edm::EventSetup con
   // }
 
   //std::cout << "SoftDropProducer::runAlgorithm end" << std::endl;
+
+
+   for(int iPtBins=0; iPtBins<nPtBins; iPtBins++){
+			delete h1[iPtBins];
+    for(int iZgBins=0; iZgBins<nZgBins; iZgBins++){
+      delete h2[iPtBins][iZgBins];
+    }
+   }
+
+
+	delete fin;
   
 }
 
@@ -405,14 +594,20 @@ void SoftDropJetProducer::writeSoftDropJets(  edm::Event & iEvent, edm::EventSet
 
   // Loop over the hard jets
   //std::cout << "N hard jets: " << fjJets_.size() << std::endl;
+
   std::vector<fastjet::PseudoJet>::const_iterator it = fjJets_.begin(),
     iEnd = fjJets_.end(),
     iBegin = fjJets_.begin();
   indices.resize( fjJets_.size() );
+	
+
   for ( ; it != iEnd; ++it ) {
+
+
     fastjet::PseudoJet const & localJet = *it;
     unsigned int jetIndex = it - iBegin;
     // Get the 4-vector for the hard jet
+
     p4_hardJets.push_back( math::XYZTLorentzVector(localJet.px(), localJet.py(), localJet.pz(), localJet.e() ));
     double localJetArea = 0.0;
     if ( doAreaFastjet_ && localJet.has_area() ) {
@@ -430,7 +625,12 @@ void SoftDropJetProducer::writeSoftDropJets(  edm::Event & iEvent, edm::EventSet
     }
 
     //loop over constituents of jet (can be subjets or normal constituents)
-    //std::cout << "N subjets: " << constituents.size() << std::endl;
+		std::cout << "jetIndex = "<<jetIndex<<endl;
+    // std::cout << "N subjets(or constituents): " << constituents.size() << std::endl;  // print out numer of constitunets
+		double sj1pt=0;
+		double sj2pt=0;
+		double sjzg=0;
+
     std::vector<fastjet::PseudoJet>::const_iterator itSubJetBegin = constituents.begin(),
       itSubJet = itSubJetBegin, itSubJetEnd = constituents.end();
     for (; itSubJet != itSubJetEnd; ++itSubJet ){
@@ -450,7 +650,30 @@ void SoftDropJetProducer::writeSoftDropJets(  edm::Event & iEvent, edm::EventSet
         }
       }
 
-      math::XYZTLorentzVector p4Subjet(subjet.px(), subjet.py(), subjet.pz(), subjet.e() ); //4-vector of subjet/constituent
+        math::XYZTLorentzVector p4Subjet(subjet.px(), subjet.py(), subjet.pz(), subjet.e() );
+        // cout<<"p4sj.X() = "<<p4Subjet.X()<<endl;
+//				p4Subjet.SetXYZT(1,1,1,1);
+				// cout<<"p4sj.X() = "<<p4Subjet.X()<<endl;
+
+
+			if( constituents.size()==2){
+				if(itSubJet==itSubJetBegin){
+      	p4Subjet.SetXYZT(subjet.px()*(1+SjJES[jetIndex][0]), subjet.py()*(1+SjJES[jetIndex][0]), subjet.pz(), subjet.e() );
+				sj1pt=subjet.perp()*((1+SjJES[jetIndex][0]));
+        // cout<<"SjJES[ijet][0] = "<<SjJES[jetIndex][0]<<endl;
+				}else{
+        p4Subjet.SetXYZT(subjet.px()*(1+SjJES[jetIndex][1]), subjet.py()*(1+SjJES[jetIndex][1]), subjet.pz(), subjet.e() );
+				sj2pt=subjet.perp()*(1+SjJES[jetIndex][1]);
+				sjzg=sj2pt/(sj2pt+sj1pt);
+				cout<<"sj2 ori pt"<<subjet.perp()<<" SjJES[1] = "<<SjJES[jetIndex][1]<<endl;
+				cout<<"sjzg = "<<sjzg<<" , sj1pt = "<<sj1pt<<" , sj2pt = "<<sj2pt<<endl;
+        // cout<<"SjJES[ijet][1] = "<<SjJES[jetIndex][1]<<endl;
+				}
+			}
+
+			// cout<<"subjet.px = "<<subjet.px()<<" , subjet.py = "<<subjet.py()<<endl;
+        // cout<<"p4sj.X() = "<<p4Subjet.X()<<endl;
+
       reco::Particle::Point point(0,0,0);
 
       // This will hold ptr's to the subjets/constituents -> MV: not used?

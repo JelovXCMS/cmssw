@@ -32,6 +32,25 @@ akSoftDrop5PFJets = akSoftDrop4PFJets.clone(rParam = cms.double(0.5), R0 = cms.d
 #akSoftDrop4PFz005bm1Jets = akSoftDrop4PFJets.clone(beta = cms.double(-1), zcut=cms.double(0.05))
 #akSoftDrop4PFz005bm2Jets = akSoftDrop4PFJets.clone(beta = cms.double(-2), zcut=cms.double(0.05))
 
+#akSoftDrop4PFJetsJES = cms.EDProducer(
+#    "SoftDropJetProducerJES",
+#    PFJetParameters,
+#    AnomalousCellParameters,
+#    jetAlgorithm = cms.string("AntiKt"),
+#    rParam       = cms.double(0.4),
+#    zcut = cms.double(0.1),
+#    beta = cms.double(0.0),
+#    R0   = cms.double(0.4),
+#    useOnlyCharged = cms.bool(False),
+#    useExplicitGhosts = cms.bool(True),
+#    writeCompound = cms.bool(True),
+#    jetCollInstanceName=cms.string("SubJets"),
+#	  JetDataJES = cms.double(0.05)	,
+#		qcd_bjt=cms.bool(False)
+#)
+
+
+
 from HeavyIonsAnalysis.JetAnalysis.akSoftDrop4GenJets_cfi import akSoftDrop4GenJets
 
 #Filter PF jets
@@ -57,6 +76,9 @@ from HeavyIonsAnalysis.JetAnalysis.jets.ak3PFJetSequence_pp_mc_cff import *
 from HeavyIonsAnalysis.JetAnalysis.jets.ak4PFJetSequence_pp_mc_cff import *
 from HeavyIonsAnalysis.JetAnalysis.jets.ak4CaloJetSequence_pp_mc_cff import *
 from HeavyIonsAnalysis.JetAnalysis.jets.akSoftDrop4PFJetSequence_pp_mc_cff import *
+#from HeavyIonsAnalysis.JetAnalysis.jets.akSoftDrop4PFJetSequenceJES_pp_mc_cff import *
+
+
 
 highPurityTracks = cms.EDFilter("TrackSelector",
                                 src = cms.InputTag("generalTracks"),
@@ -87,6 +109,7 @@ jetSequences = cms.Sequence(
     ak3PFJets +
     #ak5PFJets +
     akSoftDrop4PFJets +
+    #akSoftDrop4PFJetsJES +
     #akSoftDrop5PFJets +
     #akFilter4PFJets +
     #akFilter5PFJets +
@@ -98,5 +121,6 @@ jetSequences = cms.Sequence(
 #    ak5PFJetSequence +
     #ak4CaloJetSequence +
     akSoftDrop4PFJetSequence 
+		#+akSoftDrop4PFJetSequenceJES
 #    akSoftDrop5PFJetSequence
 )
