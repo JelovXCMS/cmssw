@@ -6,7 +6,7 @@ patMuons = cms.EDProducer("PATMuonProducer",
 
     # use particle flow instead of std reco
     useParticleFlow =  cms.bool( False ),
-    pfMuonSource    = cms.InputTag("particleFlow"),
+    pfMuonSource    = cms.InputTag("particleFlowTmp"),  #change to particleFlowTmp for PbPb test, 2017.11.13
 
     # add user data
     userData = cms.PSet(

@@ -187,6 +187,8 @@ void PATMuonProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSetu
   std::vector<Muon> * patMuons = new std::vector<Muon>();
 
   edm::Handle< reco::PFCandidateCollection >  pfMuons;
+
+	std::cout<<"useParticleFlow_ = "<<useParticleFlow_<<endl; // error before here
   if( useParticleFlow_ ){
     // get the PFCandidates of type muons
     iEvent.getByToken(pfMuonToken_, pfMuons);
