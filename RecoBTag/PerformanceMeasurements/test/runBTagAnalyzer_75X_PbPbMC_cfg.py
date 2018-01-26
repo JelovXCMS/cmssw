@@ -151,7 +151,7 @@ options.register('doCTag', False,
     "Make NTuples with branches for CTag"
 )
 ## 'maxEvents' is already registered by the Framework, changing default value
-options.setDefault('maxEvents', 5000)
+options.setDefault('maxEvents', 100)
 
 options.parseArguments()
 
@@ -201,8 +201,8 @@ bTagInfosLegacy = [
    ,'inclusiveSecondaryVertexFinderTagInfos'
    ,'secondaryVertexNegativeTagInfos'
    ,'inclusiveSecondaryVertexFinderNegativeTagInfos'
-   ,'softPFMuonsTagInfos'
-   ,'softPFElectronsTagInfos'
+#   ,'softPFMuonsTagInfos'
+#   ,'softPFElectronsTagInfos'
 ]
 bTagInfos = [
     'pfImpactParameterTagInfos'
@@ -210,8 +210,8 @@ bTagInfos = [
    ,'pfInclusiveSecondaryVertexFinderTagInfos'
    ,'pfSecondaryVertexNegativeTagInfos'
    ,'pfInclusiveSecondaryVertexFinderNegativeTagInfos'
-   ,'softPFMuonsTagInfos'
-   ,'softPFElectronsTagInfos'
+#   ,'softPFMuonsTagInfos'
+#   ,'softPFElectronsTagInfos'
 #   ,'pfInclusiveSecondaryVertexFinderCvsLTagInfos'
 #   ,'pfInclusiveSecondaryVertexFinderNegativeCvsLTagInfos'
 ]
@@ -237,13 +237,13 @@ bTagDiscriminatorsLegacy = [
    ,'combinedInclusiveSecondaryVertexV2BJetTags'
    ,'positiveCombinedInclusiveSecondaryVertexV2BJetTags'
    ,'negativeCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'softPFMuonBJetTags'
-   ,'positiveSoftPFMuonBJetTags'
-   ,'negativeSoftPFMuonBJetTags'
-   ,'softPFElectronBJetTags'
-   ,'positiveSoftPFElectronBJetTags'
-   ,'negativeSoftPFElectronBJetTags'
-   ,'combinedMVABJetTags'
+#   ,'softPFMuonBJetTags'
+#   ,'positiveSoftPFMuonBJetTags'
+#   ,'negativeSoftPFMuonBJetTags'
+#   ,'softPFElectronBJetTags'
+#   ,'positiveSoftPFElectronBJetTags'
+#   ,'negativeSoftPFElectronBJetTags'
+#   ,'combinedMVABJetTags'
 #   ,'combinedMVAv2BJetTags'
 #   ,'negativeCombinedMVAv2BJetTags'
 #   ,'positiveCombinedMVAv2BJetTags'
@@ -269,13 +269,13 @@ bTagDiscriminators = [
    ,'pfCombinedInclusiveSecondaryVertexV2BJetTags'
    ,'pfPositiveCombinedInclusiveSecondaryVertexV2BJetTags'
    ,'pfNegativeCombinedInclusiveSecondaryVertexV2BJetTags'
-   ,'softPFMuonBJetTags'
-   ,'positiveSoftPFMuonBJetTags'
-   ,'negativeSoftPFMuonBJetTags'
-   ,'softPFElectronBJetTags'
-   ,'positiveSoftPFElectronBJetTags'
-   ,'negativeSoftPFElectronBJetTags'
-   ,'pfCombinedMVABJetTags'
+#   ,'softPFMuonBJetTags'
+#   ,'positiveSoftPFMuonBJetTags'
+#   ,'negativeSoftPFMuonBJetTags'
+#   ,'softPFElectronBJetTags'
+#   ,'positiveSoftPFElectronBJetTags'
+#   ,'negativeSoftPFElectronBJetTags'
+#   ,'pfCombinedMVABJetTags'
 #   ,'pfCombinedMVAV2BJetTags'
 #   ,'pfNegativeCombinedMVAV2BJetTags'
 #   ,'pfPositiveCombinedMVAV2BJetTags'
@@ -313,7 +313,7 @@ pvSource = 'hiSelectedVertex' #'offlinePrimaryVertices'
 svSource = 'inclusiveCandidateSecondaryVertices'
 muSource = 'muons'
 elSource = 'gedGsfElectrons'
-patMuons = 'selectedPatMuons'
+#patMuons = 'selectedPatMuons'
 trackSource = 'generalTracks'
 ## If running on miniAOD
 if options.miniAOD:
@@ -497,27 +497,27 @@ else:
     from RecoJets.JetProducers.ak4PFJets_cfi import ak4PFJets
     from RecoJets.JetProducers.ak4GenJets_cfi import ak4GenJets
     ## Select isolated collections
-    process.selectedMuons = cms.EDFilter("CandPtrSelector", src = cms.InputTag("slimmedMuons"), cut = cms.string('''abs(eta)<2.5 && pt>10. &&
-       (pfIsolationR04().sumChargedHadronPt+
-	max(0.,pfIsolationR04().sumNeutralHadronEt+
-	pfIsolationR04().sumPhotonEt-
-	0.50*pfIsolationR04().sumPUPt))/pt < 0.20 && 
-	(isPFMuon && (isGlobalMuon || isTrackerMuon) )'''))
-    process.selectedElectrons = cms.EDFilter("CandPtrSelector", src = cms.InputTag("slimmedElectrons"), cut = cms.string('''abs(eta)<2.5 && pt>20. &&
-	gsfTrack.isAvailable() &&
-	gsfTrack.hitPattern().numberOfLostHits(\'MISSING_INNER_HITS\') < 2 &&
-	(pfIsolationVariables().sumChargedHadronPt+
-	max(0.,pfIsolationVariables().sumNeutralHadronEt+
-	pfIsolationVariables().sumPhotonEt-
-	0.5*pfIsolationVariables().sumPUPt))/pt < 0.15'''))
+#     process.selectedMuons = cms.EDFilter("CandPtrSelector", src = cms.InputTag("slimmedMuons"), cut = cms.string('''abs(eta)<2.5 && pt>10. &&
+#        (pfIsolationR04().sumChargedHadronPt+
+# 	max(0.,pfIsolationR04().sumNeutralHadronEt+
+# 	pfIsolationR04().sumPhotonEt-
+# 	0.50*pfIsolationR04().sumPUPt))/pt < 0.20 && 
+# 	(isPFMuon && (isGlobalMuon || isTrackerMuon) )'''))
+#     process.selectedElectrons = cms.EDFilter("CandPtrSelector", src = cms.InputTag("slimmedElectrons"), cut = cms.string('''abs(eta)<2.5 && pt>20. &&
+# 	gsfTrack.isAvailable() &&
+# 	gsfTrack.hitPattern().numberOfLostHits(\'MISSING_INNER_HITS\') < 2 &&
+# 	(pfIsolationVariables().sumChargedHadronPt+
+# 	max(0.,pfIsolationVariables().sumNeutralHadronEt+
+# 	pfIsolationVariables().sumPhotonEt-
+# 	0.5*pfIsolationVariables().sumPUPt))/pt < 0.15'''))
 
     ## Do projections
     process.pfCHS = cms.EDFilter("CandPtrSelector", src = cms.InputTag("packedPFCandidates"), cut = cms.string("fromPV"))
-    process.pfNoMuonCHS =  cms.EDProducer("CandPtrProjector", src = cms.InputTag("pfCHS"), veto = cms.InputTag("selectedMuons"))
-    process.pfNoElectronsCHS = cms.EDProducer("CandPtrProjector", src = cms.InputTag("pfNoMuonCHS"), veto = cms.InputTag("selectedElectrons"))
+#    process.pfNoMuonCHS =  cms.EDProducer("CandPtrProjector", src = cms.InputTag("pfCHS"), veto = cms.InputTag("selectedMuons"))
+#    process.pfNoElectronsCHS = cms.EDProducer("CandPtrProjector", src = cms.InputTag("pfNoMuonCHS"), veto = cms.InputTag("selectedElectrons"))
 
-    process.pfNoMuon =  cms.EDProducer("CandPtrProjector", src = cms.InputTag("packedPFCandidates"), veto = cms.InputTag("selectedMuons"))
-    process.pfNoElectrons = cms.EDProducer("CandPtrProjector", src = cms.InputTag("pfNoMuon"), veto = cms.InputTag("selectedElectrons"))
+#    process.pfNoMuon =  cms.EDProducer("CandPtrProjector", src = cms.InputTag("packedPFCandidates"), veto = cms.InputTag("selectedMuons"))
+#    process.pfNoElectrons = cms.EDProducer("CandPtrProjector", src = cms.InputTag("pfNoMuon"), veto = cms.InputTag("selectedElectrons"))
 
     process.packedGenParticlesForJetsNoNu = cms.EDFilter("CandPtrSelector", src = cms.InputTag("packedGenParticles"), cut = cms.string("abs(pdgId) != 12 && abs(pdgId) != 14 && abs(pdgId) != 16"))
     process.ak4GenJetsNoNu = ak4GenJets.clone(src = 'packedGenParticlesForJetsNoNu')
@@ -570,7 +570,7 @@ process.inclusiveCandidateVertexFinder.tracks = cms.InputTag("particleFlowTmp")
 process.particleFlowPtrsPFlow.src = cms.InputTag("particleFlowTmp")
 process.patJetCorrFactorsPFlow.useRho = cms.bool(False)
 process.candidateVertexArbitrator.tracks=cms.InputTag("particleFlowTmp")
-process.particleFlowPtrs.src = cms.InputTag("particleFlowTmp")
+#process.particleFlowPtrs.src = cms.InputTag("particleFlowTmp")
 
 
 
@@ -1043,7 +1043,7 @@ process.btagana.storeCSVTagVariables  = False  ## True if you want to keep CSV T
 process.btagana.primaryVertexColl     = cms.InputTag(pvSource)
 process.btagana.Jets                  = cms.InputTag('selectedPatJets'+postfix)
 process.btagana.muonCollectionName    = cms.InputTag(muSource)
-process.btagana.patMuonCollectionName = cms.InputTag(patMuons)
+#process.btagana.patMuonCollectionName = cms.InputTag(patMuons)
 process.btagana.use_ttbar_filter      = cms.bool(options.useTTbarFilter)
 process.btagana.triggerTable          = cms.InputTag('TriggerResults::HLT') # Data and MC
 process.btagana.genParticles          = cms.InputTag(genParticles)

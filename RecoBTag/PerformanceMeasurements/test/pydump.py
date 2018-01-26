@@ -244,18 +244,8 @@ process.RecoTauPiZeroUnembedderPFlow = cms.EDProducer("RecoTauPiZeroUnembedder",
 )
 
 
-process.ak4CaloL1FastL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL1FastjetCorrector", "ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector")
-)
-
-
 process.ak4CaloL1FastL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4CaloL1FastjetCorrectorPFlow"), cms.InputTag("ak4CaloL2RelativeCorrectorPFlow"), cms.InputTag("ak4CaloL3AbsoluteCorrectorPFlow"))
-)
-
-
-process.ak4CaloL1FastL2L3L6Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL1FastjetCorrector", "ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector", "ak4CaloL6SLBCorrector")
 )
 
 
@@ -264,20 +254,8 @@ process.ak4CaloL1FastL2L3L6CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorP
 )
 
 
-process.ak4CaloL1FastL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL1FastjetCorrector", "ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector", "ak4CaloResidualCorrector")
-)
-
-
 process.ak4CaloL1FastL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4CaloL1FastjetCorrectorPFlow"), cms.InputTag("ak4CaloL2RelativeCorrectorPFlow"), cms.InputTag("ak4CaloL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4CaloResidualCorrectorPFlow"))
-)
-
-
-process.ak4CaloL1FastjetCorrector = cms.EDProducer("L1FastjetCorrectorProducer",
-    algorithm = cms.string('AK5Calo'),
-    level = cms.string('L1FastJet'),
-    srcRho = cms.InputTag("fixedGridRhoFastjetAllCalo")
 )
 
 
@@ -288,31 +266,13 @@ process.ak4CaloL1FastjetCorrectorPFlow = cms.EDProducer("L1FastjetCorrectorProdu
 )
 
 
-process.ak4CaloL1L2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL1OffsetCorrector", "ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector")
-)
-
-
 process.ak4CaloL1L2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4CaloL1OffsetCorrectorPFlow"), cms.InputTag("ak4CaloL2RelativeCorrectorPFlow"), cms.InputTag("ak4CaloL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4CaloL1L2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL1OffsetCorrector", "ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector", "ak4CaloResidualCorrector")
-)
-
-
 process.ak4CaloL1L2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4CaloL1OffsetCorrectorPFlow"), cms.InputTag("ak4CaloL2RelativeCorrectorPFlow"), cms.InputTag("ak4CaloL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4CaloResidualCorrectorPFlow"))
-)
-
-
-process.ak4CaloL1OffsetCorrector = cms.EDProducer("L1OffsetCorrectorProducer",
-    algorithm = cms.string('AK5Calo'),
-    level = cms.string('L1Offset'),
-    minVtxNdof = cms.int32(4),
-    vertexCollection = cms.InputTag("offlinePrimaryVertices")
 )
 
 
@@ -324,18 +284,8 @@ process.ak4CaloL1OffsetCorrectorPFlow = cms.EDProducer("L1OffsetCorrectorProduce
 )
 
 
-process.ak4CaloL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector")
-)
-
-
 process.ak4CaloL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4CaloL2RelativeCorrectorPFlow"), cms.InputTag("ak4CaloL3AbsoluteCorrectorPFlow"))
-)
-
-
-process.ak4CaloL2L3L6Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector", "ak4CaloL6SLBCorrector")
 )
 
 
@@ -344,19 +294,8 @@ process.ak4CaloL2L3L6CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProduce
 )
 
 
-process.ak4CaloL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4CaloL2RelativeCorrector", "ak4CaloL3AbsoluteCorrector", "ak4CaloResidualCorrector")
-)
-
-
 process.ak4CaloL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4CaloL2RelativeCorrectorPFlow"), cms.InputTag("ak4CaloL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4CaloResidualCorrectorPFlow"))
-)
-
-
-process.ak4CaloL2RelativeCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK5Calo'),
-    level = cms.string('L2Relative')
 )
 
 
@@ -366,24 +305,9 @@ process.ak4CaloL2RelativeCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer"
 )
 
 
-process.ak4CaloL3AbsoluteCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK5Calo'),
-    level = cms.string('L3Absolute')
-)
-
-
 process.ak4CaloL3AbsoluteCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK5Calo'),
     level = cms.string('L3Absolute')
-)
-
-
-process.ak4CaloL6SLBCorrector = cms.EDProducer("L6SLBCorrectorProducer",
-    addMuonToJet = cms.bool(True),
-    algorithm = cms.string(''),
-    level = cms.string('L6SLB'),
-    srcBTagInfoElectron = cms.InputTag("ak4CaloJetsSoftElectronTagInfos"),
-    srcBTagInfoMuon = cms.InputTag("ak4CaloJetsSoftMuonTagInfos")
 )
 
 
@@ -393,12 +317,6 @@ process.ak4CaloL6SLBCorrectorPFlow = cms.EDProducer("L6SLBCorrectorProducer",
     level = cms.string('L6SLB'),
     srcBTagInfoElectron = cms.InputTag("ak4CaloJetsSoftElectronTagInfos"),
     srcBTagInfoMuon = cms.InputTag("ak4CaloJetsSoftMuonTagInfos")
-)
-
-
-process.ak4CaloResidualCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK5Calo'),
-    level = cms.string('L2L3Residual')
 )
 
 
@@ -438,30 +356,13 @@ process.ak4GenJetsNoNuPFlow = cms.EDProducer("FastjetJetProducer",
 )
 
 
-process.ak4JPTL1FastL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4JPTL1FastjetCorrector", "ak4JPTL2RelativeCorrector", "ak4JPTL3AbsoluteCorrector")
-)
-
-
 process.ak4JPTL1FastL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4JPTL1FastjetCorrectorPFlow"), cms.InputTag("ak4JPTL2RelativeCorrectorPFlow"), cms.InputTag("ak4JPTL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4JPTL1FastL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4JPTL1FastjetCorrector", "ak4JPTL2RelativeCorrector", "ak4JPTL3AbsoluteCorrector", "ak4JPTResidualCorrector")
-)
-
-
 process.ak4JPTL1FastL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4JPTL1FastjetCorrectorPFlow"), cms.InputTag("ak4JPTL2RelativeCorrectorPFlow"), cms.InputTag("ak4JPTL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4JPTResidualCorrectorPFlow"))
-)
-
-
-process.ak4JPTL1FastjetCorrector = cms.EDProducer("L1FastjetCorrectorProducer",
-    algorithm = cms.string('AK5Calo'),
-    level = cms.string('L1FastJet'),
-    srcRho = cms.InputTag("fixedGridRhoFastjetAllCalo")
 )
 
 
@@ -472,31 +373,13 @@ process.ak4JPTL1FastjetCorrectorPFlow = cms.EDProducer("L1FastjetCorrectorProduc
 )
 
 
-process.ak4JPTL1L2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4L1JPTOffsetCorrector", "ak4JPTL2RelativeCorrector", "ak4JPTL3AbsoluteCorrector")
-)
-
-
 process.ak4JPTL1L2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4L1JPTOffsetCorrectorPFlow"), cms.InputTag("ak4JPTL2RelativeCorrectorPFlow"), cms.InputTag("ak4JPTL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4JPTL1L2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4L1JPTOffsetCorrector", "ak4JPTL2RelativeCorrector", "ak4JPTL3AbsoluteCorrector", "ak4JPTResidualCorrector")
-)
-
-
 process.ak4JPTL1L2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4L1JPTOffsetCorrectorPFlow"), cms.InputTag("ak4JPTL2RelativeCorrectorPFlow"), cms.InputTag("ak4JPTL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4JPTResidualCorrectorPFlow"))
-)
-
-
-process.ak4JPTL1OffsetCorrector = cms.EDProducer("L1OffsetCorrectorProducer",
-    algorithm = cms.string('AK4JPT'),
-    level = cms.string('L1Offset'),
-    minVtxNdof = cms.int32(4),
-    vertexCollection = cms.InputTag("offlinePrimaryVertices")
 )
 
 
@@ -508,29 +391,13 @@ process.ak4JPTL1OffsetCorrectorPFlow = cms.EDProducer("L1OffsetCorrectorProducer
 )
 
 
-process.ak4JPTL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4L1JPTOffsetCorrector", "ak4JPTL2RelativeCorrector", "ak4JPTL3AbsoluteCorrector")
-)
-
-
 process.ak4JPTL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4L1JPTOffsetCorrectorPFlow"), cms.InputTag("ak4JPTL2RelativeCorrectorPFlow"), cms.InputTag("ak4JPTL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4JPTL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4L1JPTOffsetCorrector", "ak4JPTL2RelativeCorrector", "ak4JPTL3AbsoluteCorrector", "ak4JPTResidualCorrector")
-)
-
-
 process.ak4JPTL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4L1JPTOffsetCorrectorPFlow"), cms.InputTag("ak4JPTL2RelativeCorrectorPFlow"), cms.InputTag("ak4JPTL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4JPTResidualCorrectorPFlow"))
-)
-
-
-process.ak4JPTL2RelativeCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4JPT'),
-    level = cms.string('L2Relative')
 )
 
 
@@ -540,21 +407,9 @@ process.ak4JPTL2RelativeCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
 )
 
 
-process.ak4JPTL3AbsoluteCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4JPT'),
-    level = cms.string('L3Absolute')
-)
-
-
 process.ak4JPTL3AbsoluteCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK4JPT'),
     level = cms.string('L3Absolute')
-)
-
-
-process.ak4JPTResidualCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4JPT'),
-    level = cms.string('L2L3Residual')
 )
 
 
@@ -573,22 +428,10 @@ process.ak4JetTracksAssociatorAtVertexPFPFlow = cms.EDProducer("JetTracksAssocia
 )
 
 
-process.ak4L1JPTOffsetCorrector = cms.EDProducer("L1JPTOffsetCorrectorProducer",
-    algorithm = cms.string('AK5JPT'),
-    level = cms.string('L1JPTOffset'),
-    offsetService = cms.InputTag("ak4CaloL1OffsetCorrector")
-)
-
-
 process.ak4L1JPTOffsetCorrectorPFlow = cms.EDProducer("L1JPTOffsetCorrectorProducer",
     algorithm = cms.string('AK5JPT'),
     level = cms.string('L1JPTOffset'),
     offsetService = cms.InputTag("ak4CaloL1OffsetCorrectorPFlow")
-)
-
-
-process.ak4PFCHSL1FastL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFCHSL1FastjetCorrector", "ak4PFCHSL2RelativeCorrector", "ak4PFCHSL3AbsoluteCorrector")
 )
 
 
@@ -597,20 +440,8 @@ process.ak4PFCHSL1FastL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorPr
 )
 
 
-process.ak4PFCHSL1FastL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFCHSL1FastjetCorrector", "ak4PFCHSL2RelativeCorrector", "ak4PFCHSL3AbsoluteCorrector", "ak4PFCHSResidualCorrector")
-)
-
-
 process.ak4PFCHSL1FastL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFCHSL1FastjetCorrectorPFlow"), cms.InputTag("ak4PFCHSL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFCHSL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFCHSResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFCHSL1FastjetCorrector = cms.EDProducer("L1FastjetCorrectorProducer",
-    algorithm = cms.string('AK4PFchs'),
-    level = cms.string('L1FastJet'),
-    srcRho = cms.InputTag("fixedGridRhoFastjetAll")
 )
 
 
@@ -621,31 +452,13 @@ process.ak4PFCHSL1FastjetCorrectorPFlow = cms.EDProducer("L1FastjetCorrectorProd
 )
 
 
-process.ak4PFCHSL1L2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFCHSL1OffsetCorrector", "ak4PFCHSL2RelativeCorrector", "ak4PFCHSL3AbsoluteCorrector")
-)
-
-
 process.ak4PFCHSL1L2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFCHSL1OffsetCorrectorPFlow"), cms.InputTag("ak4PFCHSL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFCHSL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4PFCHSL1L2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFCHSL1OffsetCorrector", "ak4PFCHSL2RelativeCorrector", "ak4PFCHSL3AbsoluteCorrector", "ak4PFCHSResidualCorrector")
-)
-
-
 process.ak4PFCHSL1L2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFCHSL1OffsetCorrectorPFlow"), cms.InputTag("ak4PFCHSL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFCHSL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFCHSResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFCHSL1OffsetCorrector = cms.EDProducer("L1OffsetCorrectorProducer",
-    algorithm = cms.string('AK4PFchs'),
-    level = cms.string('L1Offset'),
-    minVtxNdof = cms.int32(4),
-    vertexCollection = cms.InputTag("offlinePrimaryVertices")
 )
 
 
@@ -657,29 +470,13 @@ process.ak4PFCHSL1OffsetCorrectorPFlow = cms.EDProducer("L1OffsetCorrectorProduc
 )
 
 
-process.ak4PFCHSL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFCHSL2RelativeCorrector", "ak4PFCHSL3AbsoluteCorrector")
-)
-
-
 process.ak4PFCHSL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFCHSL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFCHSL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4PFCHSL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFCHSL2RelativeCorrector", "ak4PFCHSL3AbsoluteCorrector", "ak4PFCHSResidualCorrector")
-)
-
-
 process.ak4PFCHSL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFCHSL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFCHSL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFCHSResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFCHSL2RelativeCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PFchs'),
-    level = cms.string('L2Relative')
 )
 
 
@@ -689,21 +486,9 @@ process.ak4PFCHSL2RelativeCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer
 )
 
 
-process.ak4PFCHSL3AbsoluteCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PFchs'),
-    level = cms.string('L3Absolute')
-)
-
-
 process.ak4PFCHSL3AbsoluteCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK4PFchs'),
     level = cms.string('L3Absolute')
-)
-
-
-process.ak4PFCHSResidualCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PFchs'),
-    level = cms.string('L2L3Residual')
 )
 
 
@@ -986,18 +771,8 @@ process.ak4PFJetsRecoTauChargedHadronsPFlow = cms.EDProducer("PFRecoTauChargedHa
 )
 
 
-process.ak4PFL1FastL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL1FastjetCorrector", "ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector")
-)
-
-
 process.ak4PFL1FastL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFL1FastjetCorrectorPFlow"), cms.InputTag("ak4PFL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFL3AbsoluteCorrectorPFlow"))
-)
-
-
-process.ak4PFL1FastL2L3L6Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL1FastjetCorrector", "ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector", "ak4PFL6SLBCorrector")
 )
 
 
@@ -1006,20 +781,8 @@ process.ak4PFL1FastL2L3L6CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorPro
 )
 
 
-process.ak4PFL1FastL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL1FastjetCorrector", "ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector", "ak4PFResidualCorrector")
-)
-
-
 process.ak4PFL1FastL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFL1FastjetCorrectorPFlow"), cms.InputTag("ak4PFL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFL1FastjetCorrector = cms.EDProducer("L1FastjetCorrectorProducer",
-    algorithm = cms.string('AK4PF'),
-    level = cms.string('L1FastJet'),
-    srcRho = cms.InputTag("fixedGridRhoFastjetAll")
 )
 
 
@@ -1030,31 +793,13 @@ process.ak4PFL1FastjetCorrectorPFlow = cms.EDProducer("L1FastjetCorrectorProduce
 )
 
 
-process.ak4PFL1L2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL1OffsetCorrector", "ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector")
-)
-
-
 process.ak4PFL1L2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFL1OffsetCorrectorPFlow"), cms.InputTag("ak4PFL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4PFL1L2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL1OffsetCorrector", "ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector", "ak4PFResidualCorrector")
-)
-
-
 process.ak4PFL1L2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFL1OffsetCorrectorPFlow"), cms.InputTag("ak4PFL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFL1OffsetCorrector = cms.EDProducer("L1OffsetCorrectorProducer",
-    algorithm = cms.string('AK4PF'),
-    level = cms.string('L1Offset'),
-    minVtxNdof = cms.int32(4),
-    vertexCollection = cms.InputTag("offlinePrimaryVertices")
 )
 
 
@@ -1066,18 +811,8 @@ process.ak4PFL1OffsetCorrectorPFlow = cms.EDProducer("L1OffsetCorrectorProducer"
 )
 
 
-process.ak4PFL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector")
-)
-
-
 process.ak4PFL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFL3AbsoluteCorrectorPFlow"))
-)
-
-
-process.ak4PFL2L3L6Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector", "ak4PFL6SLBCorrector")
 )
 
 
@@ -1086,19 +821,8 @@ process.ak4PFL2L3L6CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer"
 )
 
 
-process.ak4PFL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFL2RelativeCorrector", "ak4PFL3AbsoluteCorrector", "ak4PFResidualCorrector")
-)
-
-
 process.ak4PFL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFL2RelativeCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PF'),
-    level = cms.string('L2Relative')
 )
 
 
@@ -1108,24 +832,9 @@ process.ak4PFL2RelativeCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
 )
 
 
-process.ak4PFL3AbsoluteCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PF'),
-    level = cms.string('L3Absolute')
-)
-
-
 process.ak4PFL3AbsoluteCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK4PF'),
     level = cms.string('L3Absolute')
-)
-
-
-process.ak4PFL6SLBCorrector = cms.EDProducer("L6SLBCorrectorProducer",
-    addMuonToJet = cms.bool(False),
-    algorithm = cms.string(''),
-    level = cms.string('L6SLB'),
-    srcBTagInfoElectron = cms.InputTag("ak4PFJetsSoftElectronTagInfos"),
-    srcBTagInfoMuon = cms.InputTag("ak4PFJetsSoftMuonTagInfos")
 )
 
 
@@ -1138,30 +847,13 @@ process.ak4PFL6SLBCorrectorPFlow = cms.EDProducer("L6SLBCorrectorProducer",
 )
 
 
-process.ak4PFPuppiL1FastL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFPuppiL1FastjetCorrector", "ak4PFPuppiL2RelativeCorrector", "ak4PFPuppiL3AbsoluteCorrector")
-)
-
-
 process.ak4PFPuppiL1FastL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFPuppiL1FastjetCorrectorPFlow"), cms.InputTag("ak4PFPuppiL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFPuppiL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4PFPuppiL1FastL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFPuppiL1FastjetCorrector", "ak4PFPuppiL2RelativeCorrector", "ak4PFPuppiL3AbsoluteCorrector", "ak4PFPuppiResidualCorrector")
-)
-
-
 process.ak4PFPuppiL1FastL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFPuppiL1FastjetCorrectorPFlow"), cms.InputTag("ak4PFPuppiL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFPuppiL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFPuppiResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFPuppiL1FastjetCorrector = cms.EDProducer("L1FastjetCorrectorProducer",
-    algorithm = cms.string('AK4PFPuppi'),
-    level = cms.string('L1FastJet'),
-    srcRho = cms.InputTag("fixedGridRhoFastjetAll")
 )
 
 
@@ -1172,31 +864,13 @@ process.ak4PFPuppiL1FastjetCorrectorPFlow = cms.EDProducer("L1FastjetCorrectorPr
 )
 
 
-process.ak4PFPuppiL1L2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFPuppiL1OffsetCorrector", "ak4PFPuppiL2RelativeCorrector", "ak4PFPuppiL3AbsoluteCorrector")
-)
-
-
 process.ak4PFPuppiL1L2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFPuppiL1OffsetCorrectorPFlow"), cms.InputTag("ak4PFPuppiL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFPuppiL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4PFPuppiL1L2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFPuppiL1OffsetCorrector", "ak4PFPuppiL2RelativeCorrector", "ak4PFPuppiL3AbsoluteCorrector", "ak4PFPuppiResidualCorrector")
-)
-
-
 process.ak4PFPuppiL1L2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFPuppiL1OffsetCorrectorPFlow"), cms.InputTag("ak4PFPuppiL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFPuppiL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFPuppiResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFPuppiL1OffsetCorrector = cms.EDProducer("L1OffsetCorrectorProducer",
-    algorithm = cms.string('AK4PFPuppi'),
-    level = cms.string('L1Offset'),
-    minVtxNdof = cms.int32(4),
-    vertexCollection = cms.InputTag("offlinePrimaryVertices")
 )
 
 
@@ -1208,29 +882,13 @@ process.ak4PFPuppiL1OffsetCorrectorPFlow = cms.EDProducer("L1OffsetCorrectorProd
 )
 
 
-process.ak4PFPuppiL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFPuppiL2RelativeCorrector", "ak4PFPuppiL3AbsoluteCorrector")
-)
-
-
 process.ak4PFPuppiL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFPuppiL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFPuppiL3AbsoluteCorrectorPFlow"))
 )
 
 
-process.ak4PFPuppiL2L3ResidualCorrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4PFPuppiL2RelativeCorrector", "ak4PFPuppiL3AbsoluteCorrector", "ak4PFPuppiResidualCorrector")
-)
-
-
 process.ak4PFPuppiL2L3ResidualCorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4PFPuppiL2RelativeCorrectorPFlow"), cms.InputTag("ak4PFPuppiL3AbsoluteCorrectorPFlow"), cms.InputTag("ak4PFPuppiResidualCorrectorPFlow"))
-)
-
-
-process.ak4PFPuppiL2RelativeCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PFPuppi'),
-    level = cms.string('L2Relative')
 )
 
 
@@ -1240,32 +898,14 @@ process.ak4PFPuppiL2RelativeCorrectorPFlow = cms.EDProducer("LXXXCorrectorProduc
 )
 
 
-process.ak4PFPuppiL3AbsoluteCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PFPuppi'),
-    level = cms.string('L3Absolute')
-)
-
-
 process.ak4PFPuppiL3AbsoluteCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK4PFPuppi'),
     level = cms.string('L3Absolute')
 )
 
 
-process.ak4PFPuppiResidualCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PFPuppi'),
-    level = cms.string('L2L3Residual')
-)
-
-
 process.ak4PFPuppiResidualCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK4PFPuppi'),
-    level = cms.string('L2L3Residual')
-)
-
-
-process.ak4PFResidualCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4PF'),
     level = cms.string('L2L3Residual')
 )
 
@@ -1276,31 +916,14 @@ process.ak4PFResidualCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
 )
 
 
-process.ak4TrackL2L3Corrector = cms.EDProducer("ChainedJetCorrectorProducer",
-    correctors = cms.VInputTag("ak4TrackL2RelativeCorrector", "ak4TrackL3AbsoluteCorrector")
-)
-
-
 process.ak4TrackL2L3CorrectorPFlow = cms.EDProducer("ChainedJetCorrectorProducer",
     correctors = cms.VInputTag(cms.InputTag("ak4TrackL2RelativeCorrectorPFlow"), cms.InputTag("ak4TrackL3AbsoluteCorrectorPFlow"))
-)
-
-
-process.ak4TrackL2RelativeCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4TRK'),
-    level = cms.string('L2Relative')
 )
 
 
 process.ak4TrackL2RelativeCorrectorPFlow = cms.EDProducer("LXXXCorrectorProducer",
     algorithm = cms.string('AK4TRK'),
     level = cms.string('L2Relative')
-)
-
-
-process.ak4TrackL3AbsoluteCorrector = cms.EDProducer("LXXXCorrectorProducer",
-    algorithm = cms.string('AK4TRK'),
-    level = cms.string('L3Absolute')
 )
 
 
@@ -1350,21 +973,9 @@ process.bToCharmDecayVertexMerged = cms.EDProducer("BtoCharmDecayVertexMerger",
 )
 
 
-process.caloMetT1 = cms.EDProducer("CorrectedCaloMETProducer",
-    src = cms.InputTag("caloMetM"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrCaloMetType1","type1"))
-)
-
-
 process.caloMetT1PFlow = cms.EDProducer("CorrectedCaloMETProducer",
     src = cms.InputTag("caloMetM"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrCaloMetType1PFlow","type1"))
-)
-
-
-process.caloMetT1T2 = cms.EDProducer("CorrectedCaloMETProducer",
-    src = cms.InputTag("caloMetM"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrCaloMetType1","type1"), cms.InputTag("corrCaloMetType2"))
 )
 
 
@@ -1388,7 +999,7 @@ process.candidateVertexArbitrator = cms.EDProducer("CandidateVertexArbitrator",
     trackMinLayers = cms.int32(4),
     trackMinPixels = cms.int32(1),
     trackMinPt = cms.double(0.4),
-    tracks = cms.InputTag("particleFlow")
+    tracks = cms.InputTag("particleFlowTmp")
 )
 
 
@@ -1854,17 +1465,6 @@ process.combinedSecondaryVertexV2BJetTags = cms.EDProducer("JetTagProducer",
 )
 
 
-process.corrCaloMetType1 = cms.EDProducer("CaloJetMETcorrInputProducer",
-    jetCorrEtaMax = cms.double(9.9),
-    jetCorrLabel = cms.InputTag("ak4CaloL2L3Corrector"),
-    skipEM = cms.bool(True),
-    skipEMfractionThreshold = cms.double(0.9),
-    src = cms.InputTag("ak4CaloJets"),
-    srcMET = cms.InputTag("caloMetM"),
-    type1JetPtThreshold = cms.double(20.0)
-)
-
-
 process.corrCaloMetType1PFlow = cms.EDProducer("CaloJetMETcorrInputProducer",
     jetCorrEtaMax = cms.double(9.9),
     jetCorrLabel = cms.InputTag("ak4CaloL2L3CorrectorPFlow"),
@@ -1873,17 +1473,6 @@ process.corrCaloMetType1PFlow = cms.EDProducer("CaloJetMETcorrInputProducer",
     src = cms.InputTag("ak4CaloJets"),
     srcMET = cms.InputTag("caloMetM"),
     type1JetPtThreshold = cms.double(20.0)
-)
-
-
-process.corrCaloMetType2 = cms.EDProducer("Type2CorrectionProducer",
-    srcUnclEnergySums = cms.VInputTag(cms.InputTag("corrCaloMetType1","type2"), cms.InputTag("muCaloMetCorr")),
-    type2CorrFormula = cms.string('A + B*TMath::Exp(-C*x)'),
-    type2CorrParameter = cms.PSet(
-        A = cms.double(2.0),
-        B = cms.double(1.3),
-        C = cms.double(0.1)
-    )
 )
 
 
@@ -1898,20 +1487,6 @@ process.corrCaloMetType2PFlow = cms.EDProducer("Type2CorrectionProducer",
 )
 
 
-process.corrPfMetType1 = cms.EDProducer("PFJetMETcorrInputProducer",
-    jetCorrEtaMax = cms.double(9.9),
-    jetCorrLabel = cms.InputTag("ak4PFCHSL1FastL2L3Corrector"),
-    jetCorrLabelRes = cms.InputTag("ak4PFCHSL1FastL2L3ResidualCorrector"),
-    offsetCorrLabel = cms.InputTag("ak4PFCHSL1FastjetCorrector"),
-    skipEM = cms.bool(True),
-    skipEMfractionThreshold = cms.double(0.9),
-    skipMuonSelection = cms.string('isGlobalMuon | isStandAloneMuon'),
-    skipMuons = cms.bool(True),
-    src = cms.InputTag("ak4PFJetsCHS"),
-    type1JetPtThreshold = cms.double(15.0)
-)
-
-
 process.corrPfMetType1PFlow = cms.EDProducer("PFJetMETcorrInputProducer",
     jetCorrEtaMax = cms.double(9.9),
     jetCorrLabel = cms.InputTag("ak4PFCHSL1FastL2L3CorrectorPFlow"),
@@ -1923,15 +1498,6 @@ process.corrPfMetType1PFlow = cms.EDProducer("PFJetMETcorrInputProducer",
     skipMuons = cms.bool(True),
     src = cms.InputTag("ak4PFJetsCHS"),
     type1JetPtThreshold = cms.double(15.0)
-)
-
-
-process.corrPfMetType2 = cms.EDProducer("Type2CorrectionProducer",
-    srcUnclEnergySums = cms.VInputTag(cms.InputTag("corrPfMetType1","type2"), cms.InputTag("corrPfMetType1","offset"), cms.InputTag("pfCandMETcorr")),
-    type2CorrFormula = cms.string('A'),
-    type2CorrParameter = cms.PSet(
-        A = cms.double(1.4)
-    )
 )
 
 
@@ -2069,22 +1635,6 @@ process.doubleSecondaryVertexHighEffBJetTags = cms.EDProducer("JetTagProducer",
 )
 
 
-process.elPFIsoDepositChargedAllPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedGsfElectrons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.elPFIsoDepositChargedAllPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -2097,22 +1647,6 @@ process.elPFIsoDepositChargedAllPATPFlow = cms.EDProducer("CandIsoDepositProduce
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("gedGsfElectrons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.elPFIsoDepositChargedAllPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedElectronsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -2133,22 +1667,6 @@ process.elPFIsoDepositChargedAllPFBRECOPFlow = cms.EDProducer("CandIsoDepositPro
 )
 
 
-process.elPFIsoDepositChargedPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedGsfElectrons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.elPFIsoDepositChargedPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -2165,22 +1683,6 @@ process.elPFIsoDepositChargedPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.elPFIsoDepositChargedPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.elPFIsoDepositChargedPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -2193,24 +1695,6 @@ process.elPFIsoDepositChargedPFBRECOPFlow = cms.EDProducer("CandIsoDepositProduc
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
-process.elPFIsoDepositGammaPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFCandWithSuperClusterExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        MissHitSCMatch_Veto = cms.bool(True),
-        SCMatch_Veto = cms.bool(False),
-        inputCandView = cms.InputTag("pfAllPhotonsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedGsfElectrons"),
     trackType = cms.string('candidate')
 )
 
@@ -2233,24 +1717,6 @@ process.elPFIsoDepositGammaPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.elPFIsoDepositGammaPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFCandWithSuperClusterExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        MissHitSCMatch_Veto = cms.bool(True),
-        SCMatch_Veto = cms.bool(False),
-        inputCandView = cms.InputTag("pfAllPhotonsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.elPFIsoDepositGammaPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('PFCandWithSuperClusterExtractor'),
@@ -2265,22 +1731,6 @@ process.elPFIsoDepositGammaPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
-process.elPFIsoDepositNeutralPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllNeutralHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedGsfElectrons"),
     trackType = cms.string('candidate')
 )
 
@@ -2301,22 +1751,6 @@ process.elPFIsoDepositNeutralPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.elPFIsoDepositNeutralPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllNeutralHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.elPFIsoDepositNeutralPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -2329,22 +1763,6 @@ process.elPFIsoDepositNeutralPFBRECOPFlow = cms.EDProducer("CandIsoDepositProduc
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
-process.elPFIsoDepositPUPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfPileUpAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedGsfElectrons"),
     trackType = cms.string('candidate')
 )
 
@@ -2365,22 +1783,6 @@ process.elPFIsoDepositPUPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.elPFIsoDepositPUPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfPileUpAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedElectronsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.elPFIsoDepositPUPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -2397,32 +1799,6 @@ process.elPFIsoDepositPUPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.elPFIsoValueCharged03NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositCharged"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged03NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueCharged03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2430,19 +1806,6 @@ process.elPFIsoValueCharged03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFrom
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged03NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2475,32 +1838,6 @@ process.elPFIsoValueCharged03NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDep
 )
 
 
-process.elPFIsoValueCharged03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositCharged"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueCharged03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2508,19 +1845,6 @@ process.elPFIsoValueCharged03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2553,32 +1877,6 @@ process.elPFIsoValueCharged03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.elPFIsoValueCharged04NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositCharged"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged04NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueCharged04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2586,19 +1884,6 @@ process.elPFIsoValueCharged04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFrom
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged04NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2631,32 +1916,6 @@ process.elPFIsoValueCharged04NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDep
 )
 
 
-process.elPFIsoValueCharged04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositCharged"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueCharged04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2664,19 +1923,6 @@ process.elPFIsoValueCharged04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueCharged04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2709,32 +1955,6 @@ process.elPFIsoValueCharged04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.elPFIsoValueChargedAll03NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAll"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll03NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueChargedAll03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2742,19 +1962,6 @@ process.elPFIsoValueChargedAll03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorF
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll03NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2787,32 +1994,6 @@ process.elPFIsoValueChargedAll03NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFrom
 )
 
 
-process.elPFIsoValueChargedAll03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAll"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueChargedAll03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2820,19 +2001,6 @@ process.elPFIsoValueChargedAll03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFro
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2865,32 +2033,6 @@ process.elPFIsoValueChargedAll03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDe
 )
 
 
-process.elPFIsoValueChargedAll04NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAll"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll04NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueChargedAll04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2898,19 +2040,6 @@ process.elPFIsoValueChargedAll04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorF
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll04NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -2943,32 +2072,6 @@ process.elPFIsoValueChargedAll04NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFrom
 )
 
 
-process.elPFIsoValueChargedAll04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAll"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueChargedAll04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -2976,19 +2079,6 @@ process.elPFIsoValueChargedAll04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFro
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueChargedAll04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -3021,32 +2111,6 @@ process.elPFIsoValueChargedAll04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDe
 )
 
 
-process.elPFIsoValueGamma03NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGamma"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma03NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueGamma03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3054,19 +2118,6 @@ process.elPFIsoValueGamma03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma03NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
         weight = cms.string('1')
     ))
@@ -3099,32 +2150,6 @@ process.elPFIsoValueGamma03NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.elPFIsoValueGamma03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGamma"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueGamma03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3132,19 +2157,6 @@ process.elPFIsoValueGamma03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDepo
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
         weight = cms.string('1')
     ))
@@ -3177,32 +2189,6 @@ process.elPFIsoValueGamma03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
 )
 
 
-process.elPFIsoValueGamma04NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGamma"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma04NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueGamma04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3210,19 +2196,6 @@ process.elPFIsoValueGamma04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma04NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
         weight = cms.string('1')
     ))
@@ -3255,32 +2228,6 @@ process.elPFIsoValueGamma04NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.elPFIsoValueGamma04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGamma"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueGamma04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3288,19 +2235,6 @@ process.elPFIsoValueGamma04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDepo
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueGamma04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.08)'),
         weight = cms.string('1')
     ))
@@ -3333,32 +2267,6 @@ process.elPFIsoValueGamma04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
 )
 
 
-process.elPFIsoValueNeutral03NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutral"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral03NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueNeutral03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3366,19 +2274,6 @@ process.elPFIsoValueNeutral03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFrom
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral03NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -3411,32 +2306,6 @@ process.elPFIsoValueNeutral03NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDep
 )
 
 
-process.elPFIsoValueNeutral03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutral"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueNeutral03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3444,19 +2313,6 @@ process.elPFIsoValueNeutral03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -3489,32 +2345,6 @@ process.elPFIsoValueNeutral03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.elPFIsoValueNeutral04NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutral"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral04NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueNeutral04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3522,19 +2352,6 @@ process.elPFIsoValueNeutral04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFrom
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral04NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -3567,32 +2384,6 @@ process.elPFIsoValueNeutral04NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDep
 )
 
 
-process.elPFIsoValueNeutral04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutral"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValueNeutral04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3600,19 +2391,6 @@ process.elPFIsoValueNeutral04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValueNeutral04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -3645,32 +2423,6 @@ process.elPFIsoValueNeutral04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.elPFIsoValuePU03NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPU"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU03NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValuePU03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3678,19 +2430,6 @@ process.elPFIsoValuePU03NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDepos
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU03NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -3723,32 +2462,6 @@ process.elPFIsoValuePU03NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposits
 )
 
 
-process.elPFIsoValuePU03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPU"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValuePU03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3756,19 +2469,6 @@ process.elPFIsoValuePU03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -3801,32 +2501,6 @@ process.elPFIsoValuePU03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
 )
 
 
-process.elPFIsoValuePU04NoPFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPU"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU04NoPFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValuePU04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3834,19 +2508,6 @@ process.elPFIsoValuePU04NoPFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDepos
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU04NoPFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -3879,32 +2540,6 @@ process.elPFIsoValuePU04NoPFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposits
 )
 
 
-process.elPFIsoValuePU04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPU"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.elPFIsoValuePU04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -3912,19 +2547,6 @@ process.elPFIsoValuePU04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("elPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.elPFIsoValuePU04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("elPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
@@ -3954,19 +2576,6 @@ process.elPFIsoValuePU04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.015)'),
         weight = cms.string('1')
     ))
-)
-
-
-process.electronMatch = cms.EDProducer("MCMatcher",
-    checkCharge = cms.bool(True),
-    matched = cms.InputTag("genParticles"),
-    maxDPtRel = cms.double(0.5),
-    maxDeltaR = cms.double(0.5),
-    mcPdgId = cms.vint32(11),
-    mcStatus = cms.vint32(1),
-    resolveAmbiguities = cms.bool(True),
-    resolveByMatchQuality = cms.bool(False),
-    src = cms.InputTag("gedGsfElectrons")
 )
 
 
@@ -4098,6 +2707,12 @@ process.genParticlesForJetsNoNuPFlow = cms.EDProducer("InputGenJetsParticleSelec
 )
 
 
+process.genPartons = cms.EDProducer("PartonSelector",
+    src = cms.InputTag("hiGenParticles"),
+    withLeptons = cms.bool(False)
+)
+
+
 process.ghostTrackBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('ghostTrackComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("impactParameterTagInfos"), cms.InputTag("ghostTrackVertexTagInfos"))
@@ -4175,101 +2790,28 @@ process.ghostTrackVertexTagInfos = cms.EDProducer("SecondaryVertexProducer",
 )
 
 
-process.hpsPFTauChargedIsoPtSum = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
-    ApplyDiscriminationByECALIsolation = cms.bool(False),
-    ApplyDiscriminationByTrackerIsolation = cms.bool(True),
-    ApplyDiscriminationByWeightedECALIsolation = cms.bool(False),
-    PFTauProducer = cms.InputTag("hpsPFTauProducer"),
-    Prediscriminants = cms.PSet(
-        BooleanOperator = cms.string('and'),
-        decayMode = cms.PSet(
-            Producer = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-            cut = cms.double(0.5)
-        )
-    ),
-    UseAllPFCandsForWeights = cms.bool(False),
-    applyDeltaBetaCorrection = cms.bool(False),
-    applyFootprintCorrection = cms.bool(False),
-    applyOccupancyCut = cms.bool(False),
-    applyPhotonPtSumOutsideSignalConeCut = cms.bool(True),
-    applyRelativeSumPtCut = cms.bool(False),
-    applyRhoCorrection = cms.bool(False),
-    applySumPtCut = cms.bool(False),
-    customOuterCone = cms.double(0.5),
-    deltaBetaFactor = cms.string('0.2000'),
-    deltaBetaPUTrackPtCutOverride = cms.double(0.5),
-    footprintCorrections = cms.VPSet(cms.PSet(
-        offset = cms.string('0.0'),
-        selection = cms.string('decayMode() = 0')
-    ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 1 || decayMode() = 2')
-        ), 
-        cms.PSet(
-            offset = cms.string('2.7'),
-            selection = cms.string('decayMode() = 5')
-        ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 6')
-        ), 
-        cms.PSet(
-            offset = cms.string('max(2.0, 0.22*pt() - 2.0)'),
-            selection = cms.string('decayMode() = 10')
-        )),
-    isoConeSizeForDeltaBeta = cms.double(0.8),
-    maxAbsPhotonSumPt_outsideSignalCone = cms.double(1000000000.0),
-    maxRelPhotonSumPt_outsideSignalCone = cms.double(0.1),
-    maximumOccupancy = cms.uint32(0),
-    maximumSumPtCut = cms.double(2.5),
-    particleFlowSrc = cms.InputTag("particleFlow"),
-    qualityCuts = cms.PSet(
-        isolationQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.2),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.03),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        leadingTrkOrPFCandOption = cms.string('leadPFCand'),
-        primaryVertexSrc = cms.InputTag("offlinePrimaryVertices"),
-        pvFindingAlgo = cms.string('closestInDeltaZ'),
-        recoverLeadingTrk = cms.bool(False),
-        signalQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.4),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minNeutralHadronEt = cms.double(30.0),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        vertexTrackFiltering = cms.bool(False),
-        vxAssocQualityCuts = cms.PSet(
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        )
-    ),
-    relativeSumPtCut = cms.double(0.0),
-    relativeSumPtOffset = cms.double(0.0),
-    rhoConeSize = cms.double(0.5),
-    rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
-    rhoUEOffsetCorrection = cms.double(1.0),
-    storeRawPUsumPt = cms.bool(False),
-    storeRawSumPt = cms.bool(True),
-    verbosity = cms.int32(0),
-    vertexSrc = cms.InputTag("offlinePrimaryVertices")
+process.heavyIon = cms.EDProducer("GenHIEventProducer",
+    doMC = cms.bool(True),
+    doReco = cms.bool(True),
+    generators = cms.vstring('generatorSmeared')
+)
+
+
+process.heavyIonCleanedGenJets = cms.EDProducer("HiGenJetCleaner",
+    createNewCollection = cms.untracked.bool(True),
+    deltaR = cms.double(0.25),
+    fillDummyEntries = cms.untracked.bool(True),
+    ptCut = cms.double(20),
+    src = cms.InputTag("iterativeCone5HiGenJets")
+)
+
+
+process.hiPartons = cms.EDProducer("HiPartonCleaner",
+    createNewCollection = cms.untracked.bool(True),
+    deltaR = cms.double(0.25),
+    fillDummyEntries = cms.untracked.bool(True),
+    ptCut = cms.double(20),
+    src = cms.InputTag("genPartons")
 )
 
 
@@ -13063,105 +11605,6 @@ process.hpsPFTauDiscriminationByVVTightIsolationMVA3oldDMwoLTPFlow = cms.EDProdu
 )
 
 
-process.hpsPFTauFootprintCorrection = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
-    ApplyDiscriminationByECALIsolation = cms.bool(False),
-    ApplyDiscriminationByTrackerIsolation = cms.bool(False),
-    ApplyDiscriminationByWeightedECALIsolation = cms.bool(False),
-    PFTauProducer = cms.InputTag("hpsPFTauProducer"),
-    Prediscriminants = cms.PSet(
-        BooleanOperator = cms.string('and'),
-        decayMode = cms.PSet(
-            Producer = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-            cut = cms.double(0.5)
-        )
-    ),
-    UseAllPFCandsForWeights = cms.bool(False),
-    applyDeltaBetaCorrection = cms.bool(False),
-    applyFootprintCorrection = cms.bool(False),
-    applyOccupancyCut = cms.bool(False),
-    applyPhotonPtSumOutsideSignalConeCut = cms.bool(True),
-    applyRelativeSumPtCut = cms.bool(False),
-    applyRhoCorrection = cms.bool(False),
-    applySumPtCut = cms.bool(False),
-    customOuterCone = cms.double(0.5),
-    deltaBetaFactor = cms.string('0.2000'),
-    deltaBetaPUTrackPtCutOverride = cms.double(0.5),
-    footprintCorrections = cms.VPSet(cms.PSet(
-        offset = cms.string('0.0'),
-        selection = cms.string('decayMode() = 0')
-    ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 1 || decayMode() = 2')
-        ), 
-        cms.PSet(
-            offset = cms.string('2.7'),
-            selection = cms.string('decayMode() = 5')
-        ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 6')
-        ), 
-        cms.PSet(
-            offset = cms.string('max(2.0, 0.22*pt() - 2.0)'),
-            selection = cms.string('decayMode() = 10')
-        )),
-    isoConeSizeForDeltaBeta = cms.double(0.8),
-    maxAbsPhotonSumPt_outsideSignalCone = cms.double(1000000000.0),
-    maxRelPhotonSumPt_outsideSignalCone = cms.double(0.1),
-    maximumOccupancy = cms.uint32(0),
-    maximumSumPtCut = cms.double(2.5),
-    particleFlowSrc = cms.InputTag("particleFlow"),
-    qualityCuts = cms.PSet(
-        isolationQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.2),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.03),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        leadingTrkOrPFCandOption = cms.string('leadPFCand'),
-        primaryVertexSrc = cms.InputTag("offlinePrimaryVertices"),
-        pvFindingAlgo = cms.string('closestInDeltaZ'),
-        recoverLeadingTrk = cms.bool(False),
-        signalQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.4),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minNeutralHadronEt = cms.double(30.0),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        vertexTrackFiltering = cms.bool(False),
-        vxAssocQualityCuts = cms.PSet(
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        )
-    ),
-    relativeSumPtCut = cms.double(0.0),
-    relativeSumPtOffset = cms.double(0.0),
-    rhoConeSize = cms.double(0.5),
-    rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
-    rhoUEOffsetCorrection = cms.double(1.0),
-    storeRawFootprintCorrection = cms.bool(True),
-    storeRawPUsumPt = cms.bool(False),
-    storeRawSumPt = cms.bool(False),
-    verbosity = cms.int32(0),
-    vertexSrc = cms.InputTag("offlinePrimaryVertices")
-)
-
-
 process.hpsPFTauFootprintCorrectionPFlow = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
     ApplyDiscriminationByECALIsolation = cms.bool(False),
     ApplyDiscriminationByTrackerIsolation = cms.bool(False),
@@ -13261,104 +11704,6 @@ process.hpsPFTauFootprintCorrectionPFlow = cms.EDProducer("PFRecoTauDiscriminati
 )
 
 
-process.hpsPFTauNeutralIsoPtSum = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
-    ApplyDiscriminationByECALIsolation = cms.bool(True),
-    ApplyDiscriminationByTrackerIsolation = cms.bool(False),
-    ApplyDiscriminationByWeightedECALIsolation = cms.bool(False),
-    PFTauProducer = cms.InputTag("hpsPFTauProducer"),
-    Prediscriminants = cms.PSet(
-        BooleanOperator = cms.string('and'),
-        decayMode = cms.PSet(
-            Producer = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-            cut = cms.double(0.5)
-        )
-    ),
-    UseAllPFCandsForWeights = cms.bool(False),
-    applyDeltaBetaCorrection = cms.bool(False),
-    applyFootprintCorrection = cms.bool(False),
-    applyOccupancyCut = cms.bool(False),
-    applyPhotonPtSumOutsideSignalConeCut = cms.bool(True),
-    applyRelativeSumPtCut = cms.bool(False),
-    applyRhoCorrection = cms.bool(False),
-    applySumPtCut = cms.bool(False),
-    customOuterCone = cms.double(0.5),
-    deltaBetaFactor = cms.string('0.2000'),
-    deltaBetaPUTrackPtCutOverride = cms.double(0.5),
-    footprintCorrections = cms.VPSet(cms.PSet(
-        offset = cms.string('0.0'),
-        selection = cms.string('decayMode() = 0')
-    ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 1 || decayMode() = 2')
-        ), 
-        cms.PSet(
-            offset = cms.string('2.7'),
-            selection = cms.string('decayMode() = 5')
-        ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 6')
-        ), 
-        cms.PSet(
-            offset = cms.string('max(2.0, 0.22*pt() - 2.0)'),
-            selection = cms.string('decayMode() = 10')
-        )),
-    isoConeSizeForDeltaBeta = cms.double(0.8),
-    maxAbsPhotonSumPt_outsideSignalCone = cms.double(1000000000.0),
-    maxRelPhotonSumPt_outsideSignalCone = cms.double(0.1),
-    maximumOccupancy = cms.uint32(0),
-    maximumSumPtCut = cms.double(2.5),
-    particleFlowSrc = cms.InputTag("particleFlow"),
-    qualityCuts = cms.PSet(
-        isolationQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.2),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.03),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        leadingTrkOrPFCandOption = cms.string('leadPFCand'),
-        primaryVertexSrc = cms.InputTag("offlinePrimaryVertices"),
-        pvFindingAlgo = cms.string('closestInDeltaZ'),
-        recoverLeadingTrk = cms.bool(False),
-        signalQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.4),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minNeutralHadronEt = cms.double(30.0),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        vertexTrackFiltering = cms.bool(False),
-        vxAssocQualityCuts = cms.PSet(
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        )
-    ),
-    relativeSumPtCut = cms.double(0.0),
-    relativeSumPtOffset = cms.double(0.0),
-    rhoConeSize = cms.double(0.5),
-    rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
-    rhoUEOffsetCorrection = cms.double(1.0),
-    storeRawPUsumPt = cms.bool(False),
-    storeRawSumPt = cms.bool(True),
-    verbosity = cms.int32(0),
-    vertexSrc = cms.InputTag("offlinePrimaryVertices")
-)
-
-
 process.hpsPFTauNeutralIsoPtSumPFlow = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
     ApplyDiscriminationByECALIsolation = cms.bool(True),
     ApplyDiscriminationByTrackerIsolation = cms.bool(False),
@@ -13372,104 +11717,6 @@ process.hpsPFTauNeutralIsoPtSumPFlow = cms.EDProducer("PFRecoTauDiscriminationBy
         )
     ),
     UseAllPFCandsForWeights = cms.bool(False),
-    applyDeltaBetaCorrection = cms.bool(False),
-    applyFootprintCorrection = cms.bool(False),
-    applyOccupancyCut = cms.bool(False),
-    applyPhotonPtSumOutsideSignalConeCut = cms.bool(True),
-    applyRelativeSumPtCut = cms.bool(False),
-    applyRhoCorrection = cms.bool(False),
-    applySumPtCut = cms.bool(False),
-    customOuterCone = cms.double(0.5),
-    deltaBetaFactor = cms.string('0.2000'),
-    deltaBetaPUTrackPtCutOverride = cms.double(0.5),
-    footprintCorrections = cms.VPSet(cms.PSet(
-        offset = cms.string('0.0'),
-        selection = cms.string('decayMode() = 0')
-    ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 1 || decayMode() = 2')
-        ), 
-        cms.PSet(
-            offset = cms.string('2.7'),
-            selection = cms.string('decayMode() = 5')
-        ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 6')
-        ), 
-        cms.PSet(
-            offset = cms.string('max(2.0, 0.22*pt() - 2.0)'),
-            selection = cms.string('decayMode() = 10')
-        )),
-    isoConeSizeForDeltaBeta = cms.double(0.8),
-    maxAbsPhotonSumPt_outsideSignalCone = cms.double(1000000000.0),
-    maxRelPhotonSumPt_outsideSignalCone = cms.double(0.1),
-    maximumOccupancy = cms.uint32(0),
-    maximumSumPtCut = cms.double(2.5),
-    particleFlowSrc = cms.InputTag("particleFlow"),
-    qualityCuts = cms.PSet(
-        isolationQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.2),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.03),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        leadingTrkOrPFCandOption = cms.string('leadPFCand'),
-        primaryVertexSrc = cms.InputTag("offlinePrimaryVertices"),
-        pvFindingAlgo = cms.string('closestInDeltaZ'),
-        recoverLeadingTrk = cms.bool(False),
-        signalQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.4),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minNeutralHadronEt = cms.double(30.0),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        vertexTrackFiltering = cms.bool(False),
-        vxAssocQualityCuts = cms.PSet(
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        )
-    ),
-    relativeSumPtCut = cms.double(0.0),
-    relativeSumPtOffset = cms.double(0.0),
-    rhoConeSize = cms.double(0.5),
-    rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
-    rhoUEOffsetCorrection = cms.double(1.0),
-    storeRawPUsumPt = cms.bool(False),
-    storeRawSumPt = cms.bool(True),
-    verbosity = cms.int32(0),
-    vertexSrc = cms.InputTag("offlinePrimaryVertices")
-)
-
-
-process.hpsPFTauNeutralIsoPtSumWeight = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
-    ApplyDiscriminationByECALIsolation = cms.bool(False),
-    ApplyDiscriminationByTrackerIsolation = cms.bool(False),
-    ApplyDiscriminationByWeightedECALIsolation = cms.bool(True),
-    PFTauProducer = cms.InputTag("hpsPFTauProducer"),
-    Prediscriminants = cms.PSet(
-        BooleanOperator = cms.string('and'),
-        decayMode = cms.PSet(
-            Producer = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-            cut = cms.double(0.5)
-        )
-    ),
-    UseAllPFCandsForWeights = cms.bool(True),
     applyDeltaBetaCorrection = cms.bool(False),
     applyFootprintCorrection = cms.bool(False),
     applyOccupancyCut = cms.bool(False),
@@ -13653,104 +11900,6 @@ process.hpsPFTauNeutralIsoPtSumWeightPFlow = cms.EDProducer("PFRecoTauDiscrimina
 )
 
 
-process.hpsPFTauPUcorrPtSum = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
-    ApplyDiscriminationByECALIsolation = cms.bool(False),
-    ApplyDiscriminationByTrackerIsolation = cms.bool(False),
-    ApplyDiscriminationByWeightedECALIsolation = cms.bool(False),
-    PFTauProducer = cms.InputTag("hpsPFTauProducer"),
-    Prediscriminants = cms.PSet(
-        BooleanOperator = cms.string('and'),
-        decayMode = cms.PSet(
-            Producer = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-            cut = cms.double(0.5)
-        )
-    ),
-    UseAllPFCandsForWeights = cms.bool(False),
-    applyDeltaBetaCorrection = cms.bool(True),
-    applyFootprintCorrection = cms.bool(False),
-    applyOccupancyCut = cms.bool(False),
-    applyPhotonPtSumOutsideSignalConeCut = cms.bool(True),
-    applyRelativeSumPtCut = cms.bool(False),
-    applyRhoCorrection = cms.bool(False),
-    applySumPtCut = cms.bool(False),
-    customOuterCone = cms.double(0.5),
-    deltaBetaFactor = cms.string('0.2000'),
-    deltaBetaPUTrackPtCutOverride = cms.double(0.5),
-    footprintCorrections = cms.VPSet(cms.PSet(
-        offset = cms.string('0.0'),
-        selection = cms.string('decayMode() = 0')
-    ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 1 || decayMode() = 2')
-        ), 
-        cms.PSet(
-            offset = cms.string('2.7'),
-            selection = cms.string('decayMode() = 5')
-        ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 6')
-        ), 
-        cms.PSet(
-            offset = cms.string('max(2.0, 0.22*pt() - 2.0)'),
-            selection = cms.string('decayMode() = 10')
-        )),
-    isoConeSizeForDeltaBeta = cms.double(0.8),
-    maxAbsPhotonSumPt_outsideSignalCone = cms.double(1000000000.0),
-    maxRelPhotonSumPt_outsideSignalCone = cms.double(0.1),
-    maximumOccupancy = cms.uint32(0),
-    maximumSumPtCut = cms.double(2.5),
-    particleFlowSrc = cms.InputTag("particleFlow"),
-    qualityCuts = cms.PSet(
-        isolationQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.2),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.03),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        leadingTrkOrPFCandOption = cms.string('leadPFCand'),
-        primaryVertexSrc = cms.InputTag("offlinePrimaryVertices"),
-        pvFindingAlgo = cms.string('closestInDeltaZ'),
-        recoverLeadingTrk = cms.bool(False),
-        signalQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.4),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minNeutralHadronEt = cms.double(30.0),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        vertexTrackFiltering = cms.bool(False),
-        vxAssocQualityCuts = cms.PSet(
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        )
-    ),
-    relativeSumPtCut = cms.double(0.0),
-    relativeSumPtOffset = cms.double(0.0),
-    rhoConeSize = cms.double(0.5),
-    rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
-    rhoUEOffsetCorrection = cms.double(1.0),
-    storeRawPUsumPt = cms.bool(True),
-    storeRawSumPt = cms.bool(False),
-    verbosity = cms.int32(0),
-    vertexSrc = cms.InputTag("offlinePrimaryVertices")
-)
-
-
 process.hpsPFTauPUcorrPtSumPFlow = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
     ApplyDiscriminationByECALIsolation = cms.bool(False),
     ApplyDiscriminationByTrackerIsolation = cms.bool(False),
@@ -13843,105 +11992,6 @@ process.hpsPFTauPUcorrPtSumPFlow = cms.EDProducer("PFRecoTauDiscriminationByIsol
     rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
     rhoUEOffsetCorrection = cms.double(1.0),
     storeRawPUsumPt = cms.bool(True),
-    storeRawSumPt = cms.bool(False),
-    verbosity = cms.int32(0),
-    vertexSrc = cms.InputTag("offlinePrimaryVertices")
-)
-
-
-process.hpsPFTauPhotonPtSumOutsideSignalCone = cms.EDProducer("PFRecoTauDiscriminationByIsolation",
-    ApplyDiscriminationByECALIsolation = cms.bool(False),
-    ApplyDiscriminationByTrackerIsolation = cms.bool(False),
-    ApplyDiscriminationByWeightedECALIsolation = cms.bool(False),
-    PFTauProducer = cms.InputTag("hpsPFTauProducer"),
-    Prediscriminants = cms.PSet(
-        BooleanOperator = cms.string('and'),
-        decayMode = cms.PSet(
-            Producer = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-            cut = cms.double(0.5)
-        )
-    ),
-    UseAllPFCandsForWeights = cms.bool(False),
-    applyDeltaBetaCorrection = cms.bool(False),
-    applyFootprintCorrection = cms.bool(False),
-    applyOccupancyCut = cms.bool(False),
-    applyPhotonPtSumOutsideSignalConeCut = cms.bool(True),
-    applyRelativeSumPtCut = cms.bool(False),
-    applyRhoCorrection = cms.bool(False),
-    applySumPtCut = cms.bool(False),
-    customOuterCone = cms.double(0.5),
-    deltaBetaFactor = cms.string('0.2000'),
-    deltaBetaPUTrackPtCutOverride = cms.double(0.5),
-    footprintCorrections = cms.VPSet(cms.PSet(
-        offset = cms.string('0.0'),
-        selection = cms.string('decayMode() = 0')
-    ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 1 || decayMode() = 2')
-        ), 
-        cms.PSet(
-            offset = cms.string('2.7'),
-            selection = cms.string('decayMode() = 5')
-        ), 
-        cms.PSet(
-            offset = cms.string('0.0'),
-            selection = cms.string('decayMode() = 6')
-        ), 
-        cms.PSet(
-            offset = cms.string('max(2.0, 0.22*pt() - 2.0)'),
-            selection = cms.string('decayMode() = 10')
-        )),
-    isoConeSizeForDeltaBeta = cms.double(0.8),
-    maxAbsPhotonSumPt_outsideSignalCone = cms.double(1000000000.0),
-    maxRelPhotonSumPt_outsideSignalCone = cms.double(0.1),
-    maximumOccupancy = cms.uint32(0),
-    maximumSumPtCut = cms.double(2.5),
-    particleFlowSrc = cms.InputTag("particleFlow"),
-    qualityCuts = cms.PSet(
-        isolationQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.2),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.03),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        leadingTrkOrPFCandOption = cms.string('leadPFCand'),
-        primaryVertexSrc = cms.InputTag("offlinePrimaryVertices"),
-        pvFindingAlgo = cms.string('closestInDeltaZ'),
-        recoverLeadingTrk = cms.bool(False),
-        signalQualityCuts = cms.PSet(
-            maxDeltaZ = cms.double(0.4),
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minNeutralHadronEt = cms.double(30.0),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        ),
-        vertexTrackFiltering = cms.bool(False),
-        vxAssocQualityCuts = cms.PSet(
-            maxTrackChi2 = cms.double(100.0),
-            maxTransverseImpactParameter = cms.double(0.1),
-            minGammaEt = cms.double(0.5),
-            minTrackHits = cms.uint32(3),
-            minTrackPixelHits = cms.uint32(0),
-            minTrackPt = cms.double(0.5),
-            minTrackVertexWeight = cms.double(-1.0)
-        )
-    ),
-    relativeSumPtCut = cms.double(0.0),
-    relativeSumPtOffset = cms.double(0.0),
-    rhoConeSize = cms.double(0.5),
-    rhoProducer = cms.InputTag("fixedGridRhoFastjetAll"),
-    rhoUEOffsetCorrection = cms.double(1.0),
-    storeRawPUsumPt = cms.bool(False),
-    storeRawPhotonSumPt_outsideSignalCone = cms.bool(True),
     storeRawSumPt = cms.bool(False),
     verbosity = cms.int32(0),
     vertexSrc = cms.InputTag("offlinePrimaryVertices")
@@ -14295,7 +12345,7 @@ process.inclusiveCandidateVertexFinder = cms.EDProducer("InclusiveCandidateVerte
     minHits = cms.uint32(8),
     minPt = cms.double(0.8),
     primaryVertices = cms.InputTag("hiSelectedVertex"),
-    tracks = cms.InputTag("particleFlow"),
+    tracks = cms.InputTag("particleFlowTmp"),
     useDirectVertexFitter = cms.bool(True),
     useVertexReco = cms.bool(True),
     vertexMinAngleCosine = cms.double(0.95),
@@ -14671,22 +12721,6 @@ process.inclusiveVertexFinder = cms.EDProducer("InclusiveVertexFinder",
 )
 
 
-process.isoDeposits = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag(""),
-    trackType = cms.string('candidate')
-)
-
-
 process.isoDepositsPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -14754,31 +12788,9 @@ process.jetTracksAssociatorAtVertexPFlow = cms.EDProducer("JetTracksAssociatorAt
 )
 
 
-process.muCaloMetCorr = cms.EDProducer("MuonMETcorrInputProducer",
-    src = cms.InputTag("muons"),
-    srcMuonCorrections = cms.InputTag("muonMETValueMapProducer","muCorrData")
-)
-
-
 process.muCaloMetCorrPFlow = cms.EDProducer("MuonMETcorrInputProducer",
     src = cms.InputTag("muons"),
     srcMuonCorrections = cms.InputTag("muonMETValueMapProducer","muCorrData")
-)
-
-
-process.muPFIsoDepositChargedAllPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
 )
 
 
@@ -14794,22 +12806,6 @@ process.muPFIsoDepositChargedAllPATPFlow = cms.EDProducer("CandIsoDepositProduce
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.muPFIsoDepositChargedAllPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedMuonsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -14830,22 +12826,6 @@ process.muPFIsoDepositChargedAllPFBRECOPFlow = cms.EDProducer("CandIsoDepositPro
 )
 
 
-process.muPFIsoDepositChargedPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.muPFIsoDepositChargedPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -14858,22 +12838,6 @@ process.muPFIsoDepositChargedPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.muPFIsoDepositChargedPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedMuonsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -14894,22 +12858,6 @@ process.muPFIsoDepositChargedPFBRECOPFlow = cms.EDProducer("CandIsoDepositProduc
 )
 
 
-process.muPFIsoDepositGammaPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllPhotonsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.muPFIsoDepositGammaPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -14922,22 +12870,6 @@ process.muPFIsoDepositGammaPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.muPFIsoDepositGammaPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllPhotonsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedMuonsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -14958,22 +12890,6 @@ process.muPFIsoDepositGammaPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer
 )
 
 
-process.muPFIsoDepositNeutralPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllNeutralHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.muPFIsoDepositNeutralPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -14986,22 +12902,6 @@ process.muPFIsoDepositNeutralPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.muPFIsoDepositNeutralPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllNeutralHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedMuonsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -15022,22 +12922,6 @@ process.muPFIsoDepositNeutralPFBRECOPFlow = cms.EDProducer("CandIsoDepositProduc
 )
 
 
-process.muPFIsoDepositPUPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfPileUpAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.muPFIsoDepositPUPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -15050,22 +12934,6 @@ process.muPFIsoDepositPUPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("muons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.muPFIsoDepositPUPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(1e-05),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfPileUpAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedMuonsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -15086,51 +12954,12 @@ process.muPFIsoDepositPUPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.muPFIsoValueCharged03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositCharged"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueCharged03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueCharged03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueCharged03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -15164,51 +12993,12 @@ process.muPFIsoValueCharged03PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValueCharged04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositCharged"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueCharged04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueCharged04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueCharged04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -15242,51 +13032,12 @@ process.muPFIsoValueCharged04PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValueChargedAll03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAll"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueChargedAll03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueChargedAll03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueChargedAll03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -15320,51 +13071,12 @@ process.muPFIsoValueChargedAll03PFlow = cms.EDProducer("CandIsolatorFromDeposits
 )
 
 
-process.muPFIsoValueChargedAll04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAll"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueChargedAll04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueChargedAll04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueChargedAll04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -15398,51 +13110,12 @@ process.muPFIsoValueChargedAll04PFlow = cms.EDProducer("CandIsolatorFromDeposits
 )
 
 
-process.muPFIsoValueGamma03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGamma03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueGamma03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGamma03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -15476,51 +13149,12 @@ process.muPFIsoValueGamma03PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValueGamma04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGamma04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueGamma04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGamma04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -15554,51 +13188,12 @@ process.muPFIsoValueGamma04PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValueGammaHighThreshold03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGammaHighThreshold03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueGammaHighThreshold03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGammaHighThreshold03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -15632,51 +13227,12 @@ process.muPFIsoValueGammaHighThreshold03PFlow = cms.EDProducer("CandIsolatorFrom
 )
 
 
-process.muPFIsoValueGammaHighThreshold04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGammaHighThreshold04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueGammaHighThreshold04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueGammaHighThreshold04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -15710,51 +13266,12 @@ process.muPFIsoValueGammaHighThreshold04PFlow = cms.EDProducer("CandIsolatorFrom
 )
 
 
-process.muPFIsoValueNeutral03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutral03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueNeutral03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutral03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -15788,51 +13305,12 @@ process.muPFIsoValueNeutral03PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValueNeutral04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutral04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueNeutral04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutral04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -15866,51 +13344,12 @@ process.muPFIsoValueNeutral04PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValueNeutralHighThreshold03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutralHighThreshold03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueNeutralHighThreshold03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutralHighThreshold03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -15944,51 +13383,12 @@ process.muPFIsoValueNeutralHighThreshold03PFlow = cms.EDProducer("CandIsolatorFr
 )
 
 
-process.muPFIsoValueNeutralHighThreshold04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutralHighThreshold04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValueNeutralHighThreshold04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValueNeutralHighThreshold04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -16022,51 +13422,12 @@ process.muPFIsoValueNeutralHighThreshold04PFlow = cms.EDProducer("CandIsolatorFr
 )
 
 
-process.muPFIsoValuePU03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPU"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValuePU03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValuePU03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValuePU03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -16100,51 +13461,12 @@ process.muPFIsoValuePU03PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFIsoValuePU04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPU"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValuePU04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFIsoValuePU04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFIsoValuePU04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -16178,51 +13500,12 @@ process.muPFIsoValuePU04PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFMeanDRIsoValueCharged03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositCharged"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueCharged03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueCharged03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueCharged03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -16256,51 +13539,12 @@ process.muPFMeanDRIsoValueCharged03PFlow = cms.EDProducer("CandIsolatorFromDepos
 )
 
 
-process.muPFMeanDRIsoValueCharged04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositCharged"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueCharged04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueCharged04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueCharged04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -16334,51 +13578,12 @@ process.muPFMeanDRIsoValueCharged04PFlow = cms.EDProducer("CandIsolatorFromDepos
 )
 
 
-process.muPFMeanDRIsoValueChargedAll03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAll"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueChargedAll03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueChargedAll03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueChargedAll03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -16412,51 +13617,12 @@ process.muPFMeanDRIsoValueChargedAll03PFlow = cms.EDProducer("CandIsolatorFromDe
 )
 
 
-process.muPFMeanDRIsoValueChargedAll04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAll"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueChargedAll04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueChargedAll04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueChargedAll04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -16490,51 +13656,12 @@ process.muPFMeanDRIsoValueChargedAll04PFlow = cms.EDProducer("CandIsolatorFromDe
 )
 
 
-process.muPFMeanDRIsoValueGamma03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGamma03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueGamma03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGamma03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -16568,51 +13695,12 @@ process.muPFMeanDRIsoValueGamma03PFlow = cms.EDProducer("CandIsolatorFromDeposit
 )
 
 
-process.muPFMeanDRIsoValueGamma04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGamma04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueGamma04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGamma04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -16646,51 +13734,12 @@ process.muPFMeanDRIsoValueGamma04PFlow = cms.EDProducer("CandIsolatorFromDeposit
 )
 
 
-process.muPFMeanDRIsoValueGammaHighThreshold03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGammaHighThreshold03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueGammaHighThreshold03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGammaHighThreshold03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -16724,51 +13773,12 @@ process.muPFMeanDRIsoValueGammaHighThreshold03PFlow = cms.EDProducer("CandIsolat
 )
 
 
-process.muPFMeanDRIsoValueGammaHighThreshold04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGammaHighThreshold04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueGammaHighThreshold04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueGammaHighThreshold04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -16802,51 +13812,12 @@ process.muPFMeanDRIsoValueGammaHighThreshold04PFlow = cms.EDProducer("CandIsolat
 )
 
 
-process.muPFMeanDRIsoValueNeutral03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutral03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueNeutral03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutral03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -16880,51 +13851,12 @@ process.muPFMeanDRIsoValueNeutral03PFlow = cms.EDProducer("CandIsolatorFromDepos
 )
 
 
-process.muPFMeanDRIsoValueNeutral04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutral04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueNeutral04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutral04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -16958,51 +13890,12 @@ process.muPFMeanDRIsoValueNeutral04PFlow = cms.EDProducer("CandIsolatorFromDepos
 )
 
 
-process.muPFMeanDRIsoValueNeutralHighThreshold03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutralHighThreshold03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueNeutralHighThreshold03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutralHighThreshold03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -17036,51 +13929,12 @@ process.muPFMeanDRIsoValueNeutralHighThreshold03PFlow = cms.EDProducer("CandIsol
 )
 
 
-process.muPFMeanDRIsoValueNeutralHighThreshold04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutralHighThreshold04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValueNeutralHighThreshold04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValueNeutralHighThreshold04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -17114,51 +13968,12 @@ process.muPFMeanDRIsoValueNeutralHighThreshold04PFlow = cms.EDProducer("CandIsol
 )
 
 
-process.muPFMeanDRIsoValuePU03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPU"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValuePU03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValuePU03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValuePU03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -17192,51 +14007,12 @@ process.muPFMeanDRIsoValuePU03PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFMeanDRIsoValuePU04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPU"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValuePU04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFMeanDRIsoValuePU04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('meanDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFMeanDRIsoValuePU04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('meanDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -17270,51 +14046,12 @@ process.muPFMeanDRIsoValuePU04PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFSumDRIsoValueCharged03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositCharged"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueCharged03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueCharged03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueCharged03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -17348,51 +14085,12 @@ process.muPFSumDRIsoValueCharged03PFlow = cms.EDProducer("CandIsolatorFromDeposi
 )
 
 
-process.muPFSumDRIsoValueCharged04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositCharged"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueCharged04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueCharged04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueCharged04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -17426,51 +14124,12 @@ process.muPFSumDRIsoValueCharged04PFlow = cms.EDProducer("CandIsolatorFromDeposi
 )
 
 
-process.muPFSumDRIsoValueChargedAll03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAll"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueChargedAll03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueChargedAll03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueChargedAll03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -17504,51 +14163,12 @@ process.muPFSumDRIsoValueChargedAll03PFlow = cms.EDProducer("CandIsolatorFromDep
 )
 
 
-process.muPFSumDRIsoValueChargedAll04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAll"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueChargedAll04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueChargedAll04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring('0.0001', 
-            'Threshold(0.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueChargedAll04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring('0.0001', 
             'Threshold(0.0)'),
         weight = cms.string('1')
@@ -17582,51 +14202,12 @@ process.muPFSumDRIsoValueChargedAll04PFlow = cms.EDProducer("CandIsolatorFromDep
 )
 
 
-process.muPFSumDRIsoValueGamma03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGamma03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueGamma03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGamma03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -17660,51 +14241,12 @@ process.muPFSumDRIsoValueGamma03PFlow = cms.EDProducer("CandIsolatorFromDeposits
 )
 
 
-process.muPFSumDRIsoValueGamma04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGamma04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueGamma04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGamma04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -17738,51 +14280,12 @@ process.muPFSumDRIsoValueGamma04PFlow = cms.EDProducer("CandIsolatorFromDeposits
 )
 
 
-process.muPFSumDRIsoValueGammaHighThreshold03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGammaHighThreshold03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueGammaHighThreshold03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGammaHighThreshold03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -17816,51 +14319,12 @@ process.muPFSumDRIsoValueGammaHighThreshold03PFlow = cms.EDProducer("CandIsolato
 )
 
 
-process.muPFSumDRIsoValueGammaHighThreshold04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGamma"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGammaHighThreshold04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueGammaHighThreshold04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueGammaHighThreshold04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -17894,51 +14358,12 @@ process.muPFSumDRIsoValueGammaHighThreshold04PFlow = cms.EDProducer("CandIsolato
 )
 
 
-process.muPFSumDRIsoValueNeutral03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutral03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueNeutral03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutral03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -17972,51 +14397,12 @@ process.muPFSumDRIsoValueNeutral03PFlow = cms.EDProducer("CandIsolatorFromDeposi
 )
 
 
-process.muPFSumDRIsoValueNeutral04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutral04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueNeutral04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutral04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -18050,51 +14436,12 @@ process.muPFSumDRIsoValueNeutral04PFlow = cms.EDProducer("CandIsolatorFromDeposi
 )
 
 
-process.muPFSumDRIsoValueNeutralHighThreshold03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutralHighThreshold03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueNeutralHighThreshold03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutralHighThreshold03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -18128,51 +14475,12 @@ process.muPFSumDRIsoValueNeutralHighThreshold03PFlow = cms.EDProducer("CandIsola
 )
 
 
-process.muPFSumDRIsoValueNeutralHighThreshold04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutral"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutralHighThreshold04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValueNeutralHighThreshold04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(1.0)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValueNeutralHighThreshold04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(1.0)'),
         weight = cms.string('1')
@@ -18206,51 +14514,12 @@ process.muPFSumDRIsoValueNeutralHighThreshold04PFlow = cms.EDProducer("CandIsola
 )
 
 
-process.muPFSumDRIsoValuePU03 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPU"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValuePU03PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValuePU03PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.3),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValuePU03PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.3),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -18284,51 +14553,12 @@ process.muPFSumDRIsoValuePU03PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muPFSumDRIsoValuePU04 = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPU"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValuePU04PAT = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPAT"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.muPFSumDRIsoValuePU04PATPFlow = cms.EDProducer("CandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         deltaR = cms.double(0.4),
         mode = cms.string('sumDR'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("muPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring('0.01', 
-            'Threshold(0.5)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.muPFSumDRIsoValuePU04PFBRECO = cms.EDProducer("CandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        deltaR = cms.double(0.4),
-        mode = cms.string('sumDR'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("muPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring('0.01', 
             'Threshold(0.5)'),
         weight = cms.string('1')
@@ -18362,19 +14592,6 @@ process.muPFSumDRIsoValuePU04PFlow = cms.EDProducer("CandIsolatorFromDeposits",
 )
 
 
-process.muonMatch = cms.EDProducer("MCMatcher",
-    checkCharge = cms.bool(True),
-    matched = cms.InputTag("genParticles"),
-    maxDPtRel = cms.double(0.5),
-    maxDeltaR = cms.double(0.5),
-    mcPdgId = cms.vint32(13),
-    mcStatus = cms.vint32(1),
-    resolveAmbiguities = cms.bool(True),
-    resolveByMatchQuality = cms.bool(False),
-    src = cms.InputTag("muons")
-)
-
-
 process.muonMatchPFlow = cms.EDProducer("MCMatcher",
     checkCharge = cms.bool(True),
     matched = cms.InputTag("genParticles"),
@@ -18385,6 +14602,12 @@ process.muonMatchPFlow = cms.EDProducer("MCMatcher",
     resolveAmbiguities = cms.bool(True),
     resolveByMatchQuality = cms.bool(False),
     src = cms.InputTag("pfIsolatedMuonsPFBRECOPFlow")
+)
+
+
+process.myPartons = cms.EDProducer("PartonSelector",
+    src = cms.InputTag("genParticles"),
+    withLeptons = cms.bool(False)
 )
 
 
@@ -18466,12 +14689,6 @@ process.negativeSoftPFElectronBJetTags = cms.EDProducer("JetTagProducer",
 )
 
 
-process.negativeSoftPFElectronBJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('negativeSoftPFElectronComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("softPFElectronsTagInfosPFlow"))
-)
-
-
 process.negativeSoftPFElectronByIP2dBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('negativeSoftPFElectronByIP2dComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("softPFElectronsTagInfos"))
@@ -18493,12 +14710,6 @@ process.negativeSoftPFElectronByPtBJetTags = cms.EDProducer("JetTagProducer",
 process.negativeSoftPFMuonBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('negativeSoftPFMuonComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("softPFMuonsTagInfos"))
-)
-
-
-process.negativeSoftPFMuonBJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('negativeSoftPFMuonComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("softPFMuonsTagInfosPFlow"))
 )
 
 
@@ -18629,98 +14840,8 @@ process.neutralIsoPtSumPFlow = cms.EDProducer("PFRecoTauDiscriminationByIsolatio
 )
 
 
-process.particleFlowPtrs = cms.EDProducer("PFCandidateFwdPtrProducer",
-    src = cms.InputTag("particleFlow")
-)
-
-
 process.particleFlowPtrsPFlow = cms.EDProducer("PFCandidateFwdPtrProducer",
-    src = cms.InputTag("particleFlow")
-)
-
-
-process.patElectrons = cms.EDProducer("PATElectronProducer",
-    addEfficiencies = cms.bool(False),
-    addElectronID = cms.bool(True),
-    addGenMatch = cms.bool(True),
-    addPFClusterIso = cms.bool(False),
-    addResolutions = cms.bool(False),
-    beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    efficiencies = cms.PSet(
-
-    ),
-    electronIDSources = cms.PSet(
-        eidLoose = cms.InputTag("eidLoose"),
-        eidRobustHighEnergy = cms.InputTag("eidRobustHighEnergy"),
-        eidRobustLoose = cms.InputTag("eidRobustLoose"),
-        eidRobustTight = cms.InputTag("eidRobustTight"),
-        eidTight = cms.InputTag("eidTight")
-    ),
-    electronSource = cms.InputTag("gedGsfElectrons"),
-    embedBasicClusters = cms.bool(True),
-    embedGenMatch = cms.bool(True),
-    embedGsfElectronCore = cms.bool(True),
-    embedGsfTrack = cms.bool(True),
-    embedHighLevelSelection = cms.bool(True),
-    embedPFCandidate = cms.bool(True),
-    embedPflowBasicClusters = cms.bool(True),
-    embedPflowPreshowerClusters = cms.bool(True),
-    embedPflowSuperCluster = cms.bool(True),
-    embedPreshowerClusters = cms.bool(True),
-    embedRecHits = cms.bool(True),
-    embedSeedCluster = cms.bool(True),
-    embedSuperCluster = cms.bool(True),
-    embedTrack = cms.bool(True),
-    genParticleMatch = cms.InputTag("electronMatch"),
-    isoDeposits = cms.PSet(
-        pfChargedAll = cms.InputTag("elPFIsoDepositChargedAllPAT"),
-        pfChargedHadrons = cms.InputTag("elPFIsoDepositChargedPAT"),
-        pfNeutralHadrons = cms.InputTag("elPFIsoDepositNeutralPAT"),
-        pfPUChargedHadrons = cms.InputTag("elPFIsoDepositPUPAT"),
-        pfPhotons = cms.InputTag("elPFIsoDepositGammaPAT")
-    ),
-    isolationValues = cms.PSet(
-        pfChargedAll = cms.InputTag("elPFIsoValueChargedAll04PFIdPAT"),
-        pfChargedHadrons = cms.InputTag("elPFIsoValueCharged04PFIdPAT"),
-        pfNeutralHadrons = cms.InputTag("elPFIsoValueNeutral04PFIdPAT"),
-        pfPUChargedHadrons = cms.InputTag("elPFIsoValuePU04PFIdPAT"),
-        pfPhotons = cms.InputTag("elPFIsoValueGamma04PFIdPAT")
-    ),
-    isolationValuesNoPFId = cms.PSet(
-        pfChargedAll = cms.InputTag("elPFIsoValueChargedAll04NoPFIdPAT"),
-        pfChargedHadrons = cms.InputTag("elPFIsoValueCharged04NoPFIdPAT"),
-        pfNeutralHadrons = cms.InputTag("elPFIsoValueNeutral04NoPFIdPAT"),
-        pfPUChargedHadrons = cms.InputTag("elPFIsoValuePU04NoPFIdPAT"),
-        pfPhotons = cms.InputTag("elPFIsoValueGamma04NoPFIdPAT")
-    ),
-    pfCandidateMap = cms.InputTag("particleFlow","electrons"),
-    pfElectronSource = cms.InputTag("particleFlow"),
-    pvSrc = cms.InputTag("hiSelectedVertex"),
-    reducedBarrelRecHitCollection = cms.InputTag("reducedEcalRecHitsEB"),
-    reducedEndcapRecHitCollection = cms.InputTag("reducedEcalRecHitsEE"),
-    resolutions = cms.PSet(
-
-    ),
-    useParticleFlow = cms.bool(False),
-    userData = cms.PSet(
-        userCands = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userClasses = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFloats = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFunctionLabels = cms.vstring(),
-        userFunctions = cms.vstring(),
-        userInts = cms.PSet(
-            src = cms.VInputTag("")
-        )
-    ),
-    userIsolation = cms.PSet(
-
-    )
+    src = cms.InputTag("particleFlowTmp")
 )
 
 
@@ -18873,7 +14994,7 @@ process.patJetCorrFactorsPFlow = cms.EDProducer("JetCorrFactorsProducer",
     rho = cms.InputTag("fixedGridRhoFastjetAll"),
     src = cms.InputTag("pfJetsPFBRECOPFlow"),
     useNPV = cms.bool(True),
-    useRho = cms.bool(True)
+    useRho = cms.bool(False)
 )
 
 
@@ -19084,9 +15205,7 @@ process.patJetsPFlow = cms.EDProducer("PATJetProducer",
     discriminatorSources = cms.VInputTag(cms.InputTag("pfJetBProbabilityBJetTagsPFlow"), cms.InputTag("pfJetProbabilityBJetTagsPFlow"), cms.InputTag("pfPositiveOnlyJetBProbabilityBJetTagsPFlow"), cms.InputTag("pfPositiveOnlyJetProbabilityBJetTagsPFlow"), cms.InputTag("pfNegativeOnlyJetBProbabilityBJetTagsPFlow"), 
         cms.InputTag("pfNegativeOnlyJetProbabilityBJetTagsPFlow"), cms.InputTag("pfTrackCountingHighPurBJetTagsPFlow"), cms.InputTag("pfTrackCountingHighEffBJetTagsPFlow"), cms.InputTag("pfNegativeTrackCountingHighPurBJetTagsPFlow"), cms.InputTag("pfNegativeTrackCountingHighEffBJetTagsPFlow"), 
         cms.InputTag("pfSimpleSecondaryVertexHighEffBJetTagsPFlow"), cms.InputTag("pfSimpleSecondaryVertexHighPurBJetTagsPFlow"), cms.InputTag("pfNegativeSimpleSecondaryVertexHighEffBJetTagsPFlow"), cms.InputTag("pfNegativeSimpleSecondaryVertexHighPurBJetTagsPFlow"), cms.InputTag("pfCombinedSecondaryVertexV2BJetTagsPFlow"), 
-        cms.InputTag("pfPositiveCombinedSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfNegativeCombinedSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfCombinedInclusiveSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfPositiveCombinedInclusiveSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfNegativeCombinedInclusiveSecondaryVertexV2BJetTagsPFlow"), 
-        cms.InputTag("softPFMuonBJetTagsPFlow"), cms.InputTag("positiveSoftPFMuonBJetTagsPFlow"), cms.InputTag("negativeSoftPFMuonBJetTagsPFlow"), cms.InputTag("softPFElectronBJetTagsPFlow"), cms.InputTag("positiveSoftPFElectronBJetTagsPFlow"), 
-        cms.InputTag("negativeSoftPFElectronBJetTagsPFlow"), cms.InputTag("pfCombinedMVABJetTagsPFlow")),
+        cms.InputTag("pfPositiveCombinedSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfNegativeCombinedSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfCombinedInclusiveSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfPositiveCombinedInclusiveSecondaryVertexV2BJetTagsPFlow"), cms.InputTag("pfNegativeCombinedInclusiveSecondaryVertexV2BJetTagsPFlow")),
     efficiencies = cms.PSet(
 
     ),
@@ -19104,56 +15223,9 @@ process.patJetsPFlow = cms.EDProducer("PATJetProducer",
     resolutions = cms.PSet(
 
     ),
-    tagInfoSources = cms.VInputTag(cms.InputTag("pfImpactParameterTagInfosPFlow"), cms.InputTag("pfSecondaryVertexTagInfosPFlow"), cms.InputTag("pfInclusiveSecondaryVertexFinderTagInfosPFlow"), cms.InputTag("pfSecondaryVertexNegativeTagInfosPFlow"), cms.InputTag("pfInclusiveSecondaryVertexFinderNegativeTagInfosPFlow"), 
-        cms.InputTag("softPFMuonsTagInfosPFlow"), cms.InputTag("softPFElectronsTagInfosPFlow")),
+    tagInfoSources = cms.VInputTag(cms.InputTag("pfImpactParameterTagInfosPFlow"), cms.InputTag("pfSecondaryVertexTagInfosPFlow"), cms.InputTag("pfInclusiveSecondaryVertexFinderTagInfosPFlow"), cms.InputTag("pfSecondaryVertexNegativeTagInfosPFlow"), cms.InputTag("pfInclusiveSecondaryVertexFinderNegativeTagInfosPFlow")),
     trackAssociationSource = cms.InputTag(""),
     useLegacyJetMCFlavour = cms.bool(False),
-    userData = cms.PSet(
-        userCands = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userClasses = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFloats = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFunctionLabels = cms.vstring(),
-        userFunctions = cms.vstring(),
-        userInts = cms.PSet(
-            src = cms.VInputTag("")
-        )
-    )
-)
-
-
-process.patMETs = cms.EDProducer("PATMETProducer",
-    addEfficiencies = cms.bool(False),
-    addGenMET = cms.bool(True),
-    addMuonCorrections = cms.bool(False),
-    addResolutions = cms.bool(False),
-    computeMETSignificance = cms.bool(False),
-    efficiencies = cms.PSet(
-
-    ),
-    genMETSource = cms.InputTag("genMetTrue"),
-    metSource = cms.InputTag("pfMetT1"),
-    muonSource = cms.InputTag("muons"),
-    parameters = cms.PSet(
-        dRMatch = cms.double(0.4),
-        jetThreshold = cms.double(20),
-        jeta = cms.vdouble(0.5, 1.1, 1.7, 2.3),
-        jpar = cms.vdouble(1.41, 1.29, 1.41, 1.4, 2.53),
-        phiResFile = cms.string('Spring10_PhiResolution_AK5PF.txt'),
-        pjpar = cms.vdouble(0.0, 0.674),
-        ptResFile = cms.string('Spring10_PtResolution_AK5PF.txt')
-    ),
-    resolutions = cms.PSet(
-
-    ),
-    srcJets = cms.InputTag("selectedPatJets"),
-    srcLeptons = cms.VInputTag("selectedPatElectrons", "selectedPatMuons", "selectedPatPhotons"),
-    srcPFCands = cms.InputTag("packedPFCandidates"),
     userData = cms.PSet(
         userCands = cms.PSet(
             src = cms.VInputTag("")
@@ -19215,75 +15287,6 @@ process.patMETsPFlow = cms.EDProducer("PATMETProducer",
         userInts = cms.PSet(
             src = cms.VInputTag("")
         )
-    )
-)
-
-
-process.patMuons = cms.EDProducer("PATMuonProducer",
-    addEfficiencies = cms.bool(False),
-    addGenMatch = cms.bool(True),
-    addResolutions = cms.bool(False),
-    beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    caloMETMuonCorrs = cms.InputTag("muonMETValueMapProducer","muCorrData"),
-    efficiencies = cms.PSet(
-
-    ),
-    embedCaloMETMuonCorrs = cms.bool(True),
-    embedCombinedMuon = cms.bool(True),
-    embedDytMuon = cms.bool(True),
-    embedGenMatch = cms.bool(True),
-    embedHighLevelSelection = cms.bool(True),
-    embedMuonBestTrack = cms.bool(True),
-    embedPFCandidate = cms.bool(True),
-    embedPfEcalEnergy = cms.bool(True),
-    embedPickyMuon = cms.bool(True),
-    embedStandAloneMuon = cms.bool(True),
-    embedTcMETMuonCorrs = cms.bool(False),
-    embedTpfmsMuon = cms.bool(True),
-    embedTrack = cms.bool(False),
-    embedTunePMuonBestTrack = cms.bool(True),
-    forceBestTrackEmbedding = cms.bool(False),
-    genParticleMatch = cms.InputTag("muonMatch"),
-    isoDeposits = cms.PSet(
-        pfChargedAll = cms.InputTag("muPFIsoDepositChargedAllPAT"),
-        pfChargedHadrons = cms.InputTag("muPFIsoDepositChargedPAT"),
-        pfNeutralHadrons = cms.InputTag("muPFIsoDepositNeutralPAT"),
-        pfPUChargedHadrons = cms.InputTag("muPFIsoDepositPUPAT"),
-        pfPhotons = cms.InputTag("muPFIsoDepositGammaPAT")
-    ),
-    isolationValues = cms.PSet(
-        pfChargedAll = cms.InputTag("muPFIsoValueChargedAll04PAT"),
-        pfChargedHadrons = cms.InputTag("muPFIsoValueCharged04PAT"),
-        pfNeutralHadrons = cms.InputTag("muPFIsoValueNeutral04PAT"),
-        pfPUChargedHadrons = cms.InputTag("muPFIsoValuePU04PAT"),
-        pfPhotons = cms.InputTag("muPFIsoValueGamma04PAT")
-    ),
-    muonSource = cms.InputTag("muons"),
-    pfMuonSource = cms.InputTag("particleFlow"),
-    pvSrc = cms.InputTag("hiSelectedVertex"),
-    resolutions = cms.PSet(
-
-    ),
-    tcMETMuonCorrs = cms.InputTag("muonTCMETValueMapProducer","muCorrData"),
-    useParticleFlow = cms.bool(False),
-    userData = cms.PSet(
-        userCands = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userClasses = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFloats = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFunctionLabels = cms.vstring(),
-        userFunctions = cms.vstring(),
-        userInts = cms.PSet(
-            src = cms.VInputTag("")
-        )
-    ),
-    userIsolation = cms.PSet(
-
     )
 )
 
@@ -19389,70 +15392,6 @@ process.patPFParticlesPFlow = cms.EDProducer("PATPFParticleProducer",
 )
 
 
-process.patPhotons = cms.EDProducer("PATPhotonProducer",
-    addEfficiencies = cms.bool(False),
-    addGenMatch = cms.bool(True),
-    addPFClusterIso = cms.bool(False),
-    addPhotonID = cms.bool(True),
-    addResolutions = cms.bool(False),
-    beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    efficiencies = cms.PSet(
-
-    ),
-    electronSource = cms.InputTag("gedGsfElectrons"),
-    embedBasicClusters = cms.bool(True),
-    embedGenMatch = cms.bool(True),
-    embedPreshowerClusters = cms.bool(True),
-    embedRecHits = cms.bool(True),
-    embedSeedCluster = cms.bool(True),
-    embedSuperCluster = cms.bool(True),
-    genParticleMatch = cms.InputTag("photonMatch"),
-    isoDeposits = cms.PSet(
-        pfChargedAll = cms.InputTag("phPFIsoDepositChargedAllPAT"),
-        pfChargedHadrons = cms.InputTag("phPFIsoDepositChargedPAT"),
-        pfNeutralHadrons = cms.InputTag("phPFIsoDepositNeutralPAT"),
-        pfPUChargedHadrons = cms.InputTag("phPFIsoDepositPUPAT"),
-        pfPhotons = cms.InputTag("phPFIsoDepositGammaPAT")
-    ),
-    isolationValues = cms.PSet(
-        pfChargedAll = cms.InputTag("phPFIsoValueChargedAll04PFIdPAT"),
-        pfChargedHadrons = cms.InputTag("phPFIsoValueCharged04PFIdPAT"),
-        pfNeutralHadrons = cms.InputTag("phPFIsoValueNeutral04PFIdPAT"),
-        pfPUChargedHadrons = cms.InputTag("phPFIsoValuePU04PFIdPAT"),
-        pfPhotons = cms.InputTag("phPFIsoValueGamma04PFIdPAT")
-    ),
-    photonIDSources = cms.PSet(
-        PhotonCutBasedIDLoose = cms.InputTag("PhotonIDProdGED","PhotonCutBasedIDLoose"),
-        PhotonCutBasedIDTight = cms.InputTag("PhotonIDProdGED","PhotonCutBasedIDTight")
-    ),
-    photonSource = cms.InputTag("gedPhotons"),
-    reducedBarrelRecHitCollection = cms.InputTag("reducedEcalRecHitsEB"),
-    reducedEndcapRecHitCollection = cms.InputTag("reducedEcalRecHitsEE"),
-    resolutions = cms.PSet(
-
-    ),
-    userData = cms.PSet(
-        userCands = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userClasses = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFloats = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFunctionLabels = cms.vstring(),
-        userFunctions = cms.vstring(),
-        userInts = cms.PSet(
-            src = cms.VInputTag("")
-        )
-    ),
-    userIsolation = cms.PSet(
-
-    )
-)
-
-
 process.patPhotonsPFlow = cms.EDProducer("PATPhotonProducer",
     addEfficiencies = cms.bool(False),
     addGenMatch = cms.bool(True),
@@ -19495,107 +15434,6 @@ process.patPhotonsPFlow = cms.EDProducer("PATPhotonProducer",
     resolutions = cms.PSet(
 
     ),
-    userData = cms.PSet(
-        userCands = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userClasses = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFloats = cms.PSet(
-            src = cms.VInputTag("")
-        ),
-        userFunctionLabels = cms.vstring(),
-        userFunctions = cms.vstring(),
-        userInts = cms.PSet(
-            src = cms.VInputTag("")
-        )
-    ),
-    userIsolation = cms.PSet(
-
-    )
-)
-
-
-process.patTaus = cms.EDProducer("PATTauProducer",
-    addEfficiencies = cms.bool(False),
-    addGenJetMatch = cms.bool(True),
-    addGenMatch = cms.bool(True),
-    addResolutions = cms.bool(False),
-    addTauID = cms.bool(True),
-    addTauJetCorrFactors = cms.bool(False),
-    efficiencies = cms.PSet(
-
-    ),
-    embedGenJetMatch = cms.bool(True),
-    embedGenMatch = cms.bool(True),
-    embedIsolationPFCands = cms.bool(False),
-    embedIsolationPFChargedHadrCands = cms.bool(False),
-    embedIsolationPFGammaCands = cms.bool(False),
-    embedIsolationPFNeutralHadrCands = cms.bool(False),
-    embedIsolationTracks = cms.bool(False),
-    embedLeadPFCand = cms.bool(False),
-    embedLeadPFChargedHadrCand = cms.bool(False),
-    embedLeadPFNeutralCand = cms.bool(False),
-    embedLeadTrack = cms.bool(False),
-    embedSignalPFCands = cms.bool(False),
-    embedSignalPFChargedHadrCands = cms.bool(False),
-    embedSignalPFGammaCands = cms.bool(False),
-    embedSignalPFNeutralHadrCands = cms.bool(False),
-    embedSignalTracks = cms.bool(False),
-    genJetMatch = cms.InputTag("tauGenJetMatch"),
-    genParticleMatch = cms.InputTag("tauMatch"),
-    isoDeposits = cms.PSet(
-
-    ),
-    resolutions = cms.PSet(
-
-    ),
-    tauIDSources = cms.PSet(
-        againstElectronLooseMVA5 = cms.InputTag("hpsPFTauDiscriminationByMVA5LooseElectronRejection"),
-        againstElectronMVA5category = cms.InputTag("hpsPFTauDiscriminationByMVA5rawElectronRejection","category"),
-        againstElectronMVA5raw = cms.InputTag("hpsPFTauDiscriminationByMVA5rawElectronRejection"),
-        againstElectronMediumMVA5 = cms.InputTag("hpsPFTauDiscriminationByMVA5MediumElectronRejection"),
-        againstElectronTightMVA5 = cms.InputTag("hpsPFTauDiscriminationByMVA5TightElectronRejection"),
-        againstElectronVLooseMVA5 = cms.InputTag("hpsPFTauDiscriminationByMVA5VLooseElectronRejection"),
-        againstElectronVTightMVA5 = cms.InputTag("hpsPFTauDiscriminationByMVA5VTightElectronRejection"),
-        againstMuonLoose3 = cms.InputTag("hpsPFTauDiscriminationByLooseMuonRejection3"),
-        againstMuonTight3 = cms.InputTag("hpsPFTauDiscriminationByTightMuonRejection3"),
-        byCombinedIsolationDeltaBetaCorrRaw3Hits = cms.InputTag("hpsPFTauDiscriminationByRawCombinedIsolationDBSumPtCorr3Hits"),
-        byIsolationMVA3newDMwLTraw = cms.InputTag("hpsPFTauDiscriminationByIsolationMVA3newDMwLTraw"),
-        byIsolationMVA3oldDMwLTraw = cms.InputTag("hpsPFTauDiscriminationByIsolationMVA3oldDMwLTraw"),
-        byLooseCombinedIsolationDeltaBetaCorr3Hits = cms.InputTag("hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3Hits"),
-        byLooseIsolationMVA3newDMwLT = cms.InputTag("hpsPFTauDiscriminationByLooseIsolationMVA3newDMwLT"),
-        byLooseIsolationMVA3oldDMwLT = cms.InputTag("hpsPFTauDiscriminationByLooseIsolationMVA3oldDMwLT"),
-        byLoosePileupWeightedIsolation3Hits = cms.InputTag("hpsPFTauDiscriminationByLoosePileupWeightedIsolation3Hits"),
-        byMediumCombinedIsolationDeltaBetaCorr3Hits = cms.InputTag("hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr3Hits"),
-        byMediumIsolationMVA3newDMwLT = cms.InputTag("hpsPFTauDiscriminationByMediumIsolationMVA3newDMwLT"),
-        byMediumIsolationMVA3oldDMwLT = cms.InputTag("hpsPFTauDiscriminationByMediumIsolationMVA3oldDMwLT"),
-        byMediumPileupWeightedIsolation3Hits = cms.InputTag("hpsPFTauDiscriminationByMediumPileupWeightedIsolation3Hits"),
-        byPhotonPtSumOutsideSignalCone = cms.InputTag("hpsPFTauDiscriminationByPhotonPtSumOutsideSignalCone"),
-        byPileupWeightedIsolationRaw3Hits = cms.InputTag("hpsPFTauDiscriminationByRawPileupWeightedIsolation3Hits"),
-        byTightCombinedIsolationDeltaBetaCorr3Hits = cms.InputTag("hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr3Hits"),
-        byTightIsolationMVA3newDMwLT = cms.InputTag("hpsPFTauDiscriminationByTightIsolationMVA3newDMwLT"),
-        byTightIsolationMVA3oldDMwLT = cms.InputTag("hpsPFTauDiscriminationByTightIsolationMVA3oldDMwLT"),
-        byTightPileupWeightedIsolation3Hits = cms.InputTag("hpsPFTauDiscriminationByTightPileupWeightedIsolation3Hits"),
-        byVLooseIsolationMVA3newDMwLT = cms.InputTag("hpsPFTauDiscriminationByVLooseIsolationMVA3newDMwLT"),
-        byVLooseIsolationMVA3oldDMwLT = cms.InputTag("hpsPFTauDiscriminationByVLooseIsolationMVA3oldDMwLT"),
-        byVTightIsolationMVA3newDMwLT = cms.InputTag("hpsPFTauDiscriminationByVTightIsolationMVA3newDMwLT"),
-        byVTightIsolationMVA3oldDMwLT = cms.InputTag("hpsPFTauDiscriminationByVTightIsolationMVA3oldDMwLT"),
-        byVVTightIsolationMVA3newDMwLT = cms.InputTag("hpsPFTauDiscriminationByVVTightIsolationMVA3newDMwLT"),
-        byVVTightIsolationMVA3oldDMwLT = cms.InputTag("hpsPFTauDiscriminationByVVTightIsolationMVA3oldDMwLT"),
-        chargedIsoPtSum = cms.InputTag("hpsPFTauChargedIsoPtSum"),
-        decayModeFinding = cms.InputTag("hpsPFTauDiscriminationByDecayModeFinding"),
-        decayModeFindingNewDMs = cms.InputTag("hpsPFTauDiscriminationByDecayModeFindingNewDMs"),
-        footprintCorrection = cms.InputTag("hpsPFTauFootprintCorrection"),
-        neutralIsoPtSum = cms.InputTag("hpsPFTauNeutralIsoPtSum"),
-        neutralIsoPtSumWeight = cms.InputTag("hpsPFTauNeutralIsoPtSumWeight"),
-        photonPtSumOutsideSignalCone = cms.InputTag("hpsPFTauPhotonPtSumOutsideSignalCone"),
-        puCorrPtSum = cms.InputTag("hpsPFTauPUcorrPtSum")
-    ),
-    tauJetCorrFactorsSource = cms.VInputTag(cms.InputTag("patTauJetCorrFactors")),
-    tauSource = cms.InputTag("hpsPFTauProducer"),
-    tauTransverseImpactParameterSource = cms.InputTag("hpsPFTauTransverseImpactParameters"),
     userData = cms.PSet(
         userCands = cms.PSet(
             src = cms.VInputTag("")
@@ -19752,32 +15590,13 @@ process.pfBoostedDoubleSecondaryVertexCA15BJetTags = cms.EDProducer("JetTagProdu
 )
 
 
-process.pfCandMETcorr = cms.EDProducer("PFCandMETcorrInputProducer",
-    src = cms.InputTag("pfCandsNotInJetsForMetCorr")
-)
-
-
 process.pfCandMETcorrPFlow = cms.EDProducer("PFCandMETcorrInputProducer",
     src = cms.InputTag("pfCandsNotInJetsForMetCorrPFlow")
 )
 
 
-process.pfCandsNotInJetsForMetCorr = cms.EDProducer("PFCandidateFromFwdPtrProducer",
-    src = cms.InputTag("pfCandsNotInJetsPtrForMetCorr")
-)
-
-
 process.pfCandsNotInJetsForMetCorrPFlow = cms.EDProducer("PFCandidateFromFwdPtrProducer",
     src = cms.InputTag("pfCandsNotInJetsPtrForMetCorrPFlow")
-)
-
-
-process.pfCandsNotInJetsPtrForMetCorr = cms.EDProducer("TPPFJetsOnPFCandidates",
-    bottomCollection = cms.InputTag("particleFlowPtrs"),
-    enable = cms.bool(True),
-    name = cms.untracked.string('noJet'),
-    topCollection = cms.InputTag("pfJetsPtrForMetCorr"),
-    verbose = cms.untracked.bool(False)
 )
 
 
@@ -19823,12 +15642,6 @@ process.pfCombinedInclusiveSecondaryVertexV2BJetTagsPFlow = cms.EDProducer("JetT
 process.pfCombinedMVABJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('candidateCombinedMVAComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("pfImpactParameterTagInfos"), cms.InputTag("pfInclusiveSecondaryVertexFinderTagInfos"), cms.InputTag("softPFMuonsTagInfos"), cms.InputTag("softPFElectronsTagInfos"))
-)
-
-
-process.pfCombinedMVABJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('candidateCombinedMVAComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("pfImpactParameterTagInfosPFlow"), cms.InputTag("pfInclusiveSecondaryVertexFinderTagInfosPFlow"), cms.InputTag("softPFMuonsTagInfosPFlow"), cms.InputTag("softPFElectronsTagInfosPFlow"))
 )
 
 
@@ -20649,11 +16462,6 @@ process.pfJetsPFBRECOPFlow = cms.EDProducer("FastjetJetProducer",
 )
 
 
-process.pfJetsPtrForMetCorr = cms.EDProducer("PFJetFwdPtrProducer",
-    src = cms.InputTag("ak4PFJets")
-)
-
-
 process.pfJetsPtrForMetCorrPFlow = cms.EDProducer("PFJetFwdPtrProducer",
     src = cms.InputTag("ak4PFJets")
 )
@@ -20690,21 +16498,9 @@ process.pfMetPFlow = cms.EDProducer("PFMETProducer",
 )
 
 
-process.pfMetT0pc = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"))
-)
-
-
 process.pfMetT0pcPFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"))
-)
-
-
-process.pfMetT0pcT1 = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"), cms.InputTag("corrPfMetType1","type1"))
 )
 
 
@@ -20714,21 +16510,9 @@ process.pfMetT0pcT1PFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT0pcT1T2Txy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"), cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetType2"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
 process.pfMetT0pcT1T2TxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"), cms.InputTag("corrPfMetType1PFlow","type1"), cms.InputTag("corrPfMetType2PFlow"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
-process.pfMetT0pcT1Txy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"), cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetXYMult"))
 )
 
 
@@ -20738,21 +16522,9 @@ process.pfMetT0pcT1TxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT0pcTxy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
 process.pfMetT0pcTxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0PfCand"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
-process.pfMetT0rt = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrack"))
 )
 
 
@@ -20762,21 +16534,9 @@ process.pfMetT0rtPFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT0rtT1 = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrack"), cms.InputTag("corrPfMetType1","type1"))
-)
-
-
 process.pfMetT0rtT1PFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrack"), cms.InputTag("corrPfMetType1PFlow","type1"))
-)
-
-
-process.pfMetT0rtT1T2 = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrackForType2"), cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetType2"))
 )
 
 
@@ -20786,21 +16546,9 @@ process.pfMetT0rtT1T2PFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT0rtT1T2Txy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrackForType2"), cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetType2"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
 process.pfMetT0rtT1T2TxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrackForType2"), cms.InputTag("corrPfMetType1PFlow","type1"), cms.InputTag("corrPfMetType2PFlow"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
-process.pfMetT0rtT1Txy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrack"), cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetXYMult"))
 )
 
 
@@ -20810,21 +16558,9 @@ process.pfMetT0rtT1TxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT0rtT2 = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrackForType2"), cms.InputTag("corrPfMetType2"))
-)
-
-
 process.pfMetT0rtT2PFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrackForType2"), cms.InputTag("corrPfMetType2PFlow"))
-)
-
-
-process.pfMetT0rtTxy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType0RecoTrack"), cms.InputTag("corrPfMetXYMult"))
 )
 
 
@@ -20834,21 +16570,9 @@ process.pfMetT0rtTxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT1 = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1","type1"))
-)
-
-
 process.pfMetT1PFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1PFlow","type1"))
-)
-
-
-process.pfMetT1T2 = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetType2"))
 )
 
 
@@ -20858,33 +16582,15 @@ process.pfMetT1T2PFlow = cms.EDProducer("CorrectedPFMETProducer",
 )
 
 
-process.pfMetT1T2Txy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetType2"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
 process.pfMetT1T2TxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1PFlow","type1"), cms.InputTag("corrPfMetType2PFlow"), cms.InputTag("corrPfMetXYMult"))
 )
 
 
-process.pfMetT1Txy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1","type1"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
 process.pfMetT1TxyPFlow = cms.EDProducer("CorrectedPFMETProducer",
     src = cms.InputTag("pfMet"),
     srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetType1PFlow","type1"), cms.InputTag("corrPfMetXYMult"))
-)
-
-
-process.pfMetTxy = cms.EDProducer("CorrectedPFMETProducer",
-    src = cms.InputTag("pfMet"),
-    srcCorrections = cms.VInputTag(cms.InputTag("corrPfMetXYMult"))
 )
 
 
@@ -21078,15 +16784,6 @@ process.pfNoElectronPFlow = cms.EDProducer("TPPFCandidatesOnPFCandidates",
 )
 
 
-process.pfNoJet = cms.EDProducer("TPPFJetsOnPFCandidates",
-    bottomCollection = cms.InputTag("pfNoElectronJME"),
-    enable = cms.bool(True),
-    name = cms.untracked.string('noJet'),
-    topCollection = cms.InputTag("pfJetsPtrs"),
-    verbose = cms.untracked.bool(False)
-)
-
-
 process.pfNoJetClonesPFlow = cms.EDProducer("PFCandidateFromFwdPtrProducer",
     src = cms.InputTag("pfNoJetPFlow")
 )
@@ -21146,15 +16843,6 @@ process.pfNoMuonPFlow = cms.EDProducer("TPPFCandidatesOnPFCandidates",
 )
 
 
-process.pfNoPileUpIsoPFBRECO = cms.EDProducer("TPPFCandidatesOnPFCandidates",
-    bottomCollection = cms.InputTag("particleFlowPtrs"),
-    enable = cms.bool(True),
-    name = cms.untracked.string('pileUpOnPFCandidates'),
-    topCollection = cms.InputTag("pfPileUpIsoPFBRECO"),
-    verbose = cms.untracked.bool(False)
-)
-
-
 process.pfNoPileUpIsoPFBRECOPFlow = cms.EDProducer("TPPFCandidatesOnPFCandidates",
     bottomCollection = cms.InputTag("particleFlowPtrsPFlow"),
     enable = cms.bool(True),
@@ -21169,15 +16857,6 @@ process.pfNoPileUpJMEPFlow = cms.EDProducer("TPPFCandidatesOnPFCandidates",
     enable = cms.bool(True),
     name = cms.untracked.string('pileUpOnPFCandidates'),
     topCollection = cms.InputTag("pfPileUpJMEPFlow"),
-    verbose = cms.untracked.bool(False)
-)
-
-
-process.pfNoPileUpPFBRECO = cms.EDProducer("TPPFCandidatesOnPFCandidates",
-    bottomCollection = cms.InputTag("particleFlowPtrs"),
-    enable = cms.bool(True),
-    name = cms.untracked.string('pileUpOnPFCandidates'),
-    topCollection = cms.InputTag("pfPileUpPFBRECO"),
     verbose = cms.untracked.bool(False)
 )
 
@@ -21230,15 +16909,6 @@ process.pfNoTauPFlow = cms.EDProducer("TPPFTausOnPFJetsDeltaR",
 )
 
 
-process.pfPileUpIsoPFBRECO = cms.EDProducer("PFPileUp",
-    Enable = cms.bool(True),
-    PFCandidates = cms.InputTag("particleFlowPtrs"),
-    Vertices = cms.InputTag("hiSelectedVertex"),
-    checkClosestZVertex = cms.bool(True),
-    verbose = cms.untracked.bool(False)
-)
-
-
 process.pfPileUpIsoPFBRECOPFlow = cms.EDProducer("PFPileUp",
     Enable = cms.bool(True),
     PFCandidates = cms.InputTag("particleFlowPtrsPFlow"),
@@ -21253,15 +16923,6 @@ process.pfPileUpJMEPFlow = cms.EDProducer("PFPileUp",
     PFCandidates = cms.InputTag("particleFlowPtrsPFlow"),
     Vertices = cms.InputTag("hiSelectedVertex"),
     checkClosestZVertex = cms.bool(False),
-    verbose = cms.untracked.bool(False)
-)
-
-
-process.pfPileUpPFBRECO = cms.EDProducer("PFPileUp",
-    Enable = cms.bool(True),
-    PFCandidates = cms.InputTag("particleFlowPtrs"),
-    Vertices = cms.InputTag("hiSelectedVertex"),
-    checkClosestZVertex = cms.bool(True),
     verbose = cms.untracked.bool(False)
 )
 
@@ -23160,22 +18821,6 @@ process.pfTrackCountingHighPurBJetTagsPFlow = cms.EDProducer("JetTagProducer",
 )
 
 
-process.phPFIsoDepositChargedAllPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedPhotons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.phPFIsoDepositChargedAllPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -23188,22 +18833,6 @@ process.phPFIsoDepositChargedAllPATPFlow = cms.EDProducer("CandIsoDepositProduce
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("gedPhotons"),
-    trackType = cms.string('candidate')
-)
-
-
-process.phPFIsoDepositChargedAllPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedPhotonsPFBRECO"),
     trackType = cms.string('candidate')
 )
 
@@ -23224,22 +18853,6 @@ process.phPFIsoDepositChargedAllPFBRECOPFlow = cms.EDProducer("CandIsoDepositPro
 )
 
 
-process.phPFIsoDepositChargedPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedPhotons"),
-    trackType = cms.string('candidate')
-)
-
-
 process.phPFIsoDepositChargedPATPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -23256,22 +18869,6 @@ process.phPFIsoDepositChargedPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.phPFIsoDepositChargedPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllChargedHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedPhotonsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.phPFIsoDepositChargedPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -23284,24 +18881,6 @@ process.phPFIsoDepositChargedPFBRECOPFlow = cms.EDProducer("CandIsoDepositProduc
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("pfSelectedPhotonsPFBRECOPFlow"),
-    trackType = cms.string('candidate')
-)
-
-
-process.phPFIsoDepositGammaPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFCandWithSuperClusterExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        MissHitSCMatch_Veto = cms.bool(False),
-        SCMatch_Veto = cms.bool(True),
-        inputCandView = cms.InputTag("pfAllPhotonsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedPhotons"),
     trackType = cms.string('candidate')
 )
 
@@ -23324,24 +18903,6 @@ process.phPFIsoDepositGammaPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.phPFIsoDepositGammaPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFCandWithSuperClusterExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        MissHitSCMatch_Veto = cms.bool(False),
-        SCMatch_Veto = cms.bool(True),
-        inputCandView = cms.InputTag("pfAllPhotonsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedPhotonsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.phPFIsoDepositGammaPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('PFCandWithSuperClusterExtractor'),
@@ -23356,22 +18917,6 @@ process.phPFIsoDepositGammaPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("pfSelectedPhotonsPFBRECOPFlow"),
-    trackType = cms.string('candidate')
-)
-
-
-process.phPFIsoDepositNeutralPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllNeutralHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedPhotons"),
     trackType = cms.string('candidate')
 )
 
@@ -23392,22 +18937,6 @@ process.phPFIsoDepositNeutralPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.phPFIsoDepositNeutralPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfAllNeutralHadronsPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedPhotonsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.phPFIsoDepositNeutralPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -23420,22 +18949,6 @@ process.phPFIsoDepositNeutralPFBRECOPFlow = cms.EDProducer("CandIsoDepositProduc
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("pfSelectedPhotonsPFBRECOPFlow"),
-    trackType = cms.string('candidate')
-)
-
-
-process.phPFIsoDepositPUPAT = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfPileUpAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("gedPhotons"),
     trackType = cms.string('candidate')
 )
 
@@ -23456,22 +18969,6 @@ process.phPFIsoDepositPUPATPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.phPFIsoDepositPUPFBRECO = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('CandViewExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(99999.99),
-        Diff_z = cms.double(99999.99),
-        inputCandView = cms.InputTag("pfPileUpAllChargedParticlesPFBRECO")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("pfSelectedPhotonsPFBRECO"),
-    trackType = cms.string('candidate')
-)
-
-
 process.phPFIsoDepositPUPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('CandViewExtractor'),
@@ -23488,32 +18985,6 @@ process.phPFIsoDepositPUPFBRECOPFlow = cms.EDProducer("CandIsoDepositProducer",
 )
 
 
-process.phPFIsoValueCharged03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositCharged"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueCharged03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueCharged03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23521,19 +18992,6 @@ process.phPFIsoValueCharged03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueCharged03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -23566,32 +19024,6 @@ process.phPFIsoValueCharged03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.phPFIsoValueCharged04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositCharged"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueCharged04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueCharged04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23599,19 +19031,6 @@ process.phPFIsoValueCharged04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositChargedPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueCharged04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -23644,32 +19063,6 @@ process.phPFIsoValueCharged04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.phPFIsoValueChargedAll03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedAll"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueChargedAll03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueChargedAll03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23677,19 +19070,6 @@ process.phPFIsoValueChargedAll03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFro
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueChargedAll03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -23722,32 +19102,6 @@ process.phPFIsoValueChargedAll03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDe
 )
 
 
-process.phPFIsoValueChargedAll04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedAll"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueChargedAll04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedAllPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueChargedAll04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23755,19 +19109,6 @@ process.phPFIsoValueChargedAll04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFro
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositChargedAllPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueChargedAll04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositChargedAllPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -23800,32 +19141,6 @@ process.phPFIsoValueChargedAll04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDe
 )
 
 
-process.phPFIsoValueGamma03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositGamma"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueGamma03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueGamma03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23833,19 +19148,6 @@ process.phPFIsoValueGamma03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDepo
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueGamma03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
         weight = cms.string('1')
     ))
@@ -23878,32 +19180,6 @@ process.phPFIsoValueGamma03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
 )
 
 
-process.phPFIsoValueGamma04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositGamma"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueGamma04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositGammaPAT"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueGamma04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23911,19 +19187,6 @@ process.phPFIsoValueGamma04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDepo
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositGammaPATPFlow"),
-        vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueGamma04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositGammaPFBRECO"),
         vetos = cms.vstring('EcalEndcaps:ConeVeto(0.05)'),
         weight = cms.string('1')
     ))
@@ -23956,32 +19219,6 @@ process.phPFIsoValueGamma04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
 )
 
 
-process.phPFIsoValueNeutral03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositNeutral"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueNeutral03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueNeutral03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -23989,19 +19226,6 @@ process.phPFIsoValueNeutral03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueNeutral03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -24034,32 +19258,6 @@ process.phPFIsoValueNeutral03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.phPFIsoValueNeutral04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositNeutral"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueNeutral04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositNeutralPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValueNeutral04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -24067,19 +19265,6 @@ process.phPFIsoValueNeutral04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDe
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositNeutralPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValueNeutral04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositNeutralPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -24112,32 +19297,6 @@ process.phPFIsoValueNeutral04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDepos
 )
 
 
-process.phPFIsoValuePU03PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositPU"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValuePU03PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositPUPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValuePU03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -24145,19 +19304,6 @@ process.phPFIsoValuePU03PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValuePU03PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.3),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -24190,32 +19336,6 @@ process.phPFIsoValuePU03PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
 )
 
 
-process.phPFIsoValuePU04PFId = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositPU"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValuePU04PFIdPAT = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositPUPAT"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
 process.phPFIsoValuePU04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
     deposits = cms.VPSet(cms.PSet(
         PivotCoordinatesForEBEE = cms.bool(True),
@@ -24223,19 +19343,6 @@ process.phPFIsoValuePU04PFIdPATPFlow = cms.EDProducer("PFCandIsolatorFromDeposit
         mode = cms.string('sum'),
         skipDefaultVeto = cms.bool(True),
         src = cms.InputTag("phPFIsoDepositPUPATPFlow"),
-        vetos = cms.vstring(),
-        weight = cms.string('1')
-    ))
-)
-
-
-process.phPFIsoValuePU04PFIdPFBRECO = cms.EDProducer("PFCandIsolatorFromDeposits",
-    deposits = cms.VPSet(cms.PSet(
-        PivotCoordinatesForEBEE = cms.bool(True),
-        deltaR = cms.double(0.4),
-        mode = cms.string('sum'),
-        skipDefaultVeto = cms.bool(True),
-        src = cms.InputTag("phPFIsoDepositPUPFBRECO"),
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
@@ -24265,19 +19372,6 @@ process.phPFIsoValuePU04PFIdPFlow = cms.EDProducer("PFCandIsolatorFromDeposits",
         vetos = cms.vstring(),
         weight = cms.string('1')
     ))
-)
-
-
-process.photonMatch = cms.EDProducer("MCMatcher",
-    checkCharge = cms.bool(True),
-    matched = cms.InputTag("genParticles"),
-    maxDPtRel = cms.double(1.0),
-    maxDeltaR = cms.double(0.2),
-    mcPdgId = cms.vint32(22),
-    mcStatus = cms.vint32(1),
-    resolveAmbiguities = cms.bool(True),
-    resolveByMatchQuality = cms.bool(False),
-    src = cms.InputTag("gedPhotons")
 )
 
 
@@ -24348,12 +19442,6 @@ process.positiveSoftPFElectronBJetTags = cms.EDProducer("JetTagProducer",
 )
 
 
-process.positiveSoftPFElectronBJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('positiveSoftPFElectronComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("softPFElectronsTagInfosPFlow"))
-)
-
-
 process.positiveSoftPFElectronByIP2dBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('positiveSoftPFElectronByIP2dComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("softPFElectronsTagInfos"))
@@ -24375,12 +19463,6 @@ process.positiveSoftPFElectronByPtBJetTags = cms.EDProducer("JetTagProducer",
 process.positiveSoftPFMuonBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('positiveSoftPFMuonComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("softPFMuonsTagInfos"))
-)
-
-
-process.positiveSoftPFMuonBJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('positiveSoftPFMuonComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("softPFMuonsTagInfosPFlow"))
 )
 
 
@@ -24739,12 +19821,6 @@ process.softPFElectronBJetTags = cms.EDProducer("JetTagProducer",
 )
 
 
-process.softPFElectronBJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('softPFElectronComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("softPFElectronsTagInfosPFlow"))
-)
-
-
 process.softPFElectronByIP2dBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('softPFElectronByIP2dComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("softPFElectronsTagInfos"))
@@ -24772,24 +19848,9 @@ process.softPFElectronsTagInfos = cms.EDProducer("SoftPFElectronTagInfoProducer"
 )
 
 
-process.softPFElectronsTagInfosPFlow = cms.EDProducer("SoftPFElectronTagInfoProducer",
-    DeltaRElectronJet = cms.double(0.4),
-    MaxSip3Dsig = cms.double(200),
-    electrons = cms.InputTag("gedGsfElectrons"),
-    jets = cms.InputTag("pfJetsPFBRECOPFlow"),
-    primaryVertex = cms.InputTag("hiSelectedVertex")
-)
-
-
 process.softPFMuonBJetTags = cms.EDProducer("JetTagProducer",
     jetTagComputer = cms.string('softPFMuonComputer'),
     tagInfos = cms.VInputTag(cms.InputTag("softPFMuonsTagInfos"))
-)
-
-
-process.softPFMuonBJetTagsPFlow = cms.EDProducer("JetTagProducer",
-    jetTagComputer = cms.string('softPFMuonComputer'),
-    tagInfos = cms.VInputTag(cms.InputTag("softPFMuonsTagInfosPFlow"))
 )
 
 
@@ -24824,32 +19885,6 @@ process.softPFMuonsTagInfos = cms.EDProducer("SoftPFMuonTagInfoProducer",
 )
 
 
-process.softPFMuonsTagInfosPFlow = cms.EDProducer("SoftPFMuonTagInfoProducer",
-    filterIpsig = cms.double(4.0),
-    filterPromptMuons = cms.bool(False),
-    filterRatio1 = cms.double(0.4),
-    filterRatio2 = cms.double(0.7),
-    jets = cms.InputTag("pfJetsPFBRECOPFlow"),
-    muonPt = cms.double(2.0),
-    muonSIPsig = cms.double(200.0),
-    muons = cms.InputTag("muons"),
-    primaryVertex = cms.InputTag("hiSelectedVertex")
-)
-
-
-process.tauGenJetMatch = cms.EDProducer("GenJetMatcher",
-    checkCharge = cms.bool(False),
-    matched = cms.InputTag("tauGenJetsSelectorAllHadrons"),
-    maxDPtRel = cms.double(3.0),
-    maxDeltaR = cms.double(0.1),
-    mcPdgId = cms.vint32(),
-    mcStatus = cms.vint32(),
-    resolveAmbiguities = cms.bool(True),
-    resolveByMatchQuality = cms.bool(False),
-    src = cms.InputTag("hpsPFTauProducer")
-)
-
-
 process.tauGenJetMatchPFlow = cms.EDProducer("GenJetMatcher",
     checkCharge = cms.bool(False),
     matched = cms.InputTag("tauGenJetsSelectorAllHadronsPFlow"),
@@ -24863,36 +19898,10 @@ process.tauGenJetMatchPFlow = cms.EDProducer("GenJetMatcher",
 )
 
 
-process.tauGenJets = cms.EDProducer("TauGenJetProducer",
-    GenParticles = cms.InputTag("genParticles"),
-    includeNeutrinos = cms.bool(False),
-    verbose = cms.untracked.bool(False)
-)
-
-
 process.tauGenJetsPFlow = cms.EDProducer("TauGenJetProducer",
     GenParticles = cms.InputTag("genParticles"),
     includeNeutrinos = cms.bool(False),
     verbose = cms.untracked.bool(False)
-)
-
-
-process.tauIsoDepositPFCandidates = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFTauExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0.0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(10000.0),
-        Diff_z = cms.double(10000.0),
-        candidateSource = cms.InputTag("particleFlow"),
-        dRmatchPFTau = cms.double(0.1),
-        dRvetoPFTauSignalConeConstituents = cms.double(0.01),
-        tauSource = cms.InputTag("hpsPFTauProducer")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("hpsPFTauProducer"),
-    trackType = cms.string('candidate')
 )
 
 
@@ -24911,25 +19920,6 @@ process.tauIsoDepositPFCandidatesPFlow = cms.EDProducer("CandIsoDepositProducer"
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("hpsPFTauProducerPFlow"),
-    trackType = cms.string('candidate')
-)
-
-
-process.tauIsoDepositPFChargedHadrons = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFTauExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0.0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(0.1),
-        Diff_z = cms.double(0.2),
-        candidateSource = cms.InputTag("pfAllChargedHadronsPFBRECO"),
-        dRmatchPFTau = cms.double(0.1),
-        dRvetoPFTauSignalConeConstituents = cms.double(0.01),
-        tauSource = cms.InputTag("hpsPFTauProducer")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("hpsPFTauProducer"),
     trackType = cms.string('candidate')
 )
 
@@ -24953,25 +19943,6 @@ process.tauIsoDepositPFChargedHadronsPFlow = cms.EDProducer("CandIsoDepositProdu
 )
 
 
-process.tauIsoDepositPFGammas = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFTauExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0.0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(10000.0),
-        Diff_z = cms.double(10000.0),
-        candidateSource = cms.InputTag("pfAllPhotonsPFBRECO"),
-        dRmatchPFTau = cms.double(0.1),
-        dRvetoPFTauSignalConeConstituents = cms.double(0.01),
-        tauSource = cms.InputTag("hpsPFTauProducer")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("hpsPFTauProducer"),
-    trackType = cms.string('candidate')
-)
-
-
 process.tauIsoDepositPFGammasPFlow = cms.EDProducer("CandIsoDepositProducer",
     ExtractorPSet = cms.PSet(
         ComponentName = cms.string('PFTauExtractor'),
@@ -24987,25 +19958,6 @@ process.tauIsoDepositPFGammasPFlow = cms.EDProducer("CandIsoDepositProducer",
     ),
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("hpsPFTauProducerPFlow"),
-    trackType = cms.string('candidate')
-)
-
-
-process.tauIsoDepositPFNeutralHadrons = cms.EDProducer("CandIsoDepositProducer",
-    ExtractorPSet = cms.PSet(
-        ComponentName = cms.string('PFTauExtractor'),
-        DR_Max = cms.double(1.0),
-        DR_Veto = cms.double(0.0),
-        DepositLabel = cms.untracked.string(''),
-        Diff_r = cms.double(10000.0),
-        Diff_z = cms.double(10000.0),
-        candidateSource = cms.InputTag("pfAllNeutralHadronsPFBRECO"),
-        dRmatchPFTau = cms.double(0.1),
-        dRvetoPFTauSignalConeConstituents = cms.double(0.01),
-        tauSource = cms.InputTag("hpsPFTauProducer")
-    ),
-    MultipleDepositsFlag = cms.bool(False),
-    src = cms.InputTag("hpsPFTauProducer"),
     trackType = cms.string('candidate')
 )
 
@@ -25026,19 +19978,6 @@ process.tauIsoDepositPFNeutralHadronsPFlow = cms.EDProducer("CandIsoDepositProdu
     MultipleDepositsFlag = cms.bool(False),
     src = cms.InputTag("hpsPFTauProducerPFlow"),
     trackType = cms.string('candidate')
-)
-
-
-process.tauMatch = cms.EDProducer("MCMatcher",
-    checkCharge = cms.bool(True),
-    matched = cms.InputTag("genParticles"),
-    maxDPtRel = cms.double(999.9),
-    maxDeltaR = cms.double(999.9),
-    mcPdgId = cms.vint32(15),
-    mcStatus = cms.vint32(2),
-    resolveAmbiguities = cms.bool(True),
-    resolveByMatchQuality = cms.bool(False),
-    src = cms.InputTag("hpsPFTauProducer")
 )
 
 
@@ -25254,14 +20193,6 @@ process.noscraping = cms.EDFilter("FilterOutScraping",
 )
 
 
-process.pfAllChargedHadronsPFBRECO = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
-    makeClones = cms.bool(True),
-    pdgId = cms.vint32(211, -211, 321, -321, 999211, 
-        2212, -2212),
-    src = cms.InputTag("pfNoPileUpIsoPFBRECO")
-)
-
-
 process.pfAllChargedHadronsPFBRECOPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
     makeClones = cms.bool(True),
     pdgId = cms.vint32(211, -211, 321, -321, 999211, 
@@ -25275,15 +20206,6 @@ process.pfAllChargedHadronsPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionPdgI
     pdgId = cms.vint32(211, -211, 321, -321, 999211, 
         2212, -2212),
     src = cms.InputTag("pfNoPileUpIso")
-)
-
-
-process.pfAllChargedParticlesPFBRECO = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
-    makeClones = cms.bool(True),
-    pdgId = cms.vint32(211, -211, 321, -321, 999211, 
-        2212, -2212, 11, -11, 13, 
-        -13),
-    src = cms.InputTag("pfNoPileUpIsoPFBRECO")
 )
 
 
@@ -25333,13 +20255,6 @@ process.pfAllMuonsPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
 )
 
 
-process.pfAllNeutralHadronsAndPhotonsPFBRECO = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
-    makeClones = cms.bool(True),
-    pdgId = cms.vint32(22, 111, 130, 310, 2112),
-    src = cms.InputTag("pfNoPileUpIsoPFBRECO")
-)
-
-
 process.pfAllNeutralHadronsAndPhotonsPFBRECOPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
     makeClones = cms.bool(True),
     pdgId = cms.vint32(22, 111, 130, 310, 2112),
@@ -25354,13 +20269,6 @@ process.pfAllNeutralHadronsAndPhotonsPFlow = cms.EDFilter("PFCandidateFwdPtrColl
 )
 
 
-process.pfAllNeutralHadronsPFBRECO = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
-    makeClones = cms.bool(True),
-    pdgId = cms.vint32(111, 130, 310, 2112),
-    src = cms.InputTag("pfNoPileUpIsoPFBRECO")
-)
-
-
 process.pfAllNeutralHadronsPFBRECOPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
     makeClones = cms.bool(True),
     pdgId = cms.vint32(111, 130, 310, 2112),
@@ -25372,13 +20280,6 @@ process.pfAllNeutralHadronsPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionPdgI
     makeClones = cms.bool(True),
     pdgId = cms.vint32(111, 130, 310, 2112),
     src = cms.InputTag("pfNoPileUpIso")
-)
-
-
-process.pfAllPhotonsPFBRECO = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
-    makeClones = cms.bool(True),
-    pdgId = cms.vint32(22),
-    src = cms.InputTag("pfNoPileUpIsoPFBRECO")
 )
 
 
@@ -25499,15 +20400,6 @@ process.pfMuonsPFBRECOPFlow = cms.EDFilter("PFCandidateFwdPtrCollectionStringFil
     cut = cms.string('pt > 5 & muonRef.isAvailable()'),
     makeClones = cms.bool(True),
     src = cms.InputTag("pfMuonsFromVertexPFBRECOPFlow")
-)
-
-
-process.pfPileUpAllChargedParticlesPFBRECO = cms.EDFilter("PFCandidateFwdPtrCollectionPdgIdFilter",
-    makeClones = cms.bool(True),
-    pdgId = cms.vint32(211, -211, 321, -321, 999211, 
-        2212, -2212, 11, -11, 13, 
-        -13),
-    src = cms.InputTag("pfPileUpIsoPFBRECO")
 )
 
 
@@ -25637,20 +20529,6 @@ process.selectedPatTaus = cms.EDFilter("PATTauSelector",
 process.selectedPatTausPFlow = cms.EDFilter("PATTauSelector",
     cut = cms.string(''),
     src = cms.InputTag("patTausPFlow")
-)
-
-
-process.tauGenJetsSelectorAllHadrons = cms.EDFilter("TauGenJetDecayModeSelector",
-    filter = cms.bool(False),
-    select = cms.vstring('oneProng0Pi0', 
-        'oneProng1Pi0', 
-        'oneProng2Pi0', 
-        'oneProngOther', 
-        'threeProng0Pi0', 
-        'threeProng1Pi0', 
-        'threeProngOther', 
-        'rare'),
-    src = cms.InputTag("tauGenJets")
 )
 
 
@@ -25908,13 +20786,6 @@ process.cleanPatCandidateSummaryPFlow = cms.EDAnalyzer("CandidateSummaryTable",
 )
 
 
-process.patCandidateSummary = cms.EDAnalyzer("CandidateSummaryTable",
-    candidates = cms.VInputTag(cms.InputTag("patElectrons"), cms.InputTag("patMuons"), cms.InputTag("patTaus"), cms.InputTag("patPhotons"), cms.InputTag("patJets"), 
-        cms.InputTag("patMETs")),
-    logName = cms.untracked.string('patCandidates|PATSummaryTables')
-)
-
-
 process.patCandidateSummaryPFlow = cms.EDAnalyzer("CandidateSummaryTable",
     candidates = cms.VInputTag(cms.InputTag("patElectronsPFlow"), cms.InputTag("patMuonsPFlow"), cms.InputTag("patTausPFlow"), cms.InputTag("patPhotonsPFlow"), cms.InputTag("patJetsPFlow"), 
         cms.InputTag("patMETsPFlow"), cms.InputTag("patPFParticlesPFlow")),
@@ -25938,238 +20809,49 @@ process.selectedPatCandidateSummaryPFlow = cms.EDAnalyzer("CandidateSummaryTable
 )
 
 
-process.ak4L1JPTOffsetCorrectorChain = cms.Sequence(process.ak4CaloL1OffsetCorrector+process.ak4L1JPTOffsetCorrector)
-
-
-process.ak4PFL1L2L3CorrectorChain = cms.Sequence(process.ak4PFL1OffsetCorrector+process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFL1L2L3Corrector)
-
-
-process.ak4PFCHSL1FastL2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFCHSL1FastjetCorrector+process.ak4PFCHSL2RelativeCorrector+process.ak4PFCHSL3AbsoluteCorrector+process.ak4PFCHSResidualCorrector+process.ak4PFCHSL1FastL2L3ResidualCorrector)
-
-
-process.patJetFlavourId = cms.Sequence(process.patJetPartons+process.patJetFlavourAssociation)
-
-
-process.ak4PFCHSL1FastL2L3CorrectorChain = cms.Sequence(process.ak4PFCHSL1FastjetCorrector+process.ak4PFCHSL2RelativeCorrector+process.ak4PFCHSL3AbsoluteCorrector+process.ak4PFCHSL1FastL2L3Corrector)
-
-
-process.ak4CaloL1L2L3CorrectorChain = cms.Sequence(process.ak4CaloL1OffsetCorrector+process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloL1L2L3Corrector)
-
-
-process.ak4PFL1FastL2L3CorrectorChain = cms.Sequence(process.ak4PFL1FastjetCorrector+process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFL1FastL2L3Corrector)
-
-
-process.produceHPSPFTausPFlow = cms.Sequence(process.hpsSelectionDiscriminatorPFlow+process.hpsPFTauProducerSansRefsPFlow+process.hpsPFTauProducerPFlow)
+process.inclusiveCandidateVertexingCvsL = cms.Sequence(process.inclusiveCandidateVertexFinderCvsL+process.candidateVertexMergerCvsL+process.candidateVertexArbitratorCvsL+process.inclusiveCandidateSecondaryVerticesCvsL)
 
 
 process.analyzerSeq = cms.Sequence(process.btagana)
 
 
-process.ak4PFPuppiL1L2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFPuppiL1OffsetCorrector+process.ak4PFPuppiL2RelativeCorrector+process.ak4PFPuppiL3AbsoluteCorrector+process.ak4PFPuppiResidualCorrector+process.ak4PFPuppiL1L2L3ResidualCorrector)
-
-
-process.electronPFIsolationDepositsPFBRECOSequence = cms.Sequence(process.elPFIsoDepositChargedPFBRECO+process.elPFIsoDepositChargedAllPFBRECO+process.elPFIsoDepositGammaPFBRECO+process.elPFIsoDepositNeutralPFBRECO+process.elPFIsoDepositPUPFBRECO)
-
-
-process.ak4PFL1FastL2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFL1FastjetCorrector+process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFResidualCorrector+process.ak4PFL1FastL2L3ResidualCorrector)
-
-
-process.ak4JPTL1L2L3CorrectorChain = cms.Sequence(process.ak4L1JPTOffsetCorrectorChain+process.ak4JPTL2RelativeCorrector+process.ak4JPTL3AbsoluteCorrector+process.ak4JPTL1L2L3Corrector)
-
-
-process.ak4PFPuppiL1FastL2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFPuppiL1FastjetCorrector+process.ak4PFPuppiL2RelativeCorrector+process.ak4PFPuppiL3AbsoluteCorrector+process.ak4PFPuppiResidualCorrector+process.ak4PFPuppiL1FastL2L3ResidualCorrector)
-
-
-process.patJetFlavourIdLegacy = cms.Sequence(process.patJetPartonsLegacy+process.patJetPartonAssociationLegacy+process.patJetFlavourAssociationLegacy)
-
-
-process.pfNoPileUpIsoPFBRECOSequence = cms.Sequence(process.pfPileUpIsoPFBRECO+process.pfNoPileUpIsoPFBRECO)
-
-
-process.ak4PFCHSL2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFCHSL2RelativeCorrector+process.ak4PFCHSL3AbsoluteCorrector+process.ak4PFCHSResidualCorrector+process.ak4PFCHSL2L3ResidualCorrector)
-
-
-process.pfSortByTypePFBRECOSequence = cms.Sequence(process.pfAllNeutralHadronsPFBRECO+process.pfAllChargedHadronsPFBRECO+process.pfAllPhotonsPFBRECO+process.pfAllChargedParticlesPFBRECO+process.pfPileUpAllChargedParticlesPFBRECO+process.pfAllNeutralHadronsAndPhotonsPFBRECO)
-
-
-process.updateHPSPFTaus = cms.Sequence()
-
-
 process.selectedPatCandidates = cms.Sequence(process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatPhotons+process.selectedPatJets+process.selectedPatCandidateSummary)
 
 
-process.ak4JPTL1FastL2L3CorrectorChain = cms.Sequence(process.ak4JPTL1FastjetCorrector+process.ak4JPTL2RelativeCorrector+process.ak4JPTL3AbsoluteCorrector+process.ak4JPTL1FastL2L3Corrector)
-
-
-process.inclusiveCandidateVertexingCvsL = cms.Sequence(process.inclusiveCandidateVertexFinderCvsL+process.candidateVertexMergerCvsL+process.candidateVertexArbitratorCvsL+process.inclusiveCandidateSecondaryVerticesCvsL)
-
-
-process.ak4PFCHSL2L3CorrectorChain = cms.Sequence(process.ak4PFCHSL2RelativeCorrector+process.ak4PFCHSL3AbsoluteCorrector+process.ak4PFCHSL2L3Corrector)
-
-
-process.patCaloTauDiscrimination = cms.Sequence()
-
-
-process.photonPFIsolationDepositsPFBRECOSequence = cms.Sequence(process.phPFIsoDepositChargedPFBRECO+process.phPFIsoDepositChargedAllPFBRECO+process.phPFIsoDepositGammaPFBRECO+process.phPFIsoDepositNeutralPFBRECO+process.phPFIsoDepositPUPFBRECO)
-
-
-process.ak4CaloL1FastL2L3CorrectorChain = cms.Sequence(process.ak4CaloL1FastjetCorrector+process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloL1FastL2L3Corrector)
-
-
-process.ak4PFL1L2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFL1OffsetCorrector+process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFResidualCorrector+process.ak4PFL1L2L3ResidualCorrector)
-
-
-process.ak4JPTL2L3ResidualCorrectorChain = cms.Sequence(process.ak4L1JPTOffsetCorrectorChain+process.ak4JPTL2RelativeCorrector+process.ak4JPTL3AbsoluteCorrector+process.ak4JPTResidualCorrector+process.ak4JPTL2L3ResidualCorrector)
-
-
-process.ak4PFL1FastL2L3L6CorrectorChain = cms.Sequence(process.ak4PFL1FastjetCorrector+process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFL6SLBCorrector+process.ak4PFL1FastL2L3L6Corrector)
-
-
-process.photonPFIsolationDepositsPATSequence = cms.Sequence(process.phPFIsoDepositChargedPAT+process.phPFIsoDepositChargedAllPAT+process.phPFIsoDepositGammaPAT+process.phPFIsoDepositNeutralPAT+process.phPFIsoDepositPUPAT)
-
-
-process.ak4TrackL2L3CorrectorChain = cms.Sequence(process.ak4TrackL2RelativeCorrector+process.ak4TrackL3AbsoluteCorrector+process.ak4TrackL2L3Corrector)
-
-
-process.patShrinkingConePFTauDiscrimination = cms.Sequence()
-
-
-process.ak4PFPuppiL2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFPuppiL2RelativeCorrector+process.ak4PFPuppiL3AbsoluteCorrector+process.ak4PFPuppiResidualCorrector+process.ak4PFPuppiL2L3ResidualCorrector)
-
-
-process.ak4JPTL1FastL2L3ResidualCorrectorChain = cms.Sequence(process.ak4JPTL1FastjetCorrector+process.ak4JPTL2RelativeCorrector+process.ak4JPTL3AbsoluteCorrector+process.ak4JPTResidualCorrector+process.ak4JPTL1FastL2L3ResidualCorrector)
-
-
-process.ak4PFL2L3L6CorrectorChain = cms.Sequence(process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFL6SLBCorrector+process.ak4PFL2L3L6Corrector)
-
-
-process.patPFTauIsolation = cms.Sequence(process.tauIsoDepositPFCandidates+process.tauIsoDepositPFChargedHadrons+process.tauIsoDepositPFNeutralHadrons+process.tauIsoDepositPFGammas)
-
-
-process.pfNoPileUpPFBRECOSequence = cms.Sequence(process.pfPileUpPFBRECO+process.pfNoPileUpPFBRECO)
-
-
-process.ak4CaloL1FastL2L3ResidualCorrectorChain = cms.Sequence(process.ak4CaloL1FastjetCorrector+process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloResidualCorrector+process.ak4CaloL1FastL2L3ResidualCorrector)
-
-
-process.electronPFIsolationDepositsPATSequence = cms.Sequence(process.elPFIsoDepositChargedPAT+process.elPFIsoDepositChargedAllPAT+process.elPFIsoDepositGammaPAT+process.elPFIsoDepositNeutralPAT+process.elPFIsoDepositPUPAT)
-
-
-process.ak4CaloL2L3L6CorrectorChain = cms.Sequence(process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloL6SLBCorrector+process.ak4CaloL2L3L6Corrector)
-
-
-process.ak4PFPuppiL1FastL2L3CorrectorChain = cms.Sequence(process.ak4PFPuppiL1FastjetCorrector+process.ak4PFPuppiL2RelativeCorrector+process.ak4PFPuppiL3AbsoluteCorrector+process.ak4PFPuppiL1FastL2L3Corrector)
-
-
-process.inclusiveVertexing = cms.Sequence(process.inclusiveVertexFinder+process.vertexMerger+process.trackVertexArbitrator+process.inclusiveSecondaryVertices)
-
-
-process.ak4JPTL2L3CorrectorChain = cms.Sequence(process.ak4L1JPTOffsetCorrectorChain+process.ak4JPTL2RelativeCorrector+process.ak4JPTL3AbsoluteCorrector+process.ak4JPTL2L3Corrector)
-
-
-process.ak4CaloL2L3CorrectorChain = cms.Sequence(process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloL2L3Corrector)
-
-
-process.ak4JPTL1L2L3ResidualCorrectorChain = cms.Sequence(process.ak4L1JPTOffsetCorrectorChain+process.ak4JPTL2RelativeCorrector+process.ak4JPTL3AbsoluteCorrector+process.ak4JPTResidualCorrector+process.ak4JPTL1L2L3ResidualCorrector)
-
-
-process.pfPhotonIsolationPATSequence = cms.Sequence(process.photonPFIsolationDepositsPATSequence+process.phPFIsoValueCharged03PFIdPAT+process.phPFIsoValueChargedAll03PFIdPAT+process.phPFIsoValueGamma03PFIdPAT+process.phPFIsoValueNeutral03PFIdPAT+process.phPFIsoValuePU03PFIdPAT+process.phPFIsoValueCharged04PFIdPAT+process.phPFIsoValueChargedAll04PFIdPAT+process.phPFIsoValueGamma04PFIdPAT+process.phPFIsoValueNeutral04PFIdPAT+process.phPFIsoValuePU04PFIdPAT)
-
-
-process.ak4PFCHSL1L2L3CorrectorChain = cms.Sequence(process.ak4PFCHSL1OffsetCorrector+process.ak4PFCHSL2RelativeCorrector+process.ak4PFCHSL3AbsoluteCorrector+process.ak4PFCHSL1L2L3Corrector)
+process.patJetFlavourId = cms.Sequence(process.patJetPartons+process.patJetFlavourAssociation)
 
 
 process.patJetCorrections = cms.Sequence(process.patJetCorrFactors)
 
 
-process.muonPFIsolationDepositsPATSequence = cms.Sequence(process.muPFIsoDepositChargedPAT+process.muPFIsoDepositChargedAllPAT+process.muPFIsoDepositGammaPAT+process.muPFIsoDepositNeutralPAT+process.muPFIsoDepositPUPAT)
+process.pfCTagging = cms.Sequence(process.inclusiveCandidateVertexingCvsL+process.pfInclusiveSecondaryVertexFinderCvsLTagInfos+process.pfCombinedCvsLJetTags+process.pfCombinedCvsBJetTags)
 
 
-process.patFixedConePFTauDiscrimination = cms.Sequence()
+process.inclusiveVertexing = cms.Sequence(process.inclusiveVertexFinder+process.vertexMerger+process.trackVertexArbitrator+process.inclusiveSecondaryVertices)
 
 
-process.muonPFIsolationPATSequence = cms.Sequence(process.muonPFIsolationDepositsPATSequence+process.muPFIsoValueCharged03PAT+process.muPFMeanDRIsoValueCharged03PAT+process.muPFSumDRIsoValueCharged03PAT+process.muPFIsoValueChargedAll03PAT+process.muPFMeanDRIsoValueChargedAll03PAT+process.muPFSumDRIsoValueChargedAll03PAT+process.muPFIsoValueGamma03PAT+process.muPFMeanDRIsoValueGamma03PAT+process.muPFSumDRIsoValueGamma03PAT+process.muPFIsoValueNeutral03PAT+process.muPFMeanDRIsoValueNeutral03PAT+process.muPFSumDRIsoValueNeutral03PAT+process.muPFIsoValueGammaHighThreshold03PAT+process.muPFMeanDRIsoValueGammaHighThreshold03PAT+process.muPFSumDRIsoValueGammaHighThreshold03PAT+process.muPFIsoValueNeutralHighThreshold03PAT+process.muPFMeanDRIsoValueNeutralHighThreshold03PAT+process.muPFSumDRIsoValueNeutralHighThreshold03PAT+process.muPFIsoValuePU03PAT+process.muPFMeanDRIsoValuePU03PAT+process.muPFSumDRIsoValuePU03PAT+process.muPFIsoValueCharged04PAT+process.muPFMeanDRIsoValueCharged04PAT+process.muPFSumDRIsoValueCharged04PAT+process.muPFIsoValueChargedAll04PAT+process.muPFMeanDRIsoValueChargedAll04PAT+process.muPFSumDRIsoValueChargedAll04PAT+process.muPFIsoValueGamma04PAT+process.muPFMeanDRIsoValueGamma04PAT+process.muPFSumDRIsoValueGamma04PAT+process.muPFIsoValueNeutral04PAT+process.muPFMeanDRIsoValueNeutral04PAT+process.muPFSumDRIsoValueNeutral04PAT+process.muPFIsoValueGammaHighThreshold04PAT+process.muPFMeanDRIsoValueGammaHighThreshold04PAT+process.muPFSumDRIsoValueGammaHighThreshold04PAT+process.muPFIsoValueNeutralHighThreshold04PAT+process.muPFMeanDRIsoValueNeutralHighThreshold04PAT+process.muPFSumDRIsoValueNeutralHighThreshold04PAT+process.muPFIsoValuePU04PAT+process.muPFMeanDRIsoValuePU04PAT+process.muPFSumDRIsoValuePU04PAT)
-
-
-process.pfElectronIsolationPATSequence = cms.Sequence(process.electronPFIsolationDepositsPATSequence+process.elPFIsoValueCharged03PFIdPAT+process.elPFIsoValueChargedAll03PFIdPAT+process.elPFIsoValueGamma03PFIdPAT+process.elPFIsoValueNeutral03PFIdPAT+process.elPFIsoValuePU03PFIdPAT+process.elPFIsoValueCharged04PFIdPAT+process.elPFIsoValueChargedAll04PFIdPAT+process.elPFIsoValueGamma04PFIdPAT+process.elPFIsoValueNeutral04PFIdPAT+process.elPFIsoValuePU04PFIdPAT+process.elPFIsoValueCharged03NoPFIdPAT+process.elPFIsoValueChargedAll03NoPFIdPAT+process.elPFIsoValueGamma03NoPFIdPAT+process.elPFIsoValueNeutral03NoPFIdPAT+process.elPFIsoValuePU03NoPFIdPAT+process.elPFIsoValueCharged04NoPFIdPAT+process.elPFIsoValueChargedAll04NoPFIdPAT+process.elPFIsoValueGamma04NoPFIdPAT+process.elPFIsoValueNeutral04NoPFIdPAT+process.elPFIsoValuePU04NoPFIdPAT)
-
-
-process.muonPFIsolationDepositsPFBRECOSequence = cms.Sequence(process.muPFIsoDepositChargedPFBRECO+process.muPFIsoDepositChargedAllPFBRECO+process.muPFIsoDepositGammaPFBRECO+process.muPFIsoDepositNeutralPFBRECO+process.muPFIsoDepositPUPFBRECO)
+process.heavyIonCleaned = cms.Sequence(process.genPartons+process.hiPartons+process.heavyIonCleanedGenJets)
 
 
 process.filtSeq = cms.Sequence()
 
 
-process.ak4CaloL1FastL2L3L6CorrectorChain = cms.Sequence(process.ak4CaloL1FastjetCorrector+process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloL6SLBCorrector+process.ak4CaloL1FastL2L3L6Corrector)
+process.patJetFlavourIdLegacy = cms.Sequence(process.patJetPartonsLegacy+process.patJetPartonAssociationLegacy+process.patJetFlavourAssociationLegacy)
 
 
-process.ak4PFPuppiL2L3CorrectorChain = cms.Sequence(process.ak4PFPuppiL2RelativeCorrector+process.ak4PFPuppiL3AbsoluteCorrector+process.ak4PFPuppiL2L3Corrector)
+process.produceHPSPFTausPFlow = cms.Sequence(process.hpsSelectionDiscriminatorPFlow+process.hpsPFTauProducerSansRefsPFlow+process.hpsPFTauProducerPFlow)
 
 
 process.inclusiveCandidateVertexing = cms.Sequence(process.inclusiveCandidateVertexFinder+process.candidateVertexMerger+process.candidateVertexArbitrator+process.inclusiveCandidateSecondaryVertices)
 
 
-process.ak4CaloL2L3ResidualCorrectorChain = cms.Sequence(process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloResidualCorrector+process.ak4CaloL2L3ResidualCorrector)
-
-
-process.ak4PFCHSL1L2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFCHSL1OffsetCorrector+process.ak4PFCHSL2RelativeCorrector+process.ak4PFCHSL3AbsoluteCorrector+process.ak4PFCHSResidualCorrector+process.ak4PFCHSL1L2L3ResidualCorrector)
-
-
-process.ak4PFL2L3CorrectorChain = cms.Sequence(process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFL2L3Corrector)
-
-
-process.ak4CaloL1L2L3ResidualCorrectorChain = cms.Sequence(process.ak4CaloL1OffsetCorrector+process.ak4CaloL2RelativeCorrector+process.ak4CaloL3AbsoluteCorrector+process.ak4CaloResidualCorrector+process.ak4CaloL1L2L3ResidualCorrector)
-
-
-process.ak4PFL2L3ResidualCorrectorChain = cms.Sequence(process.ak4PFL2RelativeCorrector+process.ak4PFL3AbsoluteCorrector+process.ak4PFResidualCorrector+process.ak4PFL2L3ResidualCorrector)
-
-
-process.ak4PFPuppiL1L2L3CorrectorChain = cms.Sequence(process.ak4PFPuppiL1OffsetCorrector+process.ak4PFPuppiL2RelativeCorrector+process.ak4PFPuppiL3AbsoluteCorrector+process.ak4PFPuppiL1L2L3Corrector)
-
-
-process.patHPSPFTauDiscrimination = cms.Sequence(process.updateHPSPFTaus)
-
-
-process.pfParticleSelectionPFBRECOSequence = cms.Sequence(process.pfNoPileUpIsoPFBRECOSequence+process.pfNoPileUpPFBRECOSequence+process.pfSortByTypePFBRECOSequence)
-
-
-process.correctionTermsPfMetType1Type2 = cms.Sequence(process.pfJetsPtrForMetCorr+process.particleFlowPtrs+process.pfCandsNotInJetsPtrForMetCorr+process.pfCandsNotInJetsForMetCorr+process.pfCandMETcorr+process.ak4PFCHSL1FastL2L3ResidualCorrectorChain+process.ak4PFCHSL1FastL2L3Corrector+process.corrPfMetType1+process.corrPfMetType2)
-
-
-process.correctionTermsCaloMet = cms.Sequence(process.ak4CaloL2L3CorrectorChain+process.corrCaloMetType1+process.muCaloMetCorr+process.corrCaloMetType2)
-
-
-process.pfCTagging = cms.Sequence(process.inclusiveCandidateVertexingCvsL+process.pfInclusiveSecondaryVertexFinderCvsLTagInfos+process.pfCombinedCvsLJetTags+process.pfCombinedCvsBJetTags)
-
-
-process.patMETCorrections = cms.Sequence(process.correctionTermsCaloMet+process.caloMetT1+process.caloMetT1T2+process.correctionTermsPfMetType1Type2+process.pfMetT1+process.pfMetT1T2)
-
-
-process.patPFCandidateIsoDepositSelection = cms.Sequence(process.pfNoPileUpIsoPFBRECOSequence+process.pfSortByTypePFBRECOSequence)
-
-
-process.makePatTaus = cms.Sequence(process.patHPSPFTauDiscrimination+process.patPFCandidateIsoDepositSelection+process.patPFTauIsolation+process.tauMatch+process.tauGenJets+process.tauGenJetsSelectorAllHadrons+process.tauGenJetMatch+process.patTaus)
-
-
 process.makePatJets = cms.Sequence(process.patJetCorrections+process.patJetCharge+process.patJetPartonMatch+process.patJetGenJetMatch+process.patJetFlavourIdLegacy+process.patJetFlavourId+process.patJets)
 
 
-process.pfParticleSelectionForIsoSequence = cms.Sequence(process.particleFlowPtrs+process.pfParticleSelectionPFBRECOSequence)
+process.makeHeavyIonJets = cms.Sequence(process.patJetCorrections+process.heavyIonCleaned+process.patJetGenJetMatch+process.patJetPartonMatch+process.patJets)
 
 
-process.makePatElectrons = cms.Sequence(process.pfParticleSelectionForIsoSequence+process.pfElectronIsolationPATSequence+process.electronMatch+process.patElectrons)
-
-
-process.makePatMETs = cms.Sequence(process.patMETCorrections+process.patMETs)
-
-
-process.makePatPhotons = cms.Sequence(process.pfParticleSelectionForIsoSequence+process.pfPhotonIsolationPATSequence+process.photonMatch+process.patPhotons)
-
-
-process.makePatMuons = cms.Sequence(process.pfParticleSelectionForIsoSequence+process.muonPFIsolationPATSequence+process.muonMatch+process.patMuons)
-
-
-process.patCandidates = cms.Sequence(process.makePatElectrons+process.makePatMuons+process.makePatTaus+process.makePatPhotons+process.makePatJets+process.makePatMETs+process.patCandidateSummary)
+process.heavyIonPatCandidates = cms.Sequence(process.heavyIon+process.makeHeavyIonJets)
 
 
 process.p = cms.Path(process.allEvents+process.filtSeq+process.selectedEvents+process.analyzerSeq)
@@ -35760,16 +30442,6 @@ process.HcalReLabel = cms.PSet(
     )
 )
 
-process.METSignificanceParams = cms.PSet(
-    dRMatch = cms.double(0.4),
-    jetThreshold = cms.double(20),
-    jeta = cms.vdouble(0.5, 1.1, 1.7, 2.3),
-    jpar = cms.vdouble(1.41, 1.29, 1.41, 1.4, 2.53),
-    phiResFile = cms.string('Spring10_PhiResolution_AK5PF.txt'),
-    pjpar = cms.vdouble(0.0, 0.674),
-    ptResFile = cms.string('Spring10_PtResolution_AK5PF.txt')
-)
-
 process.combinedSecondaryVertexCommon = cms.PSet(
     charmCut = cms.double(1.5),
     correctVertexMass = cms.bool(True),
@@ -35893,7 +30565,7 @@ process.ghostTrackVertexRecoBlock = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(5000)
+    input = cms.untracked.int32(100)
 )
 
 process.options = cms.untracked.PSet(

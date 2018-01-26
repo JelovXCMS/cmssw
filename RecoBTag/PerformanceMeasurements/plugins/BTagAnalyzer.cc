@@ -267,7 +267,7 @@ private:
 
   edm::EDGetTokenT<GenEventInfoProduct> src_;  // Generator/handronizer module label
   edm::EDGetTokenT<edm::View<reco::Muon>> muonCollectionName_;
-  edm::EDGetTokenT<std::vector<pat::Muon>> patMuonCollectionName_;
+//  edm::EDGetTokenT<std::vector<pat::Muon>> patMuonCollectionName_;
   edm::EDGetTokenT<reco::GenParticleCollection> genParticleCollectionName_;
   edm::EDGetTokenT<reco::GenParticleCollection> prunedGenParticleCollectionName_;
   edm::EDGetTokenT<edm::TriggerResults> triggerTable_;
@@ -378,7 +378,7 @@ private:
   bool use_ttbar_filter_;
   edm::EDGetTokenT<edm::View<reco::GenParticle> > ttbarproducerGen_;
   edm::EDGetTokenT<edm::View<pat::Electron>> ttbarproducerEle_;
-  edm::EDGetTokenT<edm::View<pat::Muon>> ttbarproducerMuon_;
+//  edm::EDGetTokenT<edm::View<pat::Muon>> ttbarproducerMuon_;
   edm::EDGetTokenT<edm::View<pat::MET>> ttbarproducerMET_;
   edm::EDGetTokenT<GenEventInfoProduct> generator;
   edm::EDGetTokenT<edm::HepMCProduct> generatorhep;
@@ -533,7 +533,7 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   use_ttbar_filter_ = iConfig.getParameter<bool> ("use_ttbar_filter");
   ttbarproducerGen_ = consumes<edm::View<reco::GenParticle>>(iConfig.getParameter<edm::InputTag>("ttbarproducer")),
   ttbarproducerEle_ = consumes<edm::View<pat::Electron>>(iConfig.getParameter<edm::InputTag>("ttbarproducer"));
-  ttbarproducerMuon_ = consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("ttbarproducer"));
+//  ttbarproducerMuon_ = consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("ttbarproducer"));
   ttbarproducerMET_ = consumes<edm::View<pat::MET>>(iConfig.getParameter<edm::InputTag>("ttbarproducer"));
   rhoTag_               = consumes<double>(iConfig.getParameter<edm::InputTag>("rho"));
 
@@ -633,7 +633,7 @@ BTagAnalyzerT<IPTI,VTX>::BTagAnalyzerT(const edm::ParameterSet& iConfig):
   softPFElectronTagInfos_  = iConfig.getParameter<std::string>("softPFElectronTagInfos");
 
   muonCollectionName_       = consumes<edm::View<reco::Muon>>(iConfig.getParameter<edm::InputTag>("muonCollectionName"));
-  patMuonCollectionName_    = consumes<std::vector<pat::Muon>>(iConfig.getParameter<edm::InputTag>("patMuonCollectionName"));
+//  patMuonCollectionName_    = consumes<std::vector<pat::Muon>>(iConfig.getParameter<edm::InputTag>("patMuonCollectionName"));
   genParticleCollectionName_ = consumes<reco::GenParticleCollection>(iConfig.getParameter<edm::InputTag>("genParticles"));
   prunedGenParticleCollectionName_ = consumes<reco::GenParticleCollection>(iConfig.getParameter<edm::InputTag>("prunedGenParticles"));
 
@@ -1365,7 +1365,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
 	EventInfo.ttbar_lgid[lctr] = l->genParticle() ? l->genParticle()->pdgId() : 0;
 	lctr++;
       }
-
+/*
     edm::Handle<edm::View<pat::Muon> > selMuons;
     iEvent.getByToken(ttbarproducerMuon_,selMuons);
     for (size_t i = 0; i < selMuons->size(); ++i)
@@ -1381,6 +1381,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
 	lctr++;
       }
     EventInfo.ttbar_nl=lctr;
+*/
 
     edm::Handle<edm::View<pat::MET> > selMETs;
     iEvent.getByToken(ttbarproducerMET_,selMETs);
@@ -1421,6 +1422,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
   //------------------------------------------------------
   // PAT Muons
   //------------------------------------------------------
+/*
   edm::Handle<std::vector<pat::Muon> >  patMuonsHandle;
   if( storePatMuons_ )
   {
@@ -1451,7 +1453,7 @@ void BTagAnalyzerT<IPTI,VTX>::analyze(const edm::Event& iEvent, const edm::Event
       ++EventInfo.nPatMuon;
     }
   }
-
+*/
 
   //------------------------------------------------------
   // Muons
