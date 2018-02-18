@@ -26,11 +26,14 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
+														'/store/himc/HINppWinter16DR/Pythia6_bJet100_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/06988FB5-3A0E-E611-9100-02163E011808.root'
         #"root://eoscms.cern.ch//eos/cms/store/cmst3/group/hintt/CMSSW_7_5_8_patch2/TTbar/RECO/Events_1.root"
-                           'file:step2_DIGI_L1_DIGI2RAW_HLT_RAW2DIGI_L1Reco_RECO_oldVtxParams.root')
+#                           'file:step2_DIGI_L1_DIGI2RAW_HLT_RAW2DIGI_L1Reco_RECO_oldVtxParams.root')
                            #'/store/himc/HINppWinter16DR/Pythia6_bJet100_pp502/AODSIM/75X_mcRun2_asymptotic_ppAt5TeV_v3-v1/30000/06988FB5-3A0E-E611-9100-02163E011808.root')
 			#'/store/user/kjung/Pythia8_ppMC_DigiReco_QCDJet_MuFiltered_loose2/ppMC_QCDJet_muFiltered_loose2_pt5GeV_pthat170/ppMC_QCDJet_muFiltered_loose2_pt5GeV_pthat170/crab_ppMC_QCDJet_muFiltered_loose2_pt5GeV_pthat170_DigiReco_muFiltered_loose2/171216_034802/0000/step2_DIGI_L1_DIGI2RAW_HLT_RAW2DIGI_L1Reco_RECO_10.root')
-			#'/store/user/gsfs/Pythia8_Dijet80_pp_CUETP8M1_5020GeV/RECO__201711004/171004_122752/0000/step3_pp_RAW2DIGI_L1Reco_RECO_101.root')
+			#'/store/user/gsfs/Pythia8_Dijet80_pp_CUETP8M1_5020GeV/RECO__201711004/171004_122752/0000/step3_pp_RAW2DIGI_L1Reco_RECO_101.root'
+			
+			)
 #			   eventsToProcess = cms.untracked.VEventRange('1:42101','1:52848')
 )
 
