@@ -19,6 +19,15 @@ if version == '':
     version = 'no git info'
 process.HiForest.HiForestVersion = cms.string(version)
 
+
+#####################################
+# Timing Module 
+#####################################
+process.Timing = cms.Service("Timing",
+      summaryOnly = cms.untracked.bool(False),
+      useJobReport = cms.untracked.bool(True)
+    )
+
 #####################################################################################
 # Input source
 #####################################################################################
@@ -32,7 +41,7 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100))
+    input = cms.untracked.int32(200))
 
 
 #####################################################################################
@@ -105,23 +114,23 @@ process.highPurityTracks = cms.EDFilter("TrackSelector",
                                         cut = cms.string('quality("highPurity")')
                                         )
 
-process.load('RecoJets.JetProducers.akCs4PFJets_cfi')
+#process.load('RecoJets.JetProducers.akCs4PFJets_cfi')
 
 #KT jets and rho estimators
-process.load('RecoJets.JetProducers.kt4PFJets_cfi') 
-process.load('RecoHI.HiJetAlgos.hiFJRhoProducer') 
-process.load('RecoHI.HiJetAlgos.hiFJGridEmptyAreaCalculator_cff') 
-process.kt4PFJets.src = cms.InputTag('particleFlow')
-process.kt4PFJets.doAreaFastjet = True
-process.kt4PFJets.jetPtMin      = cms.double(0.0)
-process.kt4PFJets.GhostArea     = cms.double(0.005)
-process.hiFJGridEmptyAreaCalculator.doCentrality = cms.bool(False)
-process.hiFJGridEmptyAreaCalculator.pfCandSource = cms.InputTag("particleFlow")
+#process.load('RecoJets.JetProducers.kt4PFJets_cfi') 
+#process.load('RecoHI.HiJetAlgos.hiFJRhoProducer') 
+#process.load('RecoHI.HiJetAlgos.hiFJGridEmptyAreaCalculator_cff') 
+#process.kt4PFJets.src = cms.InputTag('particleFlow')
+#process.kt4PFJets.doAreaFastjet = True
+#process.kt4PFJets.jetPtMin      = cms.double(0.0)
+#process.kt4PFJets.GhostArea     = cms.double(0.005)
+#process.hiFJGridEmptyAreaCalculator.doCentrality = cms.bool(False)
+#process.hiFJGridEmptyAreaCalculator.pfCandSource = cms.InputTag("particleFlow")
 
 #CS jets
-process.akCs4PFJets.rho      = cms.InputTag('hiFJGridEmptyAreaCalculator','mapToRhoCorr1Bin')
-process.akCs4PFJets.rhom      = cms.InputTag('hiFJGridEmptyAreaCalculator','mapToRhoMCorr1Bin')
-process.akCs4PFJets.src = cms.InputTag('particleFlow')
+#process.akCs4PFJets.rho      = cms.InputTag('hiFJGridEmptyAreaCalculator','mapToRhoCorr1Bin')
+#process.akCs4PFJets.rhom      = cms.InputTag('hiFJGridEmptyAreaCalculator','mapToRhoMCorr1Bin')
+#process.akCs4PFJets.src = cms.InputTag('particleFlow')
 
 #SoftDrop PF jets
 from RecoJets.JetProducers.PFJetParameters_cfi import *
@@ -141,20 +150,20 @@ process.akSoftDrop4PFJets = cms.EDProducer(
     writeCompound = cms.bool(True),
     jetCollInstanceName=cms.string("SubJets")
 )
-process.akSoftDrop5PFJets = process.akSoftDrop4PFJets.clone(rParam = cms.double(0.5), R0 = cms.double(0.5))
+#process.akSoftDrop5PFJets = process.akSoftDrop4PFJets.clone(rParam = cms.double(0.5), R0 = cms.double(0.5))
 
 process.jetSequences = cms.Sequence(
     #process.ak3PFJets +
     #process.ak5PFJets +
-    process.kt4PFJets +
-    process.hiFJRhoProducer +
-    process.hiFJGridEmptyAreaCalculator +
-    process.akCs4PFJets +
+ #   process.kt4PFJets +
+  #  process.hiFJRhoProducer +
+  #  process.hiFJGridEmptyAreaCalculator +
+#    process.akCs4PFJets +
     process.akSoftDrop4PFJets +
     process.highPurityTracks +
     #process.ak4CaloJetSequence +
     #process.ak3PFJetSequence +
-    process.ak4PFJetSequence +
+#    process.ak4PFJetSequence +
     #process.akCs4PFJetSequence +
     process.akSoftDrop4PFJetSequence 
     #process.ak5PFJetSequence
@@ -180,21 +189,21 @@ process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
 from HeavyIonsAnalysis.EventAnalysis.dummybranches_cff import addHLTdummybranchesForPP
 addHLTdummybranchesForPP(process)
 
-process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
-process.pfcandAnalyzer.skipCharged = False
-process.pfcandAnalyzer.pfPtMin = 0
-process.pfcandAnalyzer.pfCandidateLabel = cms.InputTag("particleFlow")
-process.pfcandAnalyzer.doVS = cms.untracked.bool(False)
-process.pfcandAnalyzer.doUEraw_ = cms.untracked.bool(False)
-process.pfcandAnalyzer.genLabel = cms.InputTag("genParticles")
-process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzerCS_cfi")
-process.pfcandAnalyzerCS.skipCharged = False
-process.pfcandAnalyzerCS.pfPtMin = 0
-process.pfcandAnalyzerCS.pfCandidateLabel = cms.InputTag("particleFlow")
-process.pfcandAnalyzerCS.doVS = cms.untracked.bool(False)
-process.pfcandAnalyzerCS.doUEraw_ = cms.untracked.bool(False)
-process.pfcandAnalyzerCS.genLabel = cms.InputTag("genParticles")
-process.load("HeavyIonsAnalysis.JetAnalysis.hcalNoise_cff")
+#process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzer_cfi")
+#process.pfcandAnalyzer.skipCharged = False
+#process.pfcandAnalyzer.pfPtMin = 0
+#process.pfcandAnalyzer.pfCandidateLabel = cms.InputTag("particleFlow")
+#process.pfcandAnalyzer.doVS = cms.untracked.bool(False)
+#process.pfcandAnalyzer.doUEraw_ = cms.untracked.bool(False)
+#process.pfcandAnalyzer.genLabel = cms.InputTag("genParticles")
+#process.load("HeavyIonsAnalysis.JetAnalysis.pfcandAnalyzerCS_cfi")
+#process.pfcandAnalyzerCS.skipCharged = False
+#process.pfcandAnalyzerCS.pfPtMin = 0
+#process.pfcandAnalyzerCS.pfCandidateLabel = cms.InputTag("particleFlow")
+#process.pfcandAnalyzerCS.doVS = cms.untracked.bool(False)
+#process.pfcandAnalyzerCS.doUEraw_ = cms.untracked.bool(False)
+#process.pfcandAnalyzerCS.genLabel = cms.InputTag("genParticles")
+#process.load("HeavyIonsAnalysis.JetAnalysis.hcalNoise_cff")
 
 #####################################################################################
 
@@ -264,8 +273,8 @@ process.ana_step = cms.Path(process.hltanalysis *
 #                            process.egmGsfElectronIDSequence + #Should be added in the path for VID module
 #                            process.ggHiNtuplizer +
 #                            process.ggHiNtuplizerGED +
-                            process.pfcandAnalyzer +
-		            process.pfcandAnalyzerCS +
+#                            process.pfcandAnalyzer +
+#		            process.pfcandAnalyzerCS +
 			    process.hltMuTree +
                             process.HiForest 
 #                            process.trackSequencesPP +
