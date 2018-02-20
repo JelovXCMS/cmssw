@@ -39,7 +39,7 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1))
+    input = cms.untracked.int32(20))
 
 #####################################################################################
 # Load Global Tag, Geometry, etc.
@@ -61,20 +61,20 @@ from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_pp50
 process = overrideJEC_pp5020(process)
 
 from CondCore.DBCommon.CondDBSetup_cfi import *
-process.jpTagConds = cms.ESSource("PoolDBESSource", CondDBSetup,
-                connect = cms.string('sqlite_file:btagnew_pythia8MC75X_recalib2017.db'),
-                toGet = cms.VPSet(         # overide Global Tag use EcalTBWeights_EBEE_offline
-                        cms.PSet(
-                                record = cms.string('BTagTrackProbability2DRcd') ,
-                                tag = cms.string('probBTagPDF2D_tag_mc')
-                                ),
-                        cms.PSet(
-                                record = cms.string('BTagTrackProbability3DRcd') ,
-                                tag = cms.string('probBTagPDF3D_tag_mc')
-                                )
-                        )
-                )
-process.es_prefer_jpTagConds = cms.ESPrefer("PoolDBESSource","jpTagConds")
+##process.jpTagConds = cms.ESSource("PoolDBESSource", CondDBSetup,
+##                connect = cms.string('sqlite_file:btagnew_pythia8MC75X_recalib2017.db'),
+##                toGet = cms.VPSet(         # overide Global Tag use EcalTBWeights_EBEE_offline
+##                        cms.PSet(
+##                                record = cms.string('BTagTrackProbability2DRcd') ,
+##                                tag = cms.string('probBTagPDF2D_tag_mc')
+##                                ),
+##                        cms.PSet(
+##                                record = cms.string('BTagTrackProbability3DRcd') ,
+##                                tag = cms.string('probBTagPDF3D_tag_mc')
+##                                )
+##                        )
+##                )
+##process.es_prefer_jpTagConds = cms.ESPrefer("PoolDBESSource","jpTagConds")
 
 #####################################################################################
 # Define tree output
@@ -259,7 +259,7 @@ process.pAna = cms.EndPath(process.skimanalysis)
 # Customization
 process.ak4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
 process.akSoftDrop4PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
-process.akSoftDrop10PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
+#process.akSoftDrop10PFpatJetsWithBtagging.getJetMCFlavour = cms.bool(False)
 #process.akSoftDrop4PFz01b1patJetsWithBtagging.getJetMCFlavour = cms.bool(False)
 #process.akSoftDrop4PFz005bm1patJetsWithBtagging.getJetMCFlavour = cms.bool(False)
 #process.akSoftDrop4PFz005bm2patJetsWithBtagging.getJetMCFlavour = cms.bool(False)
@@ -278,9 +278,9 @@ process.akSoftDrop4PFJetAnalyzer.doLifeTimeTaggingExtras = cms.untracked.bool(Tr
 process.akSoftDrop4PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
 process.akSoftDrop4PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
 
-process.akSoftDrop10PFJetAnalyzer.doLifeTimeTaggingExtras = cms.untracked.bool(True)
-process.akSoftDrop10PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
-process.akSoftDrop10PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
+#process.akSoftDrop10PFJetAnalyzer.doLifeTimeTaggingExtras = cms.untracked.bool(True)
+#process.akSoftDrop10PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
+#process.akSoftDrop10PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
 
 #process.akSoftDrop4PFz01bm1JetAnalyzer.trackSelection = process.akSoftDrop4PFJetAnalyzer.trackSelection
 #process.akSoftDrop4PFz01bm1JetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFJetAnalyzer.trackPairV0Filter
@@ -295,7 +295,7 @@ process.akSoftDrop10PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubje
 
 process.akSoftDrop4PFJetBtaggingSV *= process.akSoftDrop4PFSubjetJetTracksAssociatorAtVertex+process.akSoftDrop4PFSubjetImpactParameterTagInfos+process.akSoftDrop4PFSubjetJetProbabilityBJetTags+process.akSoftDrop4PFSubjetSecondaryVertexTagInfos+process.akSoftDrop4PFSubjetSecondaryVertexNegativeTagInfos+process.akSoftDrop4PFCombinedSubjetSecondaryVertexBJetTags+process.akSoftDrop4PFCombinedSubjetSecondaryVertexV2BJetTags+process.akSoftDrop4PFCombinedSubjetNegativeSecondaryVertexV2BJetTags
 
-process.akSoftDrop10PFJetBtaggingSV *= process.akSoftDrop10PFSubjetJetTracksAssociatorAtVertex+process.akSoftDrop10PFSubjetImpactParameterTagInfos+process.akSoftDrop10PFSubjetJetProbabilityBJetTags+process.akSoftDrop10PFSubjetSecondaryVertexTagInfos+process.akSoftDrop10PFSubjetSecondaryVertexNegativeTagInfos+process.akSoftDrop10PFCombinedSubjetSecondaryVertexBJetTags+process.akSoftDrop10PFCombinedSubjetSecondaryVertexV2BJetTags+process.akSoftDrop10PFCombinedSubjetNegativeSecondaryVertexV2BJetTags
+#process.akSoftDrop10PFJetBtaggingSV *= process.akSoftDrop10PFSubjetJetTracksAssociatorAtVertex+process.akSoftDrop10PFSubjetImpactParameterTagInfos+process.akSoftDrop10PFSubjetJetProbabilityBJetTags+process.akSoftDrop10PFSubjetSecondaryVertexTagInfos+process.akSoftDrop10PFSubjetSecondaryVertexNegativeTagInfos+process.akSoftDrop10PFCombinedSubjetSecondaryVertexBJetTags+process.akSoftDrop10PFCombinedSubjetSecondaryVertexV2BJetTags+process.akSoftDrop10PFCombinedSubjetNegativeSecondaryVertexV2BJetTags
 
 #process.akSoftDrop4PFz01bm1JetBtaggingSV *= process.akSoftDrop4PFz01bm1SubjetJetTracksAssociatorAtVertex+process.akSoftDrop4PFz01bm1SubjetImpactParameterTagInfos+process.akSoftDrop4PFz01bm1SubjetJetProbabilityBJetTags+process.akSoftDrop4PFz01bm1SubjetSecondaryVertexTagInfos+process.akSoftDrop4PFz01bm1CombinedSubjetSecondaryVertexBJetTags+process.akSoftDrop4PFz01bm1CombinedSubjetSecondaryVertexV2BJetTags
 #process.akSoftDrop4PFz01b1JetBtaggingSV *= process.akSoftDrop4PFz01b1SubjetJetTracksAssociatorAtVertex+process.akSoftDrop4PFz01b1SubjetImpactParameterTagInfos+process.akSoftDrop4PFz01b1SubjetJetProbabilityBJetTags+process.akSoftDrop4PFz01b1SubjetSecondaryVertexTagInfos+process.akSoftDrop4PFz01b1CombinedSubjetSecondaryVertexBJetTags+process.akSoftDrop4PFz01b1CombinedSubjetSecondaryVertexV2BJetTags

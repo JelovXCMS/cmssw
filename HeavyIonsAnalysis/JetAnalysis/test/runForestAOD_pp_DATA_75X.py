@@ -26,7 +26,7 @@ process.HiForest.HiForestVersion = cms.string(version)
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
                                 '/store/data/Run2015E/HighPtJet80/AOD/PromptReco-v1/000/262/173/00000/3E8293B5-9894-E511-90E8-02163E011FA1.root'                        
-                                #'/store/data/Run2015E/HighPtJet80/AOD/PromptReco-v1/000/262/272/00000/803A4255-7696-E511-B178-02163E0142DD.root'
+# '/store/data/Run2015E/HighPtJet80/AOD/PromptReco-v1/000/262/173/00000/3E8293B5-9894-E511-90E8-02163E011FA1.root'                                #'/store/data/Run2015E/HighPtJet80/AOD/PromptReco-v1/000/262/272/00000/803A4255-7696-E511-B178-02163E0142DD.root'
                             )
 )
 
@@ -53,20 +53,20 @@ from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import overrideJEC_pp50
 process = overrideJEC_pp5020(process)
 
 from CondCore.DBCommon.CondDBSetup_cfi import *
-process.jpTagConds = cms.ESSource("PoolDBESSource", CondDBSetup,
-                connect = cms.string('sqlite_file:btagnew_data75X_recalib2017.db'),
-                toGet = cms.VPSet(         # overide Global Tag use EcalTBWeights_EBEE_offline
-                        cms.PSet(
-                                record = cms.string('BTagTrackProbability2DRcd') ,
-                                tag = cms.string('probBTagPDF2D_tag_mc')
-                                ),
-                        cms.PSet(
-                                record = cms.string('BTagTrackProbability3DRcd') ,
-                                tag = cms.string('probBTagPDF3D_tag_mc')
-                                )
-                        )
-                )
-process.es_prefer_jpTagConds = cms.ESPrefer("PoolDBESSource","jpTagConds")
+##process.jpTagConds = cms.ESSource("PoolDBESSource", CondDBSetup,
+##                connect = cms.string('sqlite_file:btagnew_data75X_recalib2017.db'),
+##                toGet = cms.VPSet(         # overide Global Tag use EcalTBWeights_EBEE_offline
+##                        cms.PSet(
+##                                record = cms.string('BTagTrackProbability2DRcd') ,
+##                                tag = cms.string('probBTagPDF2D_tag_mc')
+##                                ),
+##                        cms.PSet(
+##                                record = cms.string('BTagTrackProbability3DRcd') ,
+##                                tag = cms.string('probBTagPDF3D_tag_mc')
+##                                )
+##                        )
+##                )
+##process.es_prefer_jpTagConds = cms.ESPrefer("PoolDBESSource","jpTagConds")
 
 #####################################################################################
 # Define tree output
@@ -97,7 +97,7 @@ process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4CaloJetSequence_pp_data_cff'
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak3PFJetSequence_pp_data_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak4PFJetSequence_pp_data_cff')
 
-process.load('HeavyIonsAnalysis.JetAnalysis.jets.akCs4PFJetSequence_pp_data_cff')
+#process.load('HeavyIonsAnalysis.JetAnalysis.jets.akCs4PFJetSequence_pp_data_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.akSoftDrop4PFJetSequence_pp_data_cff')
 
 process.highPurityTracks = cms.EDFilter("TrackSelector",
@@ -324,8 +324,8 @@ process.akSoftDrop4PFJetAnalyzer.doLifeTimeTaggingExtras = cms.untracked.bool(Tr
 process.ak4PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
 process.ak4PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
 
-process.akCs4PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
-process.akCs4PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
+#process.akCs4PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
+#process.akCs4PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
 
 process.akSoftDrop4PFJetAnalyzer.trackSelection = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.trackSelection
 process.akSoftDrop4PFJetAnalyzer.trackPairV0Filter = process.akSoftDrop4PFSubjetSecondaryVertexTagInfos.vertexCuts.v0Filter
