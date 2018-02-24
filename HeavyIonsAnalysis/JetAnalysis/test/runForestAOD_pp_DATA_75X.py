@@ -23,10 +23,11 @@ process.HiForest.HiForestVersion = cms.string(version)
 #####################################
 # Timing Module 
 #####################################
-process.Timing = cms.Service("Timing",
-      summaryOnly = cms.untracked.bool(False),
-      useJobReport = cms.untracked.bool(True)
-    )
+
+#process.Timing = cms.Service("Timing",
+#      summaryOnly = cms.untracked.bool(False),
+#      useJobReport = cms.untracked.bool(True)
+#    )
 
 #####################################################################################
 # Input source
@@ -163,7 +164,7 @@ process.jetSequences = cms.Sequence(
     process.highPurityTracks +
     #process.ak4CaloJetSequence +
     #process.ak3PFJetSequence +
-#    process.ak4PFJetSequence +
+    process.ak4PFJetSequence +
     #process.akCs4PFJetSequence +
     process.akSoftDrop4PFJetSequence 
     #process.ak5PFJetSequence

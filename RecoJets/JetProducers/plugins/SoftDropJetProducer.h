@@ -19,6 +19,16 @@
 
 #include "RecoJets/JetProducers/plugins/VirtualJetProducer.h"
 
+#include "FWCore/ParameterSet/interface/FileInPath.h"
+#include <TFile.h>
+#include <TH1.h>
+#include <TH1F.h>
+#include <TH2F.h>
+#include <iostream>
+#include <TF1.h>
+using namespace std;
+
+
 namespace cms
 {
   class SoftDropJetProducer : public VirtualJetProducer
@@ -49,6 +59,15 @@ namespace cms
     double beta_;               /// for soft drop : beta (angular exponent)
     double R0_;                 /// for soft drop : R0 (angular distance normalization - should be set to jet radius in most cases)
     bool   useOnlyCharged_;     /// run soft drop only on charged constituents
+ 
+    double JESpt0_;
+    double JESpt1_;
+    double JERpt0_;
+    double JERpt1_;
+	  bool  JER_;
+    bool isBjet_;
+
+		bool debug_;
 
     JetDefPtr                       fjJetDefinitionRecluster_; // fastjet jet definition for reclustering
     ClusterSequencePtr              fjClusterSeqRecluster_;    // fastjet cluster sequence for reclustering
@@ -65,7 +84,9 @@ namespace cms
     edm::EDGetTokenT<reco::CandidateView> input_candidateview_token_SD_;
     edm::EDGetTokenT<std::vector<edm::FwdPtr<reco::PFCandidate> > > input_candidatefwdptr_token_SD_;
     edm::EDGetTokenT<std::vector<edm::FwdPtr<pat::PackedCandidate> > > input_packedcandidatefwdptr_token_SD_;
-    
+  
+		double SjJES[500][2];
+	
   };
 }
 #endif
