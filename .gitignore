@@ -1,8 +1,62 @@
-__init__.py
-*.pyc
-.*.swp
 .#*
-*.root
-*.log
-#*#
 *~
+
+# specific folder or files not to be included
+
+# plots flies
+
+*.pdf
+*.eps
+*.ps
+
+# other files
+*.d
+*.txt
+*.swp
+*.log
+.*.swp
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+*.pyc
+__init__.py
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+
+# Data files
+*.root
+*~
+
+
+# other temp
+*_C_ACLiC_dict_rdict.pcm
+
+
