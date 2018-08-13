@@ -351,6 +351,8 @@ int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::donutPUEstimate(int jetEta,
   return 4*( ring[1]+ring[2] ); // This should really be multiplied by 4.5 not 4.
 }
 
+
+
 int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::chunkyDonutPUEstimate(l1t::Jet & jet, int size, 
 								     const std::vector<l1t::CaloTower> & towers){
  
@@ -442,6 +444,8 @@ int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::chunkyDonutPUEstimate(l1t::Jet & 
   
 }
 
+
+//Based on chunkDonut, for use when zeroing eta strips as done in HI
 int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::chunkySandwichPUEstimate(l1t::Jet & jet, int size, 
 								     const std::vector<l1t::CaloTower> & towers){
  
@@ -486,50 +490,15 @@ int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::chunkySandwichPUEstimate(l1t::Jet
       ring[1] += towEt;
 
     } 
-    /*
-    // do EtaUp
-    for (int iphi=jetPhi-size+1; iphi<jetPhi+size; ++iphi) {
-      
-      if (abs(ietaUp) <= CaloTools::mpEta(CaloTools::kHFEnd)) {    
-        int towPhi = iphi;
-        while ( towPhi > CaloTools::kHBHENrPhi ) towPhi -= CaloTools::kHBHENrPhi;
-        while ( towPhi < 1 ) towPhi += CaloTools::kHBHENrPhi;
-
-        const CaloTower& towEtaUp = CaloTools::getTower(towers, CaloTools::caloEta(ietaUp), towPhi);
-        int towEt = towEtaUp.hwPt();
-        ring[2] += towEt;
-      }
-
-    }
-
-    // do EtaDown
-    for (int iphi=jetPhi-size+1; iphi<jetPhi+size; ++iphi) {
-      
-      if (abs(ietaDown) <= CaloTools::mpEta(CaloTools::kHFEnd)) {
-        int towPhi = iphi;
-        while ( towPhi > CaloTools::kHBHENrPhi ) towPhi -= CaloTools::kHBHENrPhi;
-        while ( towPhi < 1 ) towPhi += CaloTools::kHBHENrPhi;
-	
-        const CaloTower& towEtaDown = CaloTools::getTower(towers, CaloTools::caloEta(ietaDown), towPhi);
-        int towEt = towEtaDown.hwPt();
-        ring[3] += towEt;
-      }
-     
-    }     
-   */ 
     
   }
-    
-  // for donut subtraction we only use the middle 2 (in energy) ring strips
-  // std::sort(ring.begin(), ring.end(), std::greater<int>());
-  // return ( ring[1]+ring[2] ); 
 
-  // use lowest 3 strips as PU estimate
+	//Each ring is the strips deep and nine strips across, i.e. 27 towers. A jet is 81 towers. For the rings to properly map onto the towers, we need 3 of them (like as down in ChunkyDonut. In ChunkySandwich we opt to take the lower strip twice, higher strip once.
+    
   std::sort( ring.begin(), ring.end() );
-  
 //  for(unsigned int i=0; i<4; ++i) jet.setPUDonutEt(i, (short int) ring[i]);
 
-  return ( 2*ring[0] );
+  return ( 2*ring[0] + ring[1]);
   
 }
 
