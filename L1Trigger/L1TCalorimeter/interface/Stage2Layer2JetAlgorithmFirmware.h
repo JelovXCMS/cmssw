@@ -26,8 +26,9 @@ namespace l1t {
     void processEvent(const std::vector<CaloTower> & towers,
 			      std::vector<Jet> & jets, std::vector<Jet> & alljets) override;
 
-    void create(const std::vector<CaloTower> & towers,
-	                      std::vector<Jet> & jets, std::vector<Jet> & alljets, std::string PUSubMethod);
+    // void create(const std::vector<CaloTower> & towers, std::vector<Jet> & jets, std::vector<Jet> & alljets, std::string PUSubMethod);
+		void create(const std::vector<CaloTower> & towers, std::vector<Jet> & jets, std::vector<Jet> & alljets, std::string PUSubMethod, bool hiMode);
+
 
     void accuSort(std::vector<Jet> & jets);
 
@@ -41,6 +42,8 @@ namespace l1t {
 
     int chunkyDonutPUEstimate(Jet & jet, int pos,
                               const std::vector<l1t::CaloTower> & towers);
+
+
 
   private:
 

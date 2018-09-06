@@ -54,13 +54,23 @@ namespace l1t {
 	   egBypassShapeFlag=42,
 	   egBypassECALFGFlag=43,
 	   egBypassHoEFlag=44,
-	   NUM_CALOPARAMNODES=45
+		 hiModeFlag=45,
+	   NUM_CALOPARAMNODES=46
     };
 
     CaloParamsHelper() { pnode_.resize(NUM_CALOPARAMNODES); }
     CaloParamsHelper(const CaloParams);
     ~CaloParamsHelper() {}
     
+		unsigned hiMode() const {
+		if(pnode_[hiModeFlag].uparams_.empty()) return 0;
+		else return pnode_[hiModeFlag].uparams_[0];
+		}
+
+		void setHiMode(unsigned flag) {
+		pnode_[hiModeFlag].uparams_.resize(1);
+		pnode_[hiModeFlag].uparams_[0] = flag;
+		}
 
 
     bool isValidForStage1() {return true; } 

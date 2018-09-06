@@ -76,6 +76,9 @@ L1TCaloStage2ParamsESProducer::L1TCaloStage2ParamsESProducer(const edm::Paramete
 
   CaloParamsHelper m_params_helper;
 
+  m_params_helper.setHiMode(conf.getParameter<unsigned>("hiMode"));
+
+
   // towers
   m_params_helper.setTowerLsbH(conf.getParameter<double>("towerLsbH"));
   m_params_helper.setTowerLsbE(conf.getParameter<double>("towerLsbE"));
