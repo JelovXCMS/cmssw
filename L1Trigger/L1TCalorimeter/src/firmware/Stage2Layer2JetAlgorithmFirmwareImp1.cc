@@ -77,7 +77,7 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
   //TURNING OFF SUB IF HIMODE
             if (PUSubMethod == "Donut" && !hiMode) {
             if (PUSubMethod == "ChunkyDonut" && !hiMode) {
-
+            if (PUSubMethod == "ChunkySandwich" && !hiMode) {
 
   // etaSide=1 is positive eta, etaSide=-1 is negative eta
   for (int etaSide=1; etaSide>=-1; etaSide-=2) {
@@ -177,7 +177,12 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 		iEt -= puEt;
 	      }
 	    }
-	    
+	   
+      if (PUSubMethod == "ChunkySandwich"){
+		puEt = chunkySandwichPUEstimate(jet, 5, towers);
+		iEt -= puEt;
+	     }
+ 
 	    if (iEt<=0) continue;
 
 	    // if tower Et is saturated, saturate jet Et
@@ -218,151 +223,9 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
   }
 
 	}//
+	}//
 	}// end turn off hiMode 
 }
-
-/*
-void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::CaloTower> & towers,
-						       std::vector<l1t::Jet> & jets, 
-						       std::vector<l1t::Jet> & alljets, 
-						       std::string PUSubMethod) {
-  
-  // etaSide=1 is positive eta, etaSide=-1 is negative eta
-  for (int etaSide=1; etaSide>=-1; etaSide-=2) {
-    
-    // the 4 groups of rings
-    std::vector<int> ringGroup1, ringGroup2, ringGroup3, ringGroup4;
-    for (int i=1; i<=CaloTools::mpEta(CaloTools::kHFEnd); i++) {
-      if      ( ! ((i-1)%4) ) ringGroup1.push_back( i * etaSide );
-      else if ( ! ((i-2)%4) ) ringGroup2.push_back( i * etaSide );
-      else if ( ! ((i-3)%4) ) ringGroup3.push_back( i * etaSide );
-      else if ( ! ((i-4)%4) ) ringGroup4.push_back( i * etaSide );
-    }
-    std::vector< std::vector<int> > theRings = { ringGroup1, ringGroup2, ringGroup3, ringGroup4 };
-    
-    // the 24 jets in this eta side
-    std::vector<l1t::Jet> jetsHalf;
-       
-    // loop over the 4 groups of rings
-    for ( unsigned ringGroupIt=1; ringGroupIt<=theRings.size(); ringGroupIt++ ) {
-      
-      // the 6 accumulated jets
-      std::vector<l1t::Jet> jetsAccu;
-     
-      // loop over the 10 rings in this group
-      for ( unsigned ringIt=0; ringIt<theRings.at(ringGroupIt-1).size(); ringIt++ ) {
-	
-	int ieta = theRings.at(ringGroupIt-1).at(ringIt);
-       
-	// the jets in this ring
-	std::vector<l1t::Jet> jetsRing;
-	
-	// loop over phi in the ring
-	for ( int iphi=1; iphi<=CaloTools::kHBHENrPhi; ++iphi ) {
-	  
-	  // no more than 18 jets per ring
-	  if (jetsRing.size()==18) break;
-	  
-	  // seed tower
-	  const CaloTower& tow = CaloTools::getTower(towers, CaloTools::caloEta(ieta), iphi); 
-	  
-	  int seedEt = tow.hwPt();
-	  int iEt = seedEt;
-	  bool vetoCandidate = false;
-	  
-	  // check it passes the seed threshold
-	  if(iEt < floor(params_->jetSeedThreshold()/params_->towerLsbSum())) continue;
-	  
-	  // loop over towers in this jet
-	  for( int deta = -4; deta < 5; ++deta ) {
-	    for( int dphi = -4; dphi < 5; ++dphi ) {
-	      
-	      int towEt = 0;
-	      int ietaTest = ieta+deta;
-	      int iphiTest = iphi+dphi;
-	      
-	      // wrap around phi
-	      while ( iphiTest > CaloTools::kHBHENrPhi ) iphiTest -= CaloTools::kHBHENrPhi;
-	      while ( iphiTest < 1 ) iphiTest += CaloTools::kHBHENrPhi;
-	      
-	      // wrap over eta=0
-	      if (ieta > 0 && ietaTest <=0) ietaTest -= 1;
-	      if (ieta < 0 && ietaTest >=0) ietaTest += 1;
-	   
-	      // check jet mask and sum tower et
-	      const CaloTower& towTest = CaloTools::getTower(towers, CaloTools::caloEta(ietaTest), iphiTest);
-	      towEt = towTest.hwPt();
-	      
-              if      (mask_[8-(dphi+4)][deta+4] == 0) continue;
-	      else if (mask_[8-(dphi+4)][deta+4] == 1) vetoCandidate = (seedEt < towEt);
-	      else if (mask_[8-(dphi+4)][deta+4] == 2) vetoCandidate = (seedEt <= towEt);
-	      
-	      if (vetoCandidate) break;
-	      else iEt += towEt;
-	   
-	    }
-	    if(vetoCandidate) break; 
-	  }
-	  
-	  // add the jet to the list
-	  if (!vetoCandidate) {
-
-	    int rawEt = iEt;
-	    int puEt(0);
-	
-	    math::XYZTLorentzVector p4;
-	    int caloEta = CaloTools::caloEta(ieta);
-	    l1t::Jet jet( p4, -999, caloEta, iphi, 0);
-
-	    if(!params_->jetBypassPUS()){
-	      if (PUSubMethod == "Donut") {
-		puEt = donutPUEstimate(ieta, iphi, 5, towers);	    
-		iEt -= puEt;
-	      }
-	      
-	      if (PUSubMethod == "ChunkyDonut"){
-		puEt = chunkyDonutPUEstimate(jet, 5, towers);
-		iEt -= puEt;
-	      }
-	    }
-	    
-	    if (iEt<=0) continue;
-
-	    // if tower Et is saturated, saturate jet Et
-	    if (seedEt == CaloTools::kSatHcal || seedEt == CaloTools::kSatEcal || seedEt == CaloTools::kSatTower) iEt = CaloTools::kSatJet;
-
-	    jet.setHwPt(iEt);
-	    jet.setRawEt( (short int) rawEt);
-	    jet.setSeedEt((short int) seedEt);
-	    jet.setTowerIEta((short int) caloEta);
-	    jet.setTowerIPhi((short int) iphi);
-	    jet.setPUEt((short int) puEt);
-	    
-
-	    jetsRing.push_back(jet);
-	    alljets.push_back(jet);
-	    
-	  }
-	  
-	}
-
-	 // jet energy corrections
-	calibrate(jetsRing, 0, false); // pass the jet collection and the hw threshold above which to calibrate
-
-	// sort these jets and keep top 6
-	start_ = jetsRing.begin();  
-	end_   = jetsRing.end();
-	BitonicSort<l1t::Jet>(down, start_, end_);
-	if (jetsRing.size()>6) jetsRing.resize(6);
-	
-	// update jets
-	jets.insert(jets.end(),jetsRing.begin(),jetsRing.end());
-	  
-      }
-    }
-  } 
-}
-*/
 
 //Accumulating sort
 void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::accuSort(std::vector<l1t::Jet> & jets){
@@ -586,6 +449,63 @@ int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::chunkyDonutPUEstimate(l1t::Jet & 
   
 }
 
+
+//Based on chunkDonut, for use when zeroing eta strips as done in HI
+int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::chunkySandwichPUEstimate(l1t::Jet & jet, int size, 
+								     const std::vector<l1t::CaloTower> & towers){
+ 
+  int jetPhi = jet.hwPhi();
+  int jetEta = CaloTools::mpEta(jet.hwEta());
+
+   // ring is a vector with 4 ring strips, one for each side of the ring
+  // order is PhiUp, PhiDown, EtaUp, EtaDown
+  std::vector<int> ring(2,0);
+  
+  // number of strips in donut - should make this configurable
+  int nStrips = 3;
+
+  // loop over strips
+  for (int stripIt=0; stripIt<nStrips; stripIt++) {
+
+    int iphiUp   = jetPhi + size + stripIt;
+    int iphiDown = jetPhi - size - stripIt;
+    while ( iphiUp > CaloTools::kHBHENrPhi )   iphiUp   -= CaloTools::kHBHENrPhi;
+    while ( iphiDown < 1 ) iphiDown += CaloTools::kHBHENrPhi;
+
+//    int ietaUp   = jetEta + size + stripIt;
+//    int ietaDown = jetEta - size - stripIt;
+//    if ( jetEta<0 && ietaUp>=0 )   ietaUp   += 1;
+//    if ( jetEta>0 && ietaDown<=0 ) ietaDown -= 1;
+    
+    // do PhiUp and PhiDown
+    for (int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta) {
+      
+      if (abs(ieta) > CaloTools::mpEta(CaloTools::kHFEnd)) continue;
+      
+      int towEta = ieta;
+      if (jetEta>0 && towEta<=0) towEta-=1;
+      if (jetEta<0 && towEta>=0) towEta+=1;
+            
+      const CaloTower& towPhiUp = CaloTools::getTower(towers, CaloTools::caloEta(towEta), iphiUp);
+      int towEt = towPhiUp.hwPt();
+      ring[0] += towEt;
+            
+      const CaloTower& towPhiDown = CaloTools::getTower(towers, CaloTools::caloEta(towEta), iphiDown);
+      towEt = towPhiDown.hwPt();
+      ring[1] += towEt;
+
+    } 
+    
+  }
+
+	//Each ring is the strips deep and nine strips across, i.e. 27 towers. A jet is 81 towers. For the rings to properly map onto the towers, we need 3 of them (like as down in ChunkyDonut. In ChunkySandwich we opt to take the lower strip twice, higher strip once.
+    
+  std::sort( ring.begin(), ring.end() );
+//  for(unsigned int i=0; i<4; ++i) jet.setPUDonutEt(i, (short int) ring[i]);
+
+  return ( 2*ring[0] + ring[1]);
+  
+}
 
 
 void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::calibrate(std::vector<l1t::Jet> & jets, int calibThreshold, bool isAllJets) {

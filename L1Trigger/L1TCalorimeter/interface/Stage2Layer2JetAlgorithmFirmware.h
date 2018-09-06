@@ -43,6 +43,8 @@ namespace l1t {
     int chunkyDonutPUEstimate(Jet & jet, int pos,
                               const std::vector<l1t::CaloTower> & towers);
 
+    int chunkySandwichPUEstimate(Jet & jet, int pos,
+                              const std::vector<l1t::CaloTower> & towers);
 
 
   private:
