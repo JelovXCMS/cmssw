@@ -69,6 +69,8 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 						       std::vector<l1t::Jet> & jets, 
 						       std::vector<l1t::Jet> & alljets, 
 						       std::string PUSubMethod) {
+
+	std::map<int,int> SumEtEtaMap=getSumEtEtaMap(towers);
   
   // etaSide=1 is positive eta, etaSide=-1 is negative eta
   for (int etaSide=1; etaSide>=-1; etaSide-=2) {
@@ -341,6 +343,32 @@ int l1t::Stage2Layer2JetAlgorithmFirmwareImp1::donutPUEstimate(int jetEta,
   std::sort(ring.begin(), ring.end(), std::greater<int>());
   
   return 4*( ring[1]+ring[2] ); // This should really be multiplied by 4.5 not 4.
+}
+
+std::map<int,int> l1t::Stage2Layer2JetAlgorithmFirmwareImp1::getSumEtEtaMap(const std::vector<l1t::CaloTower> & towers){
+
+
+	std::map<int,int> SumEtEtaMap;
+	int EtaMin=-41;
+	int EtaMax=41;
+	int phiMin=1;
+	int phiMax=72;
+
+	for(int iEta=EtaMin ; iEta<=EtaMax; iEta++ )
+	{
+		int SumEt=0;
+		for(int iPhi=phiMin; iPhi<=phiMax; iPhi++){
+			const CaloTower& tow = CaloTools::getTower(towers, CaloTools::caloEta(iEta), iPhi);
+			int towEt=tow.hwPt();
+			SumEt+=towEt;
+
+		}// end for iPih<=phiMax
+		SumEtEtaMap[iEta]=SumEt;
+
+	}// end for iEta<=EtaMax
+
+	return SumEtEtaMap;
+
 }
 
 
