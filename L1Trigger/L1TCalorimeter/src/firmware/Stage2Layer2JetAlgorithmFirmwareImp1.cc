@@ -70,7 +70,6 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 						       std::vector<l1t::Jet> & alljets, 
 						       std::string PUSubMethod) {
 
-	std::map<int,int> SumEtEtaMap=getSumEtEtaMap(towers);
   
   // etaSide=1 is positive eta, etaSide=-1 is negative eta
   for (int etaSide=1; etaSide>=-1; etaSide-=2) {
