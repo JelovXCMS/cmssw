@@ -174,6 +174,39 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 		puEt = chunkySandwichPUEstimate(jet, 5, towers, PUSubMethod);
 		iEt -= puEt;
 	      }
+
+			
+        if(PUSubMethod == "PhiRing1"){
+		int size=5;
+		std::map<int,int> SumEtEtaMap=getSumEtEtaMap(towers);
+		// int jetPhi=jet.hwPhi();
+	  int jetEta=CaloTools::mpEta(jet.hwEta());
+    puEt = 0;
+		for(int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta){
+			auto iter=SumEtEtaMap.find(ieta);
+			puEt+=iter->second;
+		}
+		puEt=(puEt*(size*2-1))/CaloTools::kHBHENrPhi;
+    iEt -= puEt;
+        }
+
+        if(PUSubMethod == "PhiRing2"){
+		int size=5;
+		std::map<int,int> SumEtEtaMap=getSumEtEtaMap(towers);
+		// int jetPhi=jet.hwPhi();
+	  int jetEta=CaloTools::mpEta(jet.hwEta());
+    puEt = 0;
+		for(int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta){
+      auto iter=SumEtEtaMap.find(ieta);
+      puEt+=iter->second;
+		}
+		puEt-=iEt;
+		puEt=(puEt*(size*2-1))/(CaloTools::kHBHENrPhi - (size*2-1));
+    iEt -= puEt;
+        }
+
+
+
 	    }
 	    
 	    if (iEt<=0) continue;
