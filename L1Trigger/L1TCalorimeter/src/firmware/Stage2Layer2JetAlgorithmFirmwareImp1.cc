@@ -182,6 +182,7 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 	  int jetEta=CaloTools::mpEta(jet.hwEta());
     puEt = 0;
 		for(int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta){
+			if(ieta==0) continue; // eta start from +- 1
 			auto iter=SumEtEtaMap.find(ieta);
 			puEt+=iter->second;
 		}
@@ -196,6 +197,7 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 	  int jetEta=CaloTools::mpEta(jet.hwEta());
     puEt = 0;
 		for(int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta){
+			if(ieta==0) continue;
       auto iter=SumEtEtaMap.find(ieta);
       puEt+=iter->second;
 		}
