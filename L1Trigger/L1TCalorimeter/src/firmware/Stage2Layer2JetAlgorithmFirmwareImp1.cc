@@ -180,8 +180,12 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 		std::map<int,int> SumEtEtaMap=getSumEtEtaMap(towers);
 		// int jetPhi=jet.hwPhi();
 	  int jetEta=CaloTools::mpEta(jet.hwEta());
+		int jetEtaLow=jetEta-size+1;
+		int jetEtaHigh=jetEta+size-1;
+		if(jetEta>0 && jetEtaLow<=0) jetEtaLow-=1;
+		if(jetEta<0 && jetEtaLow>=0) jetEtaLow+=1;
     puEt = 0;
-		for(int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta){
+		for(int ieta=jetEtaLow; ieta<=jetEtaHigh; ++ieta){
 			if(ieta==0) continue; // eta start from +- 1
 			auto iter=SumEtEtaMap.find(ieta);
 			puEt+=iter->second;
@@ -195,8 +199,12 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 		std::map<int,int> SumEtEtaMap=getSumEtEtaMap(towers);
 		// int jetPhi=jet.hwPhi();
 	  int jetEta=CaloTools::mpEta(jet.hwEta());
+		int jetEtaLow=jetEta-size+1;
+		int jetEtaHigh=jetEta+size-1;
+		if(jetEta>0 && jetEtaLow<=0) jetEtaLow-=1;
+		if(jetEta<0 && jetEtaLow>=0) jetEtaLow+=1;
     puEt = 0;
-		for(int ieta=jetEta-size+1; ieta<jetEta+size; ++ieta){
+		for(int ieta=jetEtaLow; ieta<=jetEtaHigh; ++ieta){
 			if(ieta==0) continue;
       auto iter=SumEtEtaMap.find(ieta);
       puEt+=iter->second;
