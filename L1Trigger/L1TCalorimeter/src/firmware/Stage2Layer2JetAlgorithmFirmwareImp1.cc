@@ -183,7 +183,7 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 		int jetEtaLow=jetEta-size+1;
 		int jetEtaHigh=jetEta+size-1;
 		if(jetEta>0 && jetEtaLow<=0) jetEtaLow-=1;
-		if(jetEta<0 && jetEtaLow>=0) jetEtaLow+=1;
+		if(jetEta<0 && jetEtaHigh>=0) jetEtaHigh+=1;
     puEt = 0;
 		for(int ieta=jetEtaLow; ieta<=jetEtaHigh; ++ieta){
 			if(ieta==0) continue; // eta start from +- 1
@@ -202,7 +202,7 @@ void l1t::Stage2Layer2JetAlgorithmFirmwareImp1::create(const std::vector<l1t::Ca
 		int jetEtaLow=jetEta-size+1;
 		int jetEtaHigh=jetEta+size-1;
 		if(jetEta>0 && jetEtaLow<=0) jetEtaLow-=1;
-		if(jetEta<0 && jetEtaLow>=0) jetEtaLow+=1;
+		if(jetEta<0 && jetEtaHigh>=0) jetEtaHigh+=1;
     puEt = 0;
 		for(int ieta=jetEtaLow; ieta<=jetEtaHigh; ++ieta){
 			if(ieta==0) continue;
