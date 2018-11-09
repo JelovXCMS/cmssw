@@ -21,6 +21,7 @@
 // user include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/one/EDAnalyzer.h"
+// #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/Framework/interface/ESTransientHandle.h"
@@ -67,6 +68,7 @@
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 #include "TH1F.h"
 #include "TH2F.h"
+#include "TTree.h"
 
 #include "Geometry/Records/interface/MuonGeometryRecord.h"
 #include "Geometry/RPCGeometry/interface/RPCGeometry.h"
@@ -86,11 +88,37 @@
 #include "TGraph.h"
 #include "TGraphErrors.h"
 
+
 //
 // class declaration
 //
+using namespace std;
+using namespace edm;
 
-class RateVsLumi : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
+struct RPCEvent{
+
+
+  // event information
+  int nRun;
+  int nEv;
+  int nLumi;
+  int nBX;	
+
+  int Ls;
+  double Lumi;
+  double Rate;
+  double RB1inHits;
+	double areaRB1in;
+
+
+	// int myScale;
+
+};
+
+
+class RateVsLumi : public edm::one::EDAnalyzer<edm::one::SharedResources>  
+// class RateVsLumi : public edm::EDAnalyzer  
+{
    public:
       explicit RateVsLumi(const edm::ParameterSet&);
       ~RateVsLumi();
@@ -176,6 +204,13 @@ class RateVsLumi : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 //areas
   double areaRB1in, areaRB1out, areaRB2in, areaRB2out, areaRB3, areaRB4, areaB, areaWp2, areaWp1, areaW0, areaWm1, areaWm2;
   double areaREp, areaREm, areaREp1, areaREp2, areaREp3, areaREp4, areaREm1, areaREm2, areaREm3, areaREm4;
+
+	edm::Service<TFileService> fs;
+
+  TTree * RPCTree_;
+  RPCEvent rpcev_;
+
+
 };
 
 RateVsLumi::RateVsLumi(const edm::ParameterSet& iConfig)
@@ -200,6 +235,13 @@ RateVsLumi::~RateVsLumi()
 void
 RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
+  //  cout <<"Got data"<<endl;
+  rpcev_.nEv = (int)iEvent.id().event();
+  rpcev_.nRun = (int)iEvent.id().run();
+  rpcev_.nLumi = (int)iEvent.luminosityBlock();
+  rpcev_.nBX = (int)iEvent.bunchCrossing();
+
+
   numbEvents->Fill(1);
   using namespace edm;
 //areas
@@ -240,6 +282,12 @@ RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   lumiblock = iEvent.getLuminosityBlock().luminosityBlock();
   lumiperblock = lumiperblock*1./1000.;	//10^33
 //  lumiperblock = std::floor((lumiperblock * 100.) + 0.5) / 100.;
+
+	rpcev_.Ls= lumiblock;
+	rpcev_.Lumi=lumiperblock;
+
+
+	cout<<"Ls = "<<lumiblock<<" , Lumi = "<<lumiperblock<<endl;
 
   if (debug) std::cout << "lumi section = " << lumiblock << "\tinst. lumi = " << lumiperblock << " x 10^33 Hz/cm^2" << std::endl;
   pairLsLumi.insert ( std::pair<int,double>(lumiblock,lumiperblock));
@@ -425,6 +473,8 @@ RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
           {
             areaRB1in +=area;
             std::map<int, double>::iterator lb = pairLsRateRB1in.find(lumiblock);
+						rpcev_.RB1inHits+=countRecHits;
+						// cout<<"rpcev_.RB1inHits = "<<rpcev_.RB1inHits<<" , countRecHits = "<<countRecHits<<endl;
             if(lb != pairLsRateRB1in.end()) lb->second += countRecHits;
             else pairLsRateRB1in.insert ( std::pair<int,double>(lumiblock,countRecHits));
           }
@@ -512,15 +562,46 @@ RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         }
       }//end barrel
   }//loop over rolls
-}
+
+	rpcev_.areaRB1in = areaRB1in;
+	cout<<"areaRB1in = "<<areaRB1in<<endl;
+	cout<<"rpcev_.RB1inHits = "<<rpcev_.RB1inHits<<endl;
+
+  //std::map<int, double>::iterator lb = pairLsRateRB1in.find(lumiblock);
+	for (auto &it : pairLsRateRB1in){
+		cout<<"pairLsRate first (LS) "<<it.first<<"pairLsRateRB1in second (RB1in)"<<it.second<<endl;
+	}
+
+  RPCTree_->Fill();
+  memset(&rpcev_,0,sizeof rpcev_);
+
+} // end RateVsLumi:analyzer
 
 
 // ------------ method called once each job just before starting event loop  ------------
 void
 RateVsLumi::beginJob()
 {
-  edm::Service <TFileService> fs;
+  // edm::Service <TFileService> fs;
 // number of events
+
+  RPCTree_ = fs->make<TTree>("nt","");
+
+  // event
+  RPCTree_->Branch("nEv",&rpcev_.nEv,"nEv/I");
+  RPCTree_->Branch("nLumi",&rpcev_.nLumi,"nLumi/I");
+  RPCTree_->Branch("nBX",&rpcev_.nBX,"nBX/I");
+  RPCTree_->Branch("nRun",&rpcev_.nRun,"nRun/I");
+
+	//
+  RPCTree_->Branch("Ls",&rpcev_.Ls,"Ls/I");
+  RPCTree_->Branch("Lumi",&rpcev_.Lumi,"Lumi/D");
+  RPCTree_->Branch("Rate",&rpcev_.Rate,"Rate/D");
+  RPCTree_->Branch("RB1inHits",&rpcev_.RB1inHits,"RB1inHits/D");
+  RPCTree_->Branch("areaRB1in",&rpcev_.areaRB1in,"areaRB1in/D");
+
+//  RPCTree_->Branch("myScale",&rpcev_.myScale,"myScale/D");
+
   numbEvents =fs->make<TH1F>("numbEvents", "numbEvents", 2, 0., 2.);
 
 /////////// test lumi counts
