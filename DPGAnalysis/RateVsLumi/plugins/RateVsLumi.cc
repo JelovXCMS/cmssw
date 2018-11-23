@@ -207,6 +207,8 @@ class RateVsLumi : public edm::one::EDAnalyzer<edm::one::SharedResources>
 
 	edm::Service<TFileService> fs;
 
+
+	bool debug1;
   TTree * RPCTree_;
   RPCEvent rpcev_;
 
@@ -235,6 +237,9 @@ RateVsLumi::~RateVsLumi()
 void
 RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
+
+  memset(&rpcev_,0,sizeof rpcev_);
+	debug1=true;
   //  cout <<"Got data"<<endl;
   rpcev_.nEv = (int)iEvent.id().event();
   rpcev_.nRun = (int)iEvent.id().run();
@@ -287,7 +292,7 @@ RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	rpcev_.Lumi=lumiperblock;
 
 
-	cout<<"Ls = "<<lumiblock<<" , Lumi = "<<lumiperblock<<endl;
+	if(debug1) cout<<"Ls = "<<lumiblock<<" , Lumi = "<<lumiperblock<<endl;
 
   if (debug) std::cout << "lumi section = " << lumiblock << "\tinst. lumi = " << lumiperblock << " x 10^33 Hz/cm^2" << std::endl;
   pairLsLumi.insert ( std::pair<int,double>(lumiblock,lumiperblock));
@@ -564,13 +569,13 @@ RateVsLumi::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   }//loop over rolls
 
 	rpcev_.areaRB1in = areaRB1in;
-	cout<<"areaRB1in = "<<areaRB1in<<endl;
-	cout<<"rpcev_.RB1inHits = "<<rpcev_.RB1inHits<<endl;
+	// cout<<"areaRB1in = "<<areaRB1in<<endl;
+	// cout<<"rpcev_.RB1inHits = "<<rpcev_.RB1inHits<<endl;
 
   //std::map<int, double>::iterator lb = pairLsRateRB1in.find(lumiblock);
-	for (auto &it : pairLsRateRB1in){
-		cout<<"pairLsRate first (LS) "<<it.first<<"pairLsRateRB1in second (RB1in)"<<it.second<<endl;
-	}
+	// for (auto &it : pairLsRateRB1in){
+		// cout<<"pairLsRate first (LS) "<<it.first<<"pairLsRateRB1in second (RB1in)"<<it.second<<endl;
+	// }
 
   RPCTree_->Fill();
   memset(&rpcev_,0,sizeof rpcev_);

@@ -12,7 +12,7 @@
 #include <map>
 
 long long LsKey(long long Ls, long long run){
-	return (1000000*run + 1*Ls);
+	return (10000000*run + 1*Ls);
 }
 
 
@@ -48,14 +48,11 @@ void nt::Loop()
 	 TGraphErrors *RB1in_InstLumi = new TGraphErrors();
 	 RB1in_InstLumi->SetName("RB1in_InstLumi");
 	 RB1in_InstLumi->SetTitle("RB1in hits vs Inst. lumi");
-//("RB1in_InstLumi","RB1in hits vs Inst. lumi");
 
-      // std::map<long long , double> pairLsKeyLumi;
-      // std::map<long long , double> pairLsKeyRateRB1in;
-//      std::map<int, double> pairLsRate;
-      std::map<int , double> pairLsLumi;
-      std::map<int , double> pairLsRateRB1in;
+      std::map<long long , double> pairLsKeyLumi;
+      std::map<long long , double> pairLsKeyRateRB1in;
 
+	int nRun_pre=0;
 
 
    if (fChain == 0) return;
@@ -67,27 +64,39 @@ void nt::Loop()
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-		  pairLsLumi.insert ( std::pair<int,double>(Ls,Lumi));
 
-	    std::map<int, double>::iterator lb = pairLsRateRB1in.find(Ls);
-      if(lb != pairLsRateRB1in.end()) lb->second += RB1inHits;
-      else pairLsRateRB1in.insert ( std::pair<int,double>(Ls,RB1inHits));
-	
-      // if (Cut(ientry) < 0) continue;
+		  pairLsKeyLumi.insert ( std::pair<long long,double>(LsKey(Ls,nRun),Lumi));
+
+	    std::map<long long, double>::iterator lb = pairLsKeyRateRB1in.find(LsKey(Ls,nRun));
+      if(lb != pairLsKeyRateRB1in.end()) {lb->second += RB1inHits;
+			}
+      else {
+				pairLsKeyRateRB1in.insert ( std::pair<long long,double>(LsKey(Ls,nRun),RB1inHits));			
+			}
+
    } // end for jentry<nentries
+
 
 // filling TGraph
 
 		int jrb1in=0;
-  std::map<int,double>::iterator itLumi = pairLsLumi.begin();
-  for (itLumi=pairLsLumi.begin(); itLumi!=pairLsLumi.end(); ++itLumi)
+  std::map<long long,double>::iterator itLumi = pairLsKeyLumi.begin();
+  for (itLumi=pairLsKeyLumi.begin(); itLumi!=pairLsKeyLumi.end(); ++itLumi)
   {
 
-    std::map<int,double>::iterator itRateRB1in = pairLsRateRB1in.find(itLumi->first);
-    if(itRateRB1in != pairLsRateRB1in.end())
+		// cout<<"pairLsLumi first = "<<itLumi->first<<" , second = "<<itLumi->second<<endl;
+
+    std::map<long long,double>::iterator itRateRB1in = pairLsKeyRateRB1in.find(itLumi->first);
+    if(itRateRB1in != pairLsKeyRateRB1in.end())
     {
       // if (debug) std::cout << "Found " << itRateRB1in->first << " " << itRateRB1in->second << std::endl;
+			if(itRateRB1in->second > 1e8  ) {
+
+				cout<<"Rb1in_istLumi jr = "<<jrb1in<<" ,Ls = "<<itLumi->first<<" ,lumi  = "<<itLumi->second<<" ,rateRB1in = "<<itRateRB1in->second<<endl;
+				continue;
+			}
       RB1in_InstLumi->SetPoint(jrb1in, itLumi->second, itRateRB1in->second);
+				// cout<<"Rb1in_istLumi jr = "<<jrb1in<<" ,Ls = "<<itLumi->first<<" ,lumi  = "<<itLumi->second<<" ,rateRB1in = "<<itRateRB1in->second<<endl;
 			// cout<<"jrb1in = "<<jrb1in<<" ,Lumi = "<< itLumi->second<<" RB1in = "<<itRateRB1in->second<<endl;
       // RB1in_toHz->SetPoint(jrb1in, itLumi->second, (itRateRB1in->second)/(myTime*myscale*1.));
       // RB1in_toHzcm2->SetPoint(jrb1in, itLumi->second, (itRateRB1in->second)/(areaRB1in*myTime*myscale*1.));
@@ -95,9 +104,29 @@ void nt::Loop()
     }
 	} // end loop LsLumi
 
+	/*
+	for(auto &it : pairLsKeyRateRB1in){
+			 cout<<"pairLsRateRB1in , first = "<<it.first<<" , second = "<<it.second<<endl;
+	}
+	*/
+
 	fout->cd();
 	RB1in_InstLumi->Draw();
 	RB1in_InstLumi->Write();
 
 
+	cout<<"nentries = "<<nentries<<endl;
+
 }
+
+int readntPlot(){
+
+	nt m;
+	m.Loop();
+
+
+	return 0;
+}
+
+
+

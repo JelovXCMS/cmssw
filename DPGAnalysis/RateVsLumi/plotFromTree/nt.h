@@ -62,11 +62,11 @@ nt::nt(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("../myoutput_rechits_lumi_323525_2Mevt.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("../crabtest.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("../myoutput_rechits_lumi_323525_2Mevt.root");
+         f = new TFile("../crabtest.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("../myoutput_rechits_lumi_323525_2Mevt.root:/demo");
+      TDirectory * dir = (TDirectory*)f->Get("../crabtest.root:/demo");
       dir->GetObject("nt",tree);
 
    }
