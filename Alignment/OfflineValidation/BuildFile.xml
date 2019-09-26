@@ -8,10 +8,39 @@
 <use   name="TrackingTools/PatternTools"/>
 <use   name="TrackingTools/TrackFitters"/>
 <use   name="MagneticField/Engine"/>
-
 <use   name="CLHEP"/>
 <use   name="rootmath"/>
 <use   name="roothistmatrix"/>
+<use   name="DataFormats/Alignment"/>
+<use   name="DataFormats/PatCandidates"/>
+<use   name="Geometry/CommonDetUnit"/>
+<use   name="Geometry/Records"/>
+<use   name="MagneticField/Records"/>
+<use   name="Utilities/General"/>
+<use   name="CommonTools/TrackerMap"/>
+<use   name="SimDataFormats/Vertex"/>
+<use   name="CommonTools/UtilAlgos"/>
+<use   name="CondCore/DBOutputService"/>
+<use   name="CondFormats/HLTObjects"/>
+<use   name="CondFormats/DataRecord"/>
+<use   name="Alignment/CommonAlignment"/>
+<use   name="Alignment/TrackerAlignment"/>
+<use   name="DataFormats/TrackerRecHit2D"/>
+<use   name="DataFormats/MuonReco"/>
+<use   name="RecoTracker/TransientTrackingRecHit"/>
+<use   name="Geometry/DTGeometry"/>
+<use   name="Geometry/CSCGeometry"/>
+<use   name="DataFormats/MuonDetId"/>
+<use   name="DataFormats/SiStripDetId"/>
+<use   name="DataFormats/SiPixelDetId"/>
+<use   name="DataFormats/Candidate"/>
+<use   name="DataFormats/RecoCandidate"/>
+<use   name="DataFormats/Math"/>
+<use   name="FWCore/MessageLogger"/>
+<use   name="rootcore"/>
+<use   name="rootrflx"/>
+<use   name="root"/>
+<use   name="roofit"/>
 <export>
   <lib   name="1"/>
 </export>
