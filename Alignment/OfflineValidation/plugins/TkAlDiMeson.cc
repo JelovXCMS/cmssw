@@ -497,7 +497,7 @@ class TkAlDiMeson : public edm::EDAnalyzer {
     }//return; 
 
 myTree->Fill();
-if(MuMu_size>0){
+if(MuMu_size>0 && DEBUG){
 	cout<<"MuMu_size="<<MuMu_size<<endl;
 	for(int i=0; i<MuMu_size;i++){
 		cout<<"zmass = "<<MuMu_mass[i]	<<endl;
