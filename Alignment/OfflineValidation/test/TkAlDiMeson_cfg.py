@@ -12,15 +12,23 @@ process.GlobalTag.globaltag = '102X_upgrade2018_realistic_v10'
 
 import CalibTracker.Configuration.Common.PoolDBESSource_cfi  
 
-process.conditionsInTrackerAlignmentRcd = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(
-     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_TRACKERALIGN/MP/MPproduction/mp2837/jobData/jobm/alignments_MP.db'),
-     toGet = cms.VPSet(cms.PSet(record = cms.string('TrackerAlignmentRcd'),
-                               tag = cms.string('Alignments')
-                               )
-                      )
-    )
+#process.conditionsInTrackerAlignmentRcd = CalibTracker.Configuration.Common.PoolDBESSource_cfi.poolDBESSource.clone(
+#     connect = cms.string('sqlite_file:/afs/cern.ch/cms/CAF/CMSALCA/ALCA_TRACKERALIGN/MP/MPproduction/mp2837/jobData/jobm/alignments_MP.db'),
+#     #connect = cms.string('sqlite_file:alignments_MP.db'),
+#     toGet = cms.VPSet(cms.PSet(record = cms.string('TrackerAlignmentRcd'),
+#                               tag = cms.string('Alignments')
+#                               )
+#                      )
+#    )
+#
+#process.prefer_conditionsInTrackerAlignmentRcd = cms.ESPrefer("PoolDBESSource", "conditionsInTrackerAlignmentRcd")
 
-process.prefer_conditionsInTrackerAlignmentRcd = cms.ESPrefer("PoolDBESSource", "conditionsInTrackerAlignmentRcd")
+process.GlobalTag.toGet = cms.VPSet(
+   cms.PSet(record = cms.string('TrackerAlignmentRcd'),
+            tag = cms.string('TrackerAlignment_MC2018_v1'),
+            connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
+            ),
+)
 
 
 process.source = cms.Source ("PoolSource",
