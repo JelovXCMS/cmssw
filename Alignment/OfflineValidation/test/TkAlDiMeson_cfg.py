@@ -25,7 +25,7 @@ process.prefer_conditionsInTrackerAlignmentRcd = cms.ESPrefer("PoolDBESSource", 
 
 process.source = cms.Source ("PoolSource",
 	fileNames =  cms.untracked.vstring(
-		'file:/eos/cms/store/data/Run2018D/DoubleMuon/ALCARECO/TkAlZMuMu-PromptReco-v2/000/322/381/00000/FC020B1E-E8B4-E811-9A24-FA163E5A0019.root'
+		'file:FC020B1E-E8B4-E811-9A24-FA163E5A0019.root'
 	)
 )
 ###################################################################
