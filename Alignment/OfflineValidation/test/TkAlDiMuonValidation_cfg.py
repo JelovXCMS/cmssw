@@ -51,7 +51,7 @@ process.TrackRefitter1 = process.TrackRefitterP5.clone(
     )
 
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-process.myanalysis = cms.EDAnalyzer("TkAlDiMeson",
+process.myanalysis = cms.EDAnalyzer("TkAlDiMuonValidation",
                                     #TkTag = cms.string ('ALCARECOTkAlZMuMu'),
                                     TkTag = cms.string ('TrackRefitter1'),
                                     maxMass = cms.double(80),
@@ -59,7 +59,7 @@ process.myanalysis = cms.EDAnalyzer("TkAlDiMeson",
                                     )
 
 process.TFileService = cms.Service("TFileService",
-                                   fileName = cms.string('myTkAlDiMeson_output.root')
+                                   fileName = cms.string('myTkAlDiMuonValidation_output.root')
                                    )
 
 process.MessageLogger = cms.Service("MessageLogger",

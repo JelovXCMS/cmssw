@@ -69,9 +69,9 @@
 using namespace std;
 using namespace edm;
 
-class TkAlDiMeson : public edm::EDAnalyzer {
+class TkAlDiMuonValidation : public edm::EDAnalyzer {
  public:
-  TkAlDiMeson(const edm::ParameterSet& pset) {
+  TkAlDiMuonValidation(const edm::ParameterSet& pset) {
     TkTag_ = pset.getParameter<string>("TkTag");
     theTrackCollectionToken = consumes<reco::TrackCollection>(TkTag_);
      
@@ -90,7 +90,7 @@ class TkAlDiMeson : public edm::EDAnalyzer {
     m_verbose_fit = pset.getUntrackedParameter<bool>("verbose_fit",true);
    }
 
-  ~TkAlDiMeson(){}
+  ~TkAlDiMuonValidation(){}
 
   //void fitVoigt(TH1F *hist);
   //void makeNicePlotStyle(RooPlot* plot);
@@ -131,12 +131,14 @@ class TkAlDiMeson : public edm::EDAnalyzer {
   float MuMu_phi[max_Z];
   float MuMu_pt[max_Z];
   float MuMu_eta[max_Z];
-	float Trk1_phi[max_Z];
+	int Trk1_phi[max_Z];
 	float Trk1_eta[max_Z];
 	float Trk1_pt[max_Z]; 
+	float Trk1_charge[max_Z];
 	float Trk2_phi[max_Z];
 	float Trk2_eta[max_Z];
 	float Trk2_pt[max_Z]; 
+	int Trk2_charge[max_Z];
 
 
   TTree* DiMuTree;
@@ -147,9 +149,11 @@ class TkAlDiMeson : public edm::EDAnalyzer {
 	float STrk1_phi;
 	float STrk1_eta;
 	float STrk1_pt; 
+	int STrk1_charge; 
 	float STrk2_phi;
 	float STrk2_eta;
 	float STrk2_pt; 
+	int STrk2_charge; 
 
 
 
@@ -328,10 +332,14 @@ class TkAlDiMeson : public edm::EDAnalyzer {
       // i_Track++;
 
       for (reco::TrackCollection::const_iterator track1=track+1; track1!=tC.end(); track1++){
+
+				if(track->charge()==track1->charge()) {continue;} // only reconstruct opposite charge pair
+		
         TLorentzVector track01(track1->px(),track1->py(),track1->pz(),sqrt((track1->p()*track1->p())+(0.105*0.105)));
         mother=track0+track01;
         InvMass=mother.M();
         invMass.push_back(InvMass);
+
         if(theMaxMass<5.   && theMinMass>0.)  hInvMassJpsi->Fill(InvMass);
         if(theMaxMass<15.  && theMinMass>5.)  hInvMassUpsilon->Fill(InvMass);
         if(theMaxMass<150. && theMinMass>50.) {
@@ -356,10 +364,19 @@ class TkAlDiMeson : public edm::EDAnalyzer {
         double phiMu2 = track1->phi();
 				double ptMu2 = track1->pt();
         //double ptMu2 = track1->pt();
-        //int charge2   = track1->charge();
+        int charge2   = track1->charge();
 
         int phi2bin = phiaxis->FindBin(phiMu2);
         int eta2bin = etaaxis->FindBin(etaMu2);
+
+
+				if(charge1<0){ // use Mu+ for charge1, Mu- for charge2
+					swap(charge1,charge2);
+					swap(etaMu1,etaMu2);
+					swap(phiMu1,phiMu2);
+					swap(ptMu1,ptMu2);
+				}
+
 
         //std::cout<< "phi1bin:" << phi1bin << " phi2bin:"<< phi2bin << " eta1bin:"<<eta1bin << " eta2bin:" << eta2bin << std::endl;
         if(charge1>0){
@@ -395,9 +412,11 @@ class TkAlDiMeson : public edm::EDAnalyzer {
 				Trk1_pt[MuMu_size]=ptMu1;
 				Trk1_eta[MuMu_size]=etaMu1;
 				Trk1_phi[MuMu_size]=phiMu1;
+				Trk1_charge[MuMu_size]=charge1;
 				Trk2_pt[MuMu_size]=ptMu2;
 				Trk2_eta[MuMu_size]=etaMu2;
 				Trk2_phi[MuMu_size]=phiMu2;
+				Trk2_charge[MuMu_size]=charge2;
 			
         // MuMu_idx_daughter1[MuMu_size]=i_daughter1;
         // MuMu_idx_daughter2[MuMu_size]=i_daughter2;
@@ -410,9 +429,11 @@ class TkAlDiMeson : public edm::EDAnalyzer {
 				STrk1_pt=ptMu1;
 				STrk1_eta=etaMu1;
 				STrk1_phi=phiMu1;
+				STrk1_charge=charge1;
 				STrk2_pt=ptMu2;
 				STrk2_eta=etaMu2;
 				STrk2_phi=phiMu2;
+				STrk2_charge=charge2;
 		
 				DiMuTree->Fill();
 
@@ -605,10 +626,12 @@ if(MuMu_size>0 && DEBUG){
     myTree->Branch("MuMu_eta",MuMu_eta,"MuMu_eta[MuMu_size]/F");
     myTree->Branch("Trk1_pt",Trk1_pt,"Trk1_pt[MuMu_size]/F");
     myTree->Branch("Trk1_eta",Trk1_eta,"Trk1_eta[MuMu_size]/F");
-    myTree->Branch("Trk1_phi",Trk1_phi,"Trk1_phi[MuMu_size]/F");
+    myTree->Branch("Trk1_phi",Trk1_phi,"Trk1_phi[MuMu_size]/I");
+    myTree->Branch("Trk1_charge",Trk1_charge,"Trk1_charge[MuMu_size]/F");
     myTree->Branch("Trk2_pt",Trk2_pt,"Trk2_pt[MuMu_size]/F");
     myTree->Branch("Trk2_eta",Trk2_eta,"Trk2_eta[MuMu_size]/F");
     myTree->Branch("Trk2_phi",Trk2_phi,"Trk2_phi[MuMu_size]/F");
+    myTree->Branch("Trk2_charge",Trk2_charge,"Trk2_charge[MuMu_size]/I");
 
     DiMuTree = fs->make<TTree>("DiMuTree","DiMuTree");
     DiMuTree->Branch("MuMu_mass",&SMuMu_mass,"SMuMu_mass/F");
@@ -618,9 +641,11 @@ if(MuMu_size>0 && DEBUG){
     DiMuTree->Branch("Trk1_pt",&STrk1_pt,"STrk1_pt/F");
     DiMuTree->Branch("Trk1_eta",&STrk1_eta,"STrk1_eta/F");
     DiMuTree->Branch("Trk1_phi",&STrk1_phi,"STrk1_phi/F");
+    DiMuTree->Branch("Trk1_charge",&STrk1_charge,"STrk1_charge/I");
     DiMuTree->Branch("Trk2_pt",&STrk2_pt,"STrk2_pt/F");
     DiMuTree->Branch("Trk2_eta",&STrk2_eta,"STrk2_eta/F");
     DiMuTree->Branch("Trk2_phi",&STrk2_phi,"STrk2_phi/F");
+    DiMuTree->Branch("Trk2_charge",&STrk2_charge,"STrk2_charge/I");
 
 
 
@@ -749,5 +774,5 @@ void makeNicePlotStyle(RooPlot* plot)
 };
 
 
-DEFINE_FWK_MODULE(TkAlDiMeson);
+DEFINE_FWK_MODULE(TkAlDiMuonValidation);
 
