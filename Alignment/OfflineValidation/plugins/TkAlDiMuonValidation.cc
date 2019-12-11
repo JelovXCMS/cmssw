@@ -41,6 +41,10 @@
 #include "DataFormats/VertexReco/interface/VertexFwd.h" 
 #include "DataFormats/GeometryCommonDetAlgo/interface/Measurement1D.h"
 
+#include <CLHEP/Vector/LorentzVector.h>
+#include "DataFormats/Math/interface/LorentzVector.h"
+#include "DataFormats/MuonReco/interface/Muon.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -154,6 +158,9 @@ class TkAlDiMuonValidation : public edm::EDAnalyzer {
 	float STrk2_eta;
 	float STrk2_pt; 
 	int STrk2_charge; 
+	float Sdelta_eta; 
+	float ScosthetaCS; 
+	float SphiCS; 
 
 
 
@@ -434,7 +441,43 @@ class TkAlDiMuonValidation : public edm::EDAnalyzer {
 				STrk2_eta=etaMu2;
 				STrk2_phi=phiMu2;
 				STrk2_charge=charge2;
+
+				Sdelta_eta=abs(etaMu1-etaMu2);
+
+
+		double costhetaCS, phiCS;
 		
+		double muplus = 1.0 / sqrt(2.0) * (track0.E() + track0.Z());
+    double muminus = 1.0 / sqrt(2.0) * (track0.E() - track0.Z());
+    double mubarplus = 1.0 / sqrt(2.0) * (track01.E() + track01.Z());
+    double mubarminus = 1.0 / sqrt(2.0) * (track01.E() - track01.Z());
+    //double costheta = 2.0 / Q.Mag() / sqrt(pow(Q.Mag(), 2) + pow(Q.Pt(), 2)) * (muplus * mubarminus - muminus * mubarplus);
+    costhetaCS = 2.0 / mother.Mag() / sqrt(pow(mother.Mag(), 2) + pow(mother.Pt(), 2)) * (muplus * mubarminus - muminus * mubarplus);
+    // if (momentumRes.rapidity() < 0)
+      // costhetaCS = -costhetaCS;
+		
+				ScosthetaCS=costhetaCS;
+
+    TLorentzVector Pbeam(0., 0., 3500., 3500.);
+    TVector3 R = Pbeam.Vect().Cross(mother.Vect());
+    TVector3 Runit = R.Unit();
+
+    TVector3 Qt = mother.Vect();
+    Qt.SetZ(0);
+    TVector3 Qtunit = Qt.Unit();
+
+    TLorentzVector D(track0 - track01);
+    TVector3 Dt = D.Vect();
+    Dt.SetZ(0);
+
+
+    double tanphi = sqrt(pow(mother.Mag(), 2) + pow(mother.Pt(), 2)) / mother.Mag() * Dt.Dot(Runit) / Dt.Dot(Qtunit);
+	    phiCS = atan(tanphi);
+
+
+				SphiCS=phiCS;
+
+	
 				DiMuTree->Fill();
 
 				}
@@ -646,6 +689,10 @@ if(MuMu_size>0 && DEBUG){
     DiMuTree->Branch("Trk2_eta",&STrk2_eta,"STrk2_eta/F");
     DiMuTree->Branch("Trk2_phi",&STrk2_phi,"STrk2_phi/F");
     DiMuTree->Branch("Trk2_charge",&STrk2_charge,"STrk2_charge/I");
+
+    DiMuTree->Branch("delta_eta",&Sdelta_eta,"Sdelta_eta/F");
+    DiMuTree->Branch("costhetaCS",&ScosthetaCS,"ScosthetaCS/F");
+    DiMuTree->Branch("phiCS",&SphiCS,"SphiCS/F");
 
 
 
